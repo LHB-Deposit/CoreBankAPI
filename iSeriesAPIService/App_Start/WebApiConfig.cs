@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using iSeriesDataAccess;
 using System.Web.Http;
 
-namespace iSeriesAPIService
+namespace ParameterAPI
 {
     public static class WebApiConfig
     {
@@ -14,11 +12,15 @@ namespace iSeriesAPIService
             // Web API routes
             config.MapHttpAttributeRoutes();
 
+            //Web API routes
+            config.MessageHandlers.Add(new TokenValidationHandler());
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
         }
     }
 }

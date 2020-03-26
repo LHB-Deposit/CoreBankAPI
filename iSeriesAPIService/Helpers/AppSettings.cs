@@ -1,6 +1,6 @@
 ﻿using iSeriesDataAccess;
 
-namespace iSeriesAPIService.Helpers
+namespace ParameterAPI.Helpers
 {
     public class AppSettings : ProjectAppSettings
     {

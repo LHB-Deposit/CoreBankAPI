@@ -1,17 +1,17 @@
-﻿using iSeriesAPIService.Helpers;
-using iSeriesAPIService.Interfaces;
-using iSeriesAPIService.Models;
+﻿using ParameterAPI.Helpers;
+using ParameterAPI.Interfaces;
+using ParameterAPI.Models;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Http;
 
-namespace iSeriesAPIService.Controllers
+namespace ParameterAPI.Controllers
 {
     public class DocumentTypeController : ApiController
     {
-        private readonly IParameterService service;
+        private readonly IAs400Service service;
 
-        public DocumentTypeController(IParameterService service)
+        public DocumentTypeController(IAs400Service service)
         {
             this.service = service;
         }

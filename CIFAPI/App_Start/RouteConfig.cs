@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace iSeriesAPIService
+namespace CIFAPI
 {
     public class RouteConfig
     {
@@ -15,8 +15,8 @@ namespace iSeriesAPIService
 
             routes.MapRoute(
                 name: "Default",
-                url: "swagger/ui/index",
-                defaults: new { controller = "Values", action = UrlParameter.Optional, id = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

@@ -1,8 +1,8 @@
+using AuthenticationAPIService.Helpers;
 using AuthenticationAPIService.Interfaces;
 using AuthenticationAPIService.Services;
 using AuthenticationService.Data;
 using AuthenticationService.Helpers;
-using DataAccess;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

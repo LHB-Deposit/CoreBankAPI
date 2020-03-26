@@ -1,10 +1,10 @@
-﻿using iSeriesAPIService.Helpers;
-using iSeriesAPIService.Models;
+﻿using ParameterAPI.Helpers;
+using ParameterAPI.Models;
 using System.Collections.Generic;
 
-namespace iSeriesAPIService.Interfaces
+namespace ParameterAPI.Interfaces
 {
-    public interface IParameterService
+    public interface IAs400Service
     {
         IEnumerable<ParameterModel> GetBOTOccupation(AppSettings app);
         IEnumerable<ParameterModel> GetBusinessType(AppSettings app);

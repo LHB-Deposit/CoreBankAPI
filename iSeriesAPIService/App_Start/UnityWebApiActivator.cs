@@ -2,10 +2,10 @@ using System.Web.Http;
 
 using Unity.AspNet.WebApi;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(iSeriesAPIService.UnityWebApiActivator), nameof(iSeriesAPIService.UnityWebApiActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(iSeriesAPIService.UnityWebApiActivator), nameof(iSeriesAPIService.UnityWebApiActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ParameterAPI.UnityWebApiActivator), nameof(ParameterAPI.UnityWebApiActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(ParameterAPI.UnityWebApiActivator), nameof(ParameterAPI.UnityWebApiActivator.Shutdown))]
 
-namespace iSeriesAPIService
+namespace ParameterAPI
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with WebApi when it is hosted in ASP.NET.
@@ -20,7 +20,7 @@ namespace iSeriesAPIService
             // Use UnityHierarchicalDependencyResolver if you want to use
             // a new child container for each IHttpController resolution.
             // var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.Container);
-            var resolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
+            var resolver = new UnityDependencyResolver(UnityConfig.Container);
 
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
         }
@@ -30,8 +30,7 @@ namespace iSeriesAPIService
         /// </summary>
         public static void Shutdown()
         {
-            var container = UnityConfig.GetConfiguredContainer();
-            container.Dispose();
+            UnityConfig.Container.Dispose();
         }
     }
 }

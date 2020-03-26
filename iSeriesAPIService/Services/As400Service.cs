@@ -1,6 +1,6 @@
-﻿using iSeriesAPIService.Helpers;
-using iSeriesAPIService.Interfaces;
-using iSeriesAPIService.Models;
+﻿using ParameterAPI.Helpers;
+using ParameterAPI.Interfaces;
+using ParameterAPI.Models;
 using iSeriesDataAccess;
 using System;
 using System.Collections.Generic;
@@ -9,9 +9,9 @@ using System.Data;
 using System.Linq;
 using System.Web;
 
-namespace iSeriesAPIService.Services
+namespace ParameterAPI.Services
 {
-    public class ParameterService : IParameterService
+    public class As400Service : IAs400Service
     {
         private string KEY { get; set; } = string.Empty;
         private string VALUE { get; set; } = string.Empty;
