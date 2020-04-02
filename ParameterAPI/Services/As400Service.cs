@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Web;
+using SolutionUtility;
 
 namespace ParameterAPI.Services
 {

@@ -1,7 +1,4 @@
-﻿using iSeriesDataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using SolutionUtility;
 using System.Web.Http;
 
 namespace CIFAPI
