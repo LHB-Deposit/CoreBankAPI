@@ -44,8 +44,16 @@
   <ItemGroup>
     <Compile Include="CIFLevel.cs" />
     <Compile Include="CIFLevelResponse.cs" />
+    <Compile Include="Entity\CIFAccount.cs" />
+    <Compile Include="Entity\CIFAccountResponse.cs" />
     <Compile Include="MBaseSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SolutionUtility\SolutionUtility.csproj">
+      <Project>{5244D46D-8317-430B-A7E4-22B9CAB8ED91}</Project>
+      <Name>SolutionUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

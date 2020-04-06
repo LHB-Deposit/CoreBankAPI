@@ -308,5 +308,114 @@ namespace SQLDataAccess
                 return false;
             }
         }
+
+        public void RunStoreProcedure(string SpName, SqlParameter[] ParameterIn, out string oString)
+        {
+            oString = "";
+
+            try
+            {
+                conn = new SqlConnection(GetConnectionString());
+                conn.Open();
+
+                command = new SqlCommand
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandText = SpName,
+                    Connection = conn
+                };
+
+                command.Parameters.Clear();
+
+                for (var i = 0; i < ParameterIn.Length; i++)
+                    command.Parameters.Add(ParameterIn[i]);
+
+                oString = command.ExecuteScalar().ToString();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                if(conn != null)
+                    if (conn.State == ConnectionState.Open) conn.Close();
+            }
+        }
+        public bool RunStoreProcedure(string SpName, SqlParameter[] ParameterIn, out DataTable oDataTable, out string oMessage)
+        {
+            oMessage = string.Empty;
+            oDataTable = new DataTable();
+            bool res = false;
+
+            try
+            {
+                conn = new SqlConnection(GetConnectionString());
+                conn.Open();
+
+                command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = SpName;
+                command.Connection = conn;
+
+                command.Parameters.Clear();
+
+                for (int i = 0; i < ParameterIn.Length; i++)
+                    command.Parameters.Add(ParameterIn[i]);
+
+                adapter = new SqlDataAdapter();
+                adapter.SelectCommand = command;
+                adapter.Fill(oDataTable);
+
+
+                res = true;
+            }
+            catch (Exception ex)
+            {
+                oMessage = ex.Message;
+                Logging.WriteLog(ex.Message);
+            }
+
+            return res;
+        }
+        public bool RunStoreProcedure(string SpName, SqlParameter[] ParameterIn, out DataRow oDataRow, out string oMessage)
+        {
+            oMessage = string.Empty;
+            oDataRow = null;
+            bool res = false;
+
+            try
+            {
+                DataTable dt = new DataTable();
+                conn = new SqlConnection(GetConnectionString());
+                conn.Open();
+
+                command = new SqlCommand();
+                command.CommandType = CommandType.StoredProcedure;
+                command.CommandText = SpName;
+                command.Connection = conn;
+
+                command.Parameters.Clear();
+
+                for (int i = 0; i < ParameterIn.Length; i++)
+                    command.Parameters.Add(ParameterIn[i]);
+
+                adapter = new SqlDataAdapter();
+                adapter.SelectCommand = command;
+                adapter.Fill(dt);
+
+                if (dt.Rows.Count > 0) oDataRow = dt.Rows[0];
+
+                res = true;
+            }
+            catch (Exception ex)
+            {
+                oMessage = ex.Message;
+                Logging.WriteLog(ex.Message);
+            }
+
+            return res;
+        }
     }
 }

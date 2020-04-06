@@ -1,3 +1,5 @@
+using MBaseAPI.Interfaces;
+using MBaseAPI.Services;
 using System;
 
 using Unity;
@@ -42,6 +44,8 @@ namespace MBaseAPI
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
+            container.RegisterType<ISQLService, SQLService>();
+            container.RegisterType<IMBaseService, MBaseService>();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MBaseAccess.Entity;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -79,14 +80,18 @@ namespace MBaseAccess
             }
         }
 
-        public CIFLevelResponse CIFCreation(CIFLevel cif, string terminalId, string referenceNumber, string clientDate, string clientTime)
+        public CIFAccountResponse CIFCreation(CIFAccount cif, string terminalId, string referenceNumber, string clientDate, string clientTime)
         {
 
 
-            return new CIFLevelResponse 
+            return new CIFAccountResponse
             { 
-                CustomerNumber = "",
+                CFCIFN = "",
+                ACCTNO = "",
+                ACTYPE = ""
             };
         }
+
+        
     }
 }

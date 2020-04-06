@@ -41,7 +41,7 @@ namespace SolutionUtility
 
             try
             {
-                var secretKey = System.Text.Encoding.Default.GetBytes(ConfigurationManager.AppSettings[nameof(ProjectAppSettings.SECRET)].ToString());
+                var secretKey = Encoding.Default.GetBytes(ConfigurationManager.AppSettings[nameof(ProjectAppSettings.SECRET)].ToString());
 
                 var handler = new JwtSecurityTokenHandler();
 

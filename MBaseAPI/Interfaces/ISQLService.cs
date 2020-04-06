@@ -1,13 +1,11 @@
-﻿using System;
+﻿using MBaseAPI.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MBaseAPI.Interfaces
 {
     public interface ISQLService
     {
-
+        MBaseTransaction GetMBaseTransaction(string transCode);
+        IEnumerable<MBaseMessage> GetMBaseResponse(string transCode);
     }
 }
