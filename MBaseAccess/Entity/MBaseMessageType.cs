@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MBaseAPI.Models
+namespace MBaseAccess.Entity
 {
-    public class MBaseMessage
+    public class MBaseMessageType
     {
         public string MessageType { get; set; }
         public string TranCode { get; set; }
@@ -19,6 +20,5 @@ namespace MBaseAPI.Models
         public string Description { get; set; }
         public string DefaultValue { get; set; }
         public string Remark { get; set; }
-
     }
 }

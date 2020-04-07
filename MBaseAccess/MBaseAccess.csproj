@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EbcdicEncoding">
+      <HintPath>..\DLLReference\EbcdicEncoding.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -42,10 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CIFLevel.cs" />
-    <Compile Include="CIFLevelResponse.cs" />
+    <Compile Include="Entity\CIFLevel.cs" />
+    <Compile Include="Entity\CIFLevelResponse.cs" />
     <Compile Include="Entity\CIFAccount.cs" />
     <Compile Include="Entity\CIFAccountResponse.cs" />
+    <Compile Include="Entity\MBaseHeader.cs" />
+    <Compile Include="Entity\MBaseMessage.cs" />
+    <Compile Include="Entity\MBaseMessageType.cs" />
     <Compile Include="MBaseSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

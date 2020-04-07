@@ -5,7 +5,9 @@ namespace MBaseAPI.Interfaces
 {
     public interface ISQLService
     {
-        MBaseTransaction GetMBaseTransaction(string transCode);
-        IEnumerable<MBaseMessage> GetMBaseResponse(string transCode);
+        MBaseHeader GetMBaseHeader(string tranCode);
+        IEnumerable<MBaseMessageType> GetMBaseResponseMessages(string tranCode);
+        IEnumerable<MBaseMessageType> GetMBaseHeaderMessages(string tranCode);
+        IEnumerable<MBaseMessageType> GetMBaseInputMessages(string tranCode);
     }
 }

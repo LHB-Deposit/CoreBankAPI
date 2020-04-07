@@ -9,6 +9,6 @@ namespace MBaseAPI.Interfaces
 {
     public interface IMBaseService
     {
-        CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate);
+        CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate, string terminalId, DateTime processDateTime);
     }
 }

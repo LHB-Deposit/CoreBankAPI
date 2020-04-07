@@ -19,17 +19,32 @@ namespace MBaseAPI.Services
         {
             this.sQLService = sQLService;
         }
-        public CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate)
+        public CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate, string terminalId, DateTime processDateTime)
         {
+            cIFCreate = new CIFCreateRequestModel();
 
-            var cif = sQLService.GetMBaseTransaction("1732");
+            var mBaseHeader = sQLService.GetMBaseHeader(cIFCreate.TranCode);
+            var mBaseResponseMessages = sQLService.GetMBaseResponseMessages(cIFCreate.TranCode);
+            var mBaseHeaderMessages = sQLService.GetMBaseHeaderMessages(cIFCreate.TranCode);
+            var mBaseInputMessages = sQLService.GetMBaseInputMessages(cIFCreate.TranCode);
+            var referenceNo = cIFCreate.ReferenceNo;
 
+            MBaseMessage mBaseMessage = new MBaseMessage
+            {
+                Header = mBaseHeader,
+                HeaderMessages = mBaseHeaderMessages,
+                InputMessages = mBaseInputMessages,
+                ResponseMessages = mBaseResponseMessages
+            };
 
+            // Matching Object
             CIFAccount cIFAccount = new CIFAccount();
             PropertyMatcher<CIFCreateRequestModel, CIFAccount>.GenerateMatchedObject(cIFCreate, cIFAccount);
 
-            CIFAccountResponse mBaseResponse = MBaseSingleton.Instance.CIFCreation(cIFAccount,"","","","");
-            
+            // MBase CIFCreate
+            CIFAccountResponse mBaseResponse = MBaseSingleton.Instance.CIFCreation(cIFAccount, mBaseMessage, terminalId, referenceNo, processDateTime);
+
+            // Matching Object
             CIFCreateResponseModel responseModel = new CIFCreateResponseModel();
             PropertyMatcher<CIFAccountResponse, CIFCreateResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
 

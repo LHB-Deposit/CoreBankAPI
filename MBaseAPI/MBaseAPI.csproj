@@ -196,8 +196,8 @@
     <Compile Include="Models\CIFInfoResponseModel.cs" />
     <Compile Include="Models\CIFLevelRequestModel.cs" />
     <Compile Include="Models\CIFLevelResponseModel.cs" />
-    <Compile Include="Models\MBaseMessage.cs" />
-    <Compile Include="Models\MBaseTransaction.cs" />
+    <Compile Include="Models\MBaseHeader.cs" />
+    <Compile Include="Models\MBaseMessageType.cs" />
     <Compile Include="Models\VerifyCitizenIDNumber.cs" />
     <Compile Include="Models\VerifyCitizenIDNumberResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

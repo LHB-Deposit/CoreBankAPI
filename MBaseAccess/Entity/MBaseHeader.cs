@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MBaseAPI.Models
+namespace MBaseAccess.Entity
 {
-    public class MBaseTransaction
+    public class MBaseHeader
     {
         public string MBaseTranCode { get; set; }
         public string ScenarioNumber { get; set; }
@@ -15,7 +16,5 @@ namespace MBaseAPI.Models
         public int InputLength { get; set; }
         public int ResponseLength { get; set; }
         public string Description { get; set; }
-
-
     }
 }

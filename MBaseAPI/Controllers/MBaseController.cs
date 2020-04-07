@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace MBaseAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class MBaseController : ApiController
     {
         private readonly IMBaseService mBaseService;
@@ -35,8 +36,10 @@ namespace MBaseAPI.Controllers
         [HttpPost]
         public CIFCreateResponseModel CIFCreate([FromBody]CIFCreateRequestModel cIFCreate)
         {
-            cIFCreate = new CIFCreateRequestModel();
-            return mBaseService.CIFCreation(cIFCreate);
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+
+            return mBaseService.CIFCreation(cIFCreate, terminalId, processDatetime);
         }
 
     }

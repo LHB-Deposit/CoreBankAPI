@@ -9,6 +9,12 @@ namespace MBaseAPI.Models
 {
     public class CIFCreateRequestModel
     {
+        public string TranCode { get; set; } = "1722";
+
+        [Required]
+        [MaxLength(7)]
+        public string ReferenceNo { get; set; }
+
         [MaxLength(40)]
         public string TitleThaiName { get; set; } = string.Empty;
 
