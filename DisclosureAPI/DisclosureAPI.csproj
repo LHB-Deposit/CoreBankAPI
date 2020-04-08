@@ -181,6 +181,10 @@
       <Project>{77A72326-6ED9-48F4-B7A5-A3AB63C2FA3C}</Project>
       <Name>iSeriesDataAccess</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SolutionUtility\SolutionUtility.csproj">
+      <Project>{5244D46D-8317-430B-A7E4-22B9CAB8ED91}</Project>
+      <Name>SolutionUtility</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

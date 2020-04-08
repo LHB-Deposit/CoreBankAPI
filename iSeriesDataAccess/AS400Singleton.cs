@@ -1,4 +1,5 @@
 ﻿using IBM.Data.DB2.iSeries;
+using SolutionUtility;
 using System;
 using System.Configuration;
 using System.Data;
@@ -56,6 +57,7 @@ namespace iSeriesDataAccess
                     .Replace($"[{ nameof(ProjectAppSettings.PRD_AS400_PASSWD) }]", Cryptography.DecryptString(as400Pass));
             }
         }
+
         public bool ExecuteSql(string sql, out DataTable oDataTable, out string oMessage)
         {
             bool res = false;
