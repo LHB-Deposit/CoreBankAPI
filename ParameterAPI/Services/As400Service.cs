@@ -130,5 +130,10 @@ namespace ParameterAPI.Services
 
             return GetParameter(appSettings, cond);
         }
+
+        public IEnumerable<ParameterModel> GetCountry(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
     }
 }
