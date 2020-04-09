@@ -44,7 +44,7 @@ namespace ParameterAPI.Services
         {
             KEY = app.KEY;
             VALUE = app.VALUE;
-            if (app.as400List.Count == 0)
+            if (app.as400List == null)
             {
                 LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
                     ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
