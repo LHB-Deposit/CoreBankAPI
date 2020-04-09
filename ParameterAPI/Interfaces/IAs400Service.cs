@@ -18,5 +18,6 @@ namespace ParameterAPI.Interfaces
         IEnumerable<ParameterModel> ExecuteGetParameter(string sql);
 
         IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings);
+        IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings);
     }
 }

@@ -159,6 +159,7 @@
     <Compile Include="Controllers\EducationLevelController.cs" />
     <Compile Include="Controllers\OccupationRiskController.cs" />
     <Compile Include="Controllers\PrefixNameController.cs" />
+    <Compile Include="Controllers\SourceOfIncomeController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

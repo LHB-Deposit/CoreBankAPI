@@ -123,5 +123,12 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings);
         }
 
+        public IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings)
+        {
+            string[] cond = new string[1];
+            cond[0] = "CP9XST = 'DEPSRCINV'";
+
+            return GetParameter(appSettings, cond);
+        }
     }
 }
