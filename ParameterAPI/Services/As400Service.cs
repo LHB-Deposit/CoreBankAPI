@@ -1,14 +1,12 @@
-﻿using ParameterAPI.Helpers;
+﻿using iSeriesDataAccess;
+using ParameterAPI.Helpers;
 using ParameterAPI.Interfaces;
 using ParameterAPI.Models;
-using iSeriesDataAccess;
+using SolutionUtility;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
-using System.Linq;
-using System.Web;
-using SolutionUtility;
 
 namespace ParameterAPI.Services
 {
@@ -19,6 +17,7 @@ namespace ParameterAPI.Services
         private string LIB { get; set; } = string.Empty;
         private string FILE { get; set; } = string.Empty;
         private string SQL { get; set; } = @"SELECT TRIM([KEY]) AS [KEY], TRIM([VALUE]) AS [VALUE] FROM [LIB].[FILE]";
+
         public IEnumerable<ParameterModel> ExecuteGetParameter(string sql)
         {
             List<ParameterModel> parameters = new List<ParameterModel>();
@@ -40,14 +39,24 @@ namespace ParameterAPI.Services
             }
             return parameters;
         }
+
         public IEnumerable<ParameterModel> GetParameter(AppSettings app, string[] condition = null)
         {
             KEY = app.KEY;
             VALUE = app.VALUE;
-            FILE = app.FILE;
-            LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString();
+            if (app.as400List.Count == 0)
+            {
+                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
+                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
+                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString();
+                FILE = app.FILE;
+            }
+            else
+            {
+                LIB = app.as400List[0].Library;
+                FILE = app.as400List[0].File;
+            }
+
             SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
@@ -108,5 +117,11 @@ namespace ParameterAPI.Services
 
             return GetParameter(app, cond);
         }
+
+        public IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
+
     }
 }

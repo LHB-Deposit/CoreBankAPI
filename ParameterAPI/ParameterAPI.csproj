@@ -152,6 +152,7 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountTypeController.cs" />
     <Compile Include="Controllers\BOTOccupationController.cs" />
     <Compile Include="Controllers\BusinessTypeController.cs" />
     <Compile Include="Controllers\DocumentTypeController.cs" />
@@ -164,6 +165,7 @@
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Interfaces\IAs400Service.cs" />
+    <Compile Include="Models\AS400Model.cs" />
     <Compile Include="Models\ParameterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\As400Service.cs" />

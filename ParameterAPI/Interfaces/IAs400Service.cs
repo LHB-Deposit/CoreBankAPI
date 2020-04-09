@@ -16,5 +16,7 @@ namespace ParameterAPI.Interfaces
 
         IEnumerable<ParameterModel> GetParameter(AppSettings app, string[] condition = null);
         IEnumerable<ParameterModel> ExecuteGetParameter(string sql);
+
+        IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings);
     }
 }
