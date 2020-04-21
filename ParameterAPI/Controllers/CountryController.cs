@@ -4,7 +4,7 @@ using ParameterAPI.Models;
 using System.Collections.Generic;
 using System.Web.Http;
 
-namespace iSeriesAPIService.Controllers
+namespace ParameterAPI.Controllers
 {
     public class CountryController : ApiController
     {

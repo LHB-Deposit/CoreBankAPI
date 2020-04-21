@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Web.Http;
 
-namespace iSeriesAPIService.Controllers
+namespace ParameterAPI.Controllers
 {
     public class AccountTypeController : ApiController
     {
