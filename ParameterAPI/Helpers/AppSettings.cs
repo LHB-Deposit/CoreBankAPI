@@ -1,5 +1,6 @@
-﻿
+﻿using iSeriesAPIService.Models;
 using SolutionUtility;
+using System.Collections.Generic;
 
 namespace ParameterAPI.Helpers
 {
@@ -9,6 +10,7 @@ namespace ParameterAPI.Helpers
         public string LHBDDATMAS { get; set; }
         public string LHBPDATPAR { get; set; }
         public string LHBPDATMAS { get; set; }
+        public string LHB_DATINH { get; set; }
 
         public string BOTOccuKey { get; set; }
         public string BOTOccuValue { get; set; }
@@ -37,5 +39,7 @@ namespace ParameterAPI.Helpers
         public string StatusKey { get; set; }
         public string StatusValue { get; set; }
         public string StatusFile { get; set; }
+
+        public List<AS400Model> as400List { get; set; }
     }
 }

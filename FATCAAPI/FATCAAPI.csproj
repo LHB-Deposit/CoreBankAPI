@@ -159,6 +159,7 @@
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Interfaces\IAs400Service.cs" />
     <Compile Include="Models\FatcaResponseModel.cs" />
+    <Compile Include="Models\VerifyFATCAFlagRequesstModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\As400Service.cs" />
   </ItemGroup>
@@ -187,6 +188,10 @@
     <ProjectReference Include="..\SolutionUtility\SolutionUtility.csproj">
       <Project>{5244D46D-8317-430B-A7E4-22B9CAB8ED91}</Project>
       <Name>SolutionUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440}</Project>
+      <Name>SQLDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
