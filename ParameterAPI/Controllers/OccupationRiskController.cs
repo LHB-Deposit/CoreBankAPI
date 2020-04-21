@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace ParameterAPI.Controllers
 {
+    [Authorize]
     public class OccupationRiskController : ApiController
     {
         private readonly IAs400Service service;
@@ -21,9 +22,13 @@ namespace ParameterAPI.Controllers
         {
             return service.GetOccupationRisk(new AppSettings
             {
+                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
+                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
+                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
+
+                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskFile)].ToString(),
                 KEY = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskValue)].ToString(),
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskFile)].ToString()
+                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskValue)].ToString()
             });
         }
     }

@@ -8,19 +8,19 @@ using System.Web.Http;
 namespace ParameterAPI.Controllers
 {
     [Authorize]
-    public class SourceOfIncomeController : ApiController
+    public class PurposeOfAccountOpenController : ApiController
     {
-        private readonly IAs400Service _service;
+        private readonly IAs400Service service;
 
-        public SourceOfIncomeController(IAs400Service service)
+        public PurposeOfAccountOpenController(IAs400Service service)
         {
-            _service = service;
+            this.service = service;
         }
 
         [HttpGet]
         public IEnumerable<ParameterModel> Get()
         {
-            AppSettings appSettings = new AppSettings()
+            return service.GetPurposeOfAccountOpen(new AppSettings
             {
                 LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
                     ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
@@ -29,16 +29,14 @@ namespace ParameterAPI.Controllers
                 FILE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
                 KEY = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
                 VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
-            };
-
-            return _service.GetSourceOfIncome(appSettings);
+            });
         }
 
-        [Route("api/SourceOfIncome/Corporate")]
+        [Route("api/PurposeOfAccountOpen/Corporate")]
         [HttpGet]
         public IEnumerable<ParameterModel> Corporate()
         {
-            AppSettings appSettings = new AppSettings()
+            return service.GetPurposeOfAccountOpenCorp(new AppSettings
             {
                 LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
                     ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
@@ -47,9 +45,7 @@ namespace ParameterAPI.Controllers
                 FILE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
                 KEY = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
                 VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
-            };
-
-            return _service.GetSourceOfIncomeCorp(appSettings);
+            });
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace ParameterAPI.Controllers
 {
+    [Authorize]
     public class EducationLevelController : ApiController
     {
         private readonly IAs400Service service;
@@ -21,9 +22,13 @@ namespace ParameterAPI.Controllers
         {
             return service.GetEducationLevel(new AppSettings
             {
+                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
+                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
+                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
+
+                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.EduLevelFile)].ToString(),
                 KEY = ConfigurationManager.AppSettings[nameof(AppSettings.EduLevelKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.EduLevelValue)].ToString(),
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.EduLevelFile)].ToString()
+                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.EduLevelValue)].ToString()
             });
         }
     }

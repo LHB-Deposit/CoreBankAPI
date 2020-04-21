@@ -1,17 +1,18 @@
-﻿using iSeriesAPIService.Models;
-using SolutionUtility;
-using System.Collections.Generic;
+﻿using SolutionUtility;
 
 namespace ParameterAPI.Helpers
 {
     public class AppSettings : ProjectAppSettings
     {
+        // Library
         public string LHBDDATPAR { get; set; }
         public string LHBDDATMAS { get; set; }
         public string LHBPDATPAR { get; set; }
         public string LHBPDATMAS { get; set; }
-        public string LHB_DATINH { get; set; }
+        public string LHBTDATINH { get; set; }
+        public string LHBPDATINH { get; set; }
 
+        // File, Key, Value
         public string BOTOccuKey { get; set; }
         public string BOTOccuValue { get; set; }
         public string BOTOccuFile { get; set; }
@@ -40,6 +41,17 @@ namespace ParameterAPI.Helpers
         public string StatusValue { get; set; }
         public string StatusFile { get; set; }
 
-        public List<AS400Model> as400List { get; set; }
+        public string AccountTypeKey { get; set; }
+        public string AccountTypeValue { get; set; }
+        public string AccountTypeFile { get; set; }
+
+        public string CountryKey { get; set; }
+        public string CountryValue { get; set; }
+        public string CountryFile { get; set; }
+
+        public string KYCParameterKey { get; set; }
+        public string KYCParameterValue { get; set; }
+        public string KYCParameterFile { get; set; }
+
     }
 }

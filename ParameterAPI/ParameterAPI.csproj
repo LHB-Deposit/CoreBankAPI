@@ -160,6 +160,8 @@
     <Compile Include="Controllers\EducationLevelController.cs" />
     <Compile Include="Controllers\OccupationRiskController.cs" />
     <Compile Include="Controllers\PrefixNameController.cs" />
+    <Compile Include="Controllers\PurposeOfAccountOpenController.cs" />
+    <Compile Include="Controllers\SourceOfDepositController.cs" />
     <Compile Include="Controllers\SourceOfIncomeController.cs" />
     <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Global.asax.cs">
@@ -167,7 +169,6 @@
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Interfaces\IAs400Service.cs" />
-    <Compile Include="Models\AS400Model.cs" />
     <Compile Include="Models\ParameterModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\As400Service.cs" />

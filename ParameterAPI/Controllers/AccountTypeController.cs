@@ -1,5 +1,4 @@
-﻿using iSeriesAPIService.Models;
-using ParameterAPI.Helpers;
+﻿using ParameterAPI.Helpers;
 using ParameterAPI.Interfaces;
 using ParameterAPI.Models;
 using System.Collections.Generic;
@@ -8,9 +7,10 @@ using System.Web.Http;
 
 namespace ParameterAPI.Controllers
 {
+    [Authorize]
     public class AccountTypeController : ApiController
     {
-        IAs400Service _service;
+        private readonly IAs400Service _service;
 
         public AccountTypeController(IAs400Service service)
         {
@@ -22,16 +22,14 @@ namespace ParameterAPI.Controllers
         {
             AppSettings appSettings = new AppSettings()
             {
-                as400List = new List<AS400Model>() { },
-                KEY = "FACTYPE",
-                VALUE = "FNAMEEN"
-            };
+                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
+                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBTDATINH)].ToString()
+                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATINH)].ToString(),
 
-            appSettings.as400List.Add(new AS400Model()
-            {
-                Library = ConfigurationManager.AppSettings[nameof(AppSettings.LHB_DATINH)].ToString(),
-                File = "DPI2392F"
-            });
+                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeFile)].ToString(),
+                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeKey)].ToString(),
+                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeValue)].ToString()
+            };
 
             return _service.GetAccountType(appSettings);
         }
