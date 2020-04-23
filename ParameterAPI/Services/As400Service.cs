@@ -49,6 +49,7 @@ namespace ParameterAPI.Services
 
             SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
+                .Replace($"TRIM({KEY})", $"TRIM(CFTTCD CONCAT '' CONCAT {KEY})")
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
                 .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
                 .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
