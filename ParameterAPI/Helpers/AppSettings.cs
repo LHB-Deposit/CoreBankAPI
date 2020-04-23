@@ -53,5 +53,8 @@ namespace ParameterAPI.Helpers
         public string KYCParameterValue { get; set; }
         public string KYCParameterFile { get; set; }
 
+        public string OccupationKey { get; set; }
+        public string OccupationValue { get; set; }
+        public string OccupationFile { get; set; }
     }
 }

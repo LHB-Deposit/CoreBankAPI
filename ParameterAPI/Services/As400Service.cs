@@ -90,6 +90,11 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings);
         }
 
+        public IEnumerable<ParameterModel> GetOccupation(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
+
         public IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings)
         {
             return GetParameter(appSettings);

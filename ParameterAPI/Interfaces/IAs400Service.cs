@@ -10,6 +10,7 @@ namespace ParameterAPI.Interfaces
         IEnumerable<ParameterModel> GetBusinessType(AppSettings appSettings);
         IEnumerable<ParameterModel> GetDocumentType(AppSettings appSettings);
         IEnumerable<ParameterModel> GetEducationLevel(AppSettings appSettings);
+        IEnumerable<ParameterModel> GetOccupation(AppSettings appSettings);
         IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings);
         IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings);
         IEnumerable<ParameterModel> GetStatus(AppSettings appSettings);
