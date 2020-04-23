@@ -40,25 +40,16 @@ namespace ParameterAPI.Services
             return parameters;
         }
 
-        public IEnumerable<ParameterModel> GetParameter(AppSettings app, string[] condition = null)
+        public IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null)
         {
-            KEY = app.KEY;
-            VALUE = app.VALUE;
-            if (app.as400List == null)
-            {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString();
-                FILE = app.FILE;
-            }
-            else
-            {
-                LIB = app.as400List[0].Library;
-                FILE = app.as400List[0].File;
-            }
+            LIB = appSettings.LIB;
+            FILE = appSettings.FILE;
+            KEY = appSettings.KEY;
+            VALUE = appSettings.VALUE;
 
             SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
+                .Replace($"TRIM({KEY})", $"TRIM(CFTTCD CONCAT '' CONCAT {KEY})")
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
                 .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
                 .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
@@ -80,42 +71,47 @@ namespace ParameterAPI.Services
             return ExecuteGetParameter(SQL);
         }
 
-        public IEnumerable<ParameterModel> GetBOTOccupation(AppSettings app)
+        public IEnumerable<ParameterModel> GetBOTOccupation(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetBusinessType(AppSettings app)
+        public IEnumerable<ParameterModel> GetBusinessType(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetDocumentType(AppSettings app)
+        public IEnumerable<ParameterModel> GetDocumentType(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetEducationLevel(AppSettings app)
+        public IEnumerable<ParameterModel> GetEducationLevel(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetOccupationRisk(AppSettings app)
+        public IEnumerable<ParameterModel> GetOccupation(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetPrefixName(AppSettings app)
+        public IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings)
         {
-            return GetParameter(app);
+            return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetStatus(AppSettings app)
+        public IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
+
+        public IEnumerable<ParameterModel> GetStatus(AppSettings appSettings)
         {
             string[] cond = new string[1];
             cond[0] = "CP3UIC = '1'";
 
-            return GetParameter(app, cond);
+            return GetParameter(appSettings, cond);
         }
 
         public IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings)
@@ -125,8 +121,75 @@ namespace ParameterAPI.Services
 
         public IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings)
         {
-            string[] cond = new string[1];
-            cond[0] = "CP9XST = 'DEPSRCINV'";
+            string[] cond = 
+            { 
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'ASSETSRC'",
+                "CP9VTY = 'M'"
+            };
+
+            return GetParameter(appSettings, cond);
+        }
+
+        public IEnumerable<ParameterModel> GetSourceOfIncomeCorp(AppSettings appSettings)
+        {
+            string[] cond = {
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'ASSETSRCN'",
+                "CP9VTY = 'M'"
+            };
+
+            return GetParameter(appSettings, cond);
+        }
+
+        public IEnumerable<ParameterModel> GetPurposeOfAccountOpen(AppSettings appSettings)
+        {
+            string[] cond =
+            {
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'DEPPURINV'",
+                "CP9VTY = 'M'"
+            };
+            return GetParameter(appSettings, cond);
+        }
+
+        public IEnumerable<ParameterModel> GetPurposeOfAccountOpenCorp(AppSettings appSettings)
+        {
+            string[] cond =
+            {
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'DEPPURNON'",
+                "CP9VTY = 'M'"
+            };
+            return GetParameter(appSettings, cond);
+        }
+
+        public IEnumerable<ParameterModel> GetSourceOfDeposit(AppSettings appSettings)
+        {
+            string[] cond =
+            {
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'DEPSRCINV'",
+                "CP9VTY = 'M'"
+            };
+
+            return GetParameter(appSettings, cond);
+        }
+
+        public IEnumerable<ParameterModel> GetSourceOfDepositCorp(AppSettings appSettings)
+        {
+            string[] cond =
+            {
+                "CP9XIA = 'CF'",
+                "CP9XIT = 'KYC'",
+                "CP9XST = 'DEPSRCNON'",
+                "CP9VTY = 'M'"
+            };
 
             return GetParameter(appSettings, cond);
         }
@@ -135,5 +198,7 @@ namespace ParameterAPI.Services
         {
             return GetParameter(appSettings);
         }
+
+        
     }
 }

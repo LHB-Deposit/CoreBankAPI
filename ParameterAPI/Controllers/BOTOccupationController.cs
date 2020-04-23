@@ -21,9 +21,13 @@ namespace ParameterAPI.Controllers
         {
             return service.GetBOTOccupation(new AppSettings
             {
+                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
+                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
+                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
+
+                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuFile)].ToString(),
                 KEY = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuValue)].ToString(),
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuFile)].ToString()
+                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuValue)].ToString()
             });
         }
     }
