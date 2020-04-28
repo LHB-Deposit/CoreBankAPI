@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace ParameterAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class PrefixNameController : ApiController
     {
         private readonly IAs400Service service;

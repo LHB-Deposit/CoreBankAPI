@@ -15,7 +15,7 @@ namespace ParameterAPI.Interfaces
         IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings);
         IEnumerable<ParameterModel> GetStatus(AppSettings appSettings);
 
-        IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null);
+        IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null, string keyconcat = "");
         IEnumerable<ParameterModel> ExecuteGetParameter(string sql);
         IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings);
         IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings);
