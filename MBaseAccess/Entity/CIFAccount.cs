@@ -189,6 +189,12 @@ namespace MBaseAccess.Entity
         [MatchParent("AccountType")]
         public string ACTYPE { get; set; }
 
+        [MatchParent("SourceOfFunds")]
+        public string TLBSRC { get; set; }
+
+        [MatchParent("CreateAccountFlag")]
+        public string CRTAC { get; set; }
+
         [MatchParent("EmployerName01")]
         public string CFENA1 { get; set; }  // Name Already CFEMPL
 
@@ -203,5 +209,35 @@ namespace MBaseAccess.Entity
 
         [MatchParent("ElectronicAddress")]
         public string CFEADD { get; set; }
+
+        [MatchParent("HouseNo")]
+        public string CFFHNO { get; set; }
+
+        [MatchParent("VillageNo")]
+        public string CFFVNO { get; set; }
+
+        [MatchParent("Building")]
+        public string CFFBLD { get; set; }
+
+        [MatchParent("Alley")]
+        public string CFFALY { get; set; }
+
+        [MatchParent("Lane")]
+        public string CFFLAN { get; set; }
+
+        [MatchParent("Road")]
+        public string CFFRD { get; set; }
+
+        [MatchParent("SubDistrict")]
+        public string CFFDIS { get; set; }
+
+        [MatchParent("District")]
+        public string CFFCIT { get; set; }
+
+        [MatchParent("Province")]
+        public string CFFST { get; set; }
+
+        [MatchParent("PostalCode")]
+        public string CFFZIP { get; set; }
     }
 }

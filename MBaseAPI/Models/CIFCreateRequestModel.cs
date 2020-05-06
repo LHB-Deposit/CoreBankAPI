@@ -9,7 +9,7 @@ namespace MBaseAPI.Models
 {
     public class CIFCreateRequestModel
     {
-        public string TranCode { get; set; } = "1722";
+        public string TranCode { get; set; } = "1732";
 
         [Required]
         [MaxLength(7)]
@@ -227,6 +227,14 @@ namespace MBaseAPI.Models
         [MaxLength(1)]
         public string AccountType { get; set; }
 
+        [Required]
+        [MaxLength(1)]
+        public string SourceOfFunds { get; set; }
+
+        [Required]
+        [MaxLength(1)]
+        public string CreateAccountFlag { get; set; }
+
         [MaxLength(40)]
         public string EmployerName01 { get; set; } = string.Empty; // *
 
@@ -242,5 +250,37 @@ namespace MBaseAPI.Models
         [MaxLength(30)]
         public string ElectronicAddress { get; set; } = string.Empty;
 
+        [MaxLength(1)]
+        public string AddressType { get; set; } = string.Empty;
+
+        [MaxLength(30)]
+        public string HouseNo { get; set; } = string.Empty;
+
+        [MaxLength(10)]
+        public string VillageNo { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Building { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Alley { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Lane { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Road { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string SubDistrict { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Distirict { get; set; } = string.Empty;
+
+        [MaxLength(50)]
+        public string Province { get; set; } = string.Empty;
+
+        [MaxLength(9)]
+        public string PostalCode { get; set; } = string.Empty;
     }
 }

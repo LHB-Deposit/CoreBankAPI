@@ -40,19 +40,30 @@ namespace ParameterAPI.Services
             return parameters;
         }
 
-        public IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null)
+        public IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null, string keyconcat = "")
         {
             LIB = appSettings.LIB;
             FILE = appSettings.FILE;
             KEY = appSettings.KEY;
             VALUE = appSettings.VALUE;
-
-            SQL = SQL
+            if (!string.IsNullOrEmpty(keyconcat))
+            {
+                SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
-                .Replace($"TRIM({KEY})", $"TRIM(CFTTCD CONCAT '' CONCAT {KEY})")
+                .Replace($"TRIM({KEY})", $"{keyconcat}")
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
                 .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
                 .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
+            }
+            else
+            {
+                SQL = SQL
+                .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
+                .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
+                .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
+                .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
+            }
+            
 
             if (condition != null)
             {
@@ -103,7 +114,8 @@ namespace ParameterAPI.Services
 
         public IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings)
         {
-            return GetParameter(appSettings);
+            var keyconcat = "TRIM(CFTTCD CONCAT '' CONCAT CFTTTP)";
+            return GetParameter(appSettings, null, keyconcat);
         }
 
         public IEnumerable<ParameterModel> GetStatus(AppSettings appSettings)
