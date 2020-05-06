@@ -222,8 +222,6 @@ namespace MBaseAccess
                 SetDataBytePosition(ref oByte, input);
             }
 
-
-
             return oByte;
         }
 
