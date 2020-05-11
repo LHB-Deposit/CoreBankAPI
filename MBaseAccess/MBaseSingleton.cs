@@ -67,6 +67,7 @@ namespace MBaseAccess
 
         private MBaseSingleton() { }
         private static MBaseSingleton mbase = null;
+
         public static MBaseSingleton Instance
         {
             get
@@ -79,6 +80,14 @@ namespace MBaseAccess
             }
         }
 
+        public VerifyCitizenIDResponse VerifyCitizenID()
+        {
+            VerifyCitizenIDResponse responseModel = new VerifyCitizenIDResponse();
+
+
+
+            return responseModel;
+        }
 
         public CIFAccountResponse CIFCreation(CIFAccount cif, MBaseMessage mBaseMessage, string terminalId, string referenceNumber, DateTime clientDateTime)
         {
@@ -99,9 +108,11 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
+                    Logging.WriteLog("TcpClient Connected");
                     NetworkStream serverStream = clientSocket.GetStream();
 
                     byte[] headParameter = CreateInputMessage(mBaseMessage, terminalId, referenceNumber, cif.CFBRNN, clientDateTime.ToString("ddMMyyyy"), clientDateTime.ToString("HHmmss"));
+                    Logging.WriteLog("Create Input Message Success");
 
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
@@ -204,62 +215,72 @@ namespace MBaseAccess
             return responseModel;
         }
 
-
         private byte[] CreateInputMessage(MBaseMessage mBaseMessage, string terminalId, string referenceNo, string branchNo, string clientDate, string clientTime)
         {
             //string as400UserId = "LHD8899201";
 
             int rqMsgLength = HeaderMessageLength + mBaseMessage.Header.InputLength;
-            byte[] oByte = new byte[rqMsgLength];
+            Logging.WriteLog($"Request Message Length:{ rqMsgLength }");
 
+            byte[] oByte = new byte[rqMsgLength];
+            
             foreach (var header in mBaseMessage.HeaderMessages)
             {
                 SetDataBytePosition( ref oByte, header);
             }
+            Logging.WriteLog($"Set Header Data Byte Position");
 
             foreach (var input in mBaseMessage.InputMessages)
             {
                 SetDataBytePosition(ref oByte, input);
             }
+            Logging.WriteLog($"Set Input Data Byte Position");
 
             return oByte;
         }
-
         private void SetDataBytePosition(ref byte[] oByte, MBaseMessageType input)
         {
             int idx, pos, start_idx, end_idx;
             string default_val;
 
-            start_idx = input.StartIndex;
-            end_idx = input.EndIndex;
-            default_val = input.DefaultValue;
-
-            DataType dType;
-            switch (input.DataType.ToUpper())
+            try
             {
-                case "B":
-                    dType = DataType.B;
-                    break;
-                case "P":
-                    dType = DataType.P;
-                    default_val = SetDefaultValue(default_val);
-                    break;
-                case "S":
-                    dType = DataType.S;
-                    default_val = SetDefaultValue(default_val);
-                    break;
-                default:
-                    dType = DataType.A;
-                    break;
+                start_idx = input.StartIndex;
+                end_idx = input.EndIndex;
+                default_val = input.DefaultValue;
+
+                DataType dType;
+                switch (input.DataType.ToUpper())
+                {
+                    case "B":
+                        dType = DataType.B;
+                        break;
+                    case "P":
+                        dType = DataType.P;
+                        default_val = SetDefaultValue(default_val);
+                        break;
+                    case "S":
+                        dType = DataType.S;
+                        default_val = SetDefaultValue(default_val);
+                        break;
+                    default:
+                        dType = DataType.A;
+                        break;
+                }
+
+                Logging.WriteLog($"Data: {default_val}, StartIndex: {start_idx}, EndIndex: {end_idx}, DataType: {dType}");
+                byte[] data = ConvertData(default_val, start_idx, end_idx, dType);
+
+                idx = 0;
+                for (pos = start_idx - 1; pos < end_idx; pos++)
+                {
+                    oByte[pos] = data[idx];
+                    idx++;
+                }
             }
-
-            byte[] data = ConvertData(default_val, start_idx, end_idx, dType);
-
-            idx = 0;
-            for (pos = start_idx - 1; pos < end_idx; pos++)
+            catch (Exception ex)
             {
-                oByte[pos] = data[idx];
-                idx++;
+                Logging.WriteLog("StackTrace: " + ex.StackTrace);
             }
         }
         private string SetDefaultValue(string default_val)
@@ -275,7 +296,9 @@ namespace MBaseAccess
         {
             int len = (endIndex - startIndex) + 1;
             if ((type == DataType.A) || (type == DataType.S))
-            {//if convert to EBCDIC or Zoned Decimal
+            {
+                //if convert to EBCDIC or Zoned Decimal
+                Logging.WriteLog($"Convert to EBCDIC or Zoned Decimal:{data} {startIndex} {endIndex}");
                 Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
 
                 if (data.Length < len)
@@ -284,9 +307,11 @@ namespace MBaseAccess
                 return eC.GetBytes(data);
             }
             else if (type == DataType.B)
-            {//if convert to Binary 
-             //if (data.Length < len)
-             //data = data.PadLeft(len, data == "0" ? '0' : ' ');
+            {
+                //if convert to Binary 
+                //if (data.Length < len)
+                //data = data.PadLeft(len, data == "0" ? '0' : ' ');
+                Logging.WriteLog($"Convert to Binary:{data} {startIndex} {endIndex}");
                 int i = Convert.ToInt32(data);
                 byte[] pB = System.BitConverter.GetBytes(i);
                 Array.Reverse(pB);
@@ -294,10 +319,11 @@ namespace MBaseAccess
                 //return  System.BitConverter.GetBytes(i).Reverse().ToArray(); ;// Encoding.ASCII.GetBytes(data);
             }
             else
-            {//if convert to packed decimal or other else
-             //if (data.Length < len)
-             //    data = data.PadLeft(len, '0');
-
+            {
+                //if convert to packed decimal or other else
+                //if (data.Length < len)
+                //    data = data.PadLeft(len, '0');
+                Logging.WriteLog($"Convert to Packed Decimal:{data} {startIndex} {endIndex}");
                 Stack<byte> comp3 = new Stack<byte>();
                 int value = Convert.ToInt32(data);
 

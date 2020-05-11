@@ -16,28 +16,28 @@ namespace MBaseAPI.Services
         private string SpName;
         private string oMessage;
 
-        public IEnumerable<MBaseMessageType> GetMBaseResponseMessages(string tranCode)
+        public IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode)
         {
             return ExecuteStoreProcedure(tranCode, "R");
         }
 
-        public IEnumerable<MBaseMessageType> GetMBaseHeaderMessages(string tranCode)
+        public IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode)
         {
             return ExecuteStoreProcedure(tranCode, "H");
         }
 
-        public IEnumerable<MBaseMessageType> GetMBaseInputMessages(string tranCode)
+        public IEnumerable<MBaseMessageTypeModel> GetMBaseInputMessages(string tranCode)
         {
             return ExecuteStoreProcedure(tranCode, "I");
         }
 
-        public MBaseHeader GetMBaseHeader(string transCode)
+        public MBaseHeaderModel GetMBaseHeader(string transCode)
         {
-            MBaseHeader mBase = new MBaseHeader();
+            MBaseHeaderModel mBase = new MBaseHeaderModel();
             SpName = "mbase_getTransaction";
             SqlParameter[] param =
             {
-                new SqlParameter("@transactionCode", SqlDbType.VarChar, 10) { Value = transCode }
+                new SqlParameter("@MBaseTranCode", SqlDbType.VarChar, 10) { Value = transCode }
             };
 
             if(!SQLSingleton.Instance.RunStoreProcedure(SpName, param, out DataTable oDt, out oMessage))
@@ -48,30 +48,59 @@ namespace MBaseAPI.Services
 
             foreach (DataRow row in oDt.Rows)
             {
-                mBase = new MBaseHeader
+                mBase = new MBaseHeaderModel
                 {
-                    MBaseTranCode = row[nameof(MBaseHeader.MBaseTranCode)].ToString(),
-                    ScenarioNumber = row[nameof(MBaseHeader.ScenarioNumber)].ToString(),
-                    ActionMode = row[nameof(MBaseHeader.ActionMode)].ToString(),
-                    TransactionMode = row[nameof(MBaseHeader.TransactionMode)].ToString(),
-                    NoOfRecToRetrieve = row[nameof(MBaseHeader.NoOfRecToRetrieve)].ToString(),
-                    InputLength = int.Parse(row[nameof(MBaseHeader.InputLength)].ToString()),
-                    ResponseLength = int.Parse(row[nameof(MBaseHeader.ResponseLength)].ToString())
+                    MBaseTranCode = row[nameof(MBaseHeaderModel.MBaseTranCode)].ToString(),
+                    ScenarioNumber = row[nameof(MBaseHeaderModel.ScenarioNumber)].ToString(),
+                    ActionMode = row[nameof(MBaseHeaderModel.ActionMode)].ToString(),
+                    TransactionMode = row[nameof(MBaseHeaderModel.TransactionMode)].ToString(),
+                    NoOfRecToRetrieve = row[nameof(MBaseHeaderModel.NoOfRecToRetrieve)].ToString(),
+                    InputLength = int.Parse(row[nameof(MBaseHeaderModel.InputLength)].ToString()),
+                    ResponseLength = int.Parse(row[nameof(MBaseHeaderModel.ResponseLength)].ToString())
                 };
             }
 
             return mBase;
         }
 
-
-        private IEnumerable<MBaseMessageType> ExecuteStoreProcedure(string tranCode, string messageType)
+        public void AddMBaseMessage(MBaseMessageTypeModel message)
         {
-            List<MBaseMessageType> mBaseMessages = new List<MBaseMessageType>();
+            SpName = "mbase_saveMessage";
+
+            try
+            {
+                SqlParameter[] param =
+                    {
+                        new SqlParameter("@MessageType", SqlDbType.VarChar, 5){ Value = message.MessageType },
+                        new SqlParameter("@TranCode", SqlDbType.VarChar, 5){ Value = message.TranCode },
+                        new SqlParameter("@Seq", SqlDbType.Int){ Value = message.Seq },
+                        new SqlParameter("@FieldName", SqlDbType.VarChar, 20){ Value = message.FieldName },
+                        new SqlParameter("@Length", SqlDbType.VarChar, 3){ Value = message.Length },
+                        new SqlParameter("@DataType", SqlDbType.VarChar, 2){ Value = message.DataType },
+                        new SqlParameter("@StartIndex", SqlDbType.Int){ Value = message.StartIndex },
+                        new SqlParameter("@EndIndex", SqlDbType.Int){ Value = message.EndIndex },
+                        new SqlParameter("@Mandatory", SqlDbType.VarChar, 3){ Value = message.Mandatory },
+                        new SqlParameter("@Description", SqlDbType.VarChar, 200){ Value = message.Description },
+                        new SqlParameter("@DefaultValue", SqlDbType.VarChar, 50){ Value = message.DefaultValue },
+                        new SqlParameter("@Remark", SqlDbType.NVarChar, 200){ Value = message.Remark }
+                    };
+
+                SQLSingleton.Instance.RunStoreProcedure(SpName, param, out oMessage);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteLog(ex.Message);
+            }
+        }
+
+        private IEnumerable<MBaseMessageTypeModel> ExecuteStoreProcedure(string tranCode, string messageType)
+        {
+            List<MBaseMessageTypeModel> mBaseMessages = new List<MBaseMessageTypeModel>();
             SpName = @"mbase_getMessage";
             SqlParameter[] param =
             {
-                new SqlParameter("@msgType", SqlDbType.VarChar, 5) { Value = messageType },
-                new SqlParameter("@transactionCode", SqlDbType.VarChar, 10) { Value = tranCode }
+                new SqlParameter("@MessageType", SqlDbType.VarChar, 5) { Value = messageType },
+                new SqlParameter("@TranCode", SqlDbType.VarChar, 10) { Value = tranCode }
             };
 
             if (SQLSingleton.Instance.RunStoreProcedure(SpName, param, out DataTable dt, out oMessage))
@@ -85,27 +114,28 @@ namespace MBaseAPI.Services
 
             return mBaseMessages;
         }
-        private void SetMBaseMessageValue(DataTable dt, ref List<MBaseMessageType> mBaseMessages)
+        private void SetMBaseMessageValue(DataTable dt, ref List<MBaseMessageTypeModel> mBaseMessages)
         {
             foreach (DataRow row in dt.Rows)
             {
-                mBaseMessages.Add(new MBaseMessageType
+                mBaseMessages.Add(new MBaseMessageTypeModel
                 {
-                    MessageType = row[nameof(MBaseMessageType.MessageType)].ToString(),
-                    TranCode = row[nameof(MBaseMessageType.TranCode)].ToString(),
-                    Seq = int.Parse(row[nameof(MBaseMessageType.Seq)].ToString()),
-                    FieldName = row[nameof(MBaseMessageType.FieldName)].ToString(),
-                    Length = row[nameof(MBaseMessageType.Length)].ToString(),
-                    DataType = row[nameof(MBaseMessageType.DataType)].ToString(),
-                    StartIndex = int.Parse(row[nameof(MBaseMessageType.StartIndex)].ToString()),
-                    EndIndex = int.Parse(row[nameof(MBaseMessageType.EndIndex)].ToString()),
-                    Mandatory = row[nameof(MBaseMessageType.Mandatory)].ToString(),
-                    Description = row[nameof(MBaseMessageType.Description)].ToString(),
-                    DefaultValue = row[nameof(MBaseMessageType.DefaultValue)].ToString(),
-                    Remark = row[nameof(MBaseMessageType.Remark)].ToString()
+                    MessageType = row[nameof(MBaseMessageTypeModel.MessageType)].ToString(),
+                    TranCode = row[nameof(MBaseMessageTypeModel.TranCode)].ToString(),
+                    Seq = int.Parse(row[nameof(MBaseMessageTypeModel.Seq)].ToString()),
+                    FieldName = row[nameof(MBaseMessageTypeModel.FieldName)].ToString(),
+                    Length = row[nameof(MBaseMessageTypeModel.Length)].ToString(),
+                    DataType = row[nameof(MBaseMessageTypeModel.DataType)].ToString(),
+                    StartIndex = int.Parse(row[nameof(MBaseMessageTypeModel.StartIndex)].ToString()),
+                    EndIndex = int.Parse(row[nameof(MBaseMessageTypeModel.EndIndex)].ToString()),
+                    Mandatory = row[nameof(MBaseMessageTypeModel.Mandatory)].ToString(),
+                    Description = row[nameof(MBaseMessageTypeModel.Description)].ToString(),
+                    DefaultValue = row[nameof(MBaseMessageTypeModel.DefaultValue)].ToString(),
+                    Remark = row[nameof(MBaseMessageTypeModel.Remark)].ToString()
                 });
             }
         }
+
         private void WriteLog(string message)
         {
             Logging.WriteLog(message);

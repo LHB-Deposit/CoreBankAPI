@@ -5,8 +5,7 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class MBaseHeader : MBaseAccess.Entity.MBaseHeader
+    public class MBaseMessageTypeModel : MBaseAccess.Entity.MBaseMessageType
     {
-
     }
 }

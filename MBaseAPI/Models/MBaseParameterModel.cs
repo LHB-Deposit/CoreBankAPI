@@ -5,7 +5,9 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class MBaseMessageType : MBaseAccess.Entity.MBaseMessageType
+    public class MBaseParameterModel
     {
+        public string TranCode { get; set; }
+        public string MessageType { get; set; }
     }
 }

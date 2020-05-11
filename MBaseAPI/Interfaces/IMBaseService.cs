@@ -9,6 +9,9 @@ namespace MBaseAPI.Interfaces
 {
     public interface IMBaseService
     {
+        VerifyCitizenIDResponseModel VerifyCitizenID(VerifyCitizenIDModel model);
         CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate, string terminalId, DateTime processDateTime);
+
+        void GetMBaseMessages(MBaseParameterModel model);
     }
 }
