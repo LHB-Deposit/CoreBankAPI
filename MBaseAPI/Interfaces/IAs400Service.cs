@@ -1,15 +1,16 @@
 ﻿using MBaseAPI.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MBaseAPI.Interfaces
 {
-    public interface ISQLService
+    public interface IAs400Service
     {
-        MBaseHeaderModel GetMBaseHeader(string tranCode);
         IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode);
         IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseInputMessages(string tranCode);
-
-        void AddMBaseMessage(MBaseMessageTypeModel message);
+        IEnumerable<MBaseMessageTypeModel> GetMBaseMessages(MBaseParameterModel model);
     }
 }

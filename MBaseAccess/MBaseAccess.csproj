@@ -52,6 +52,9 @@
     <Compile Include="Entity\MBaseHeader.cs" />
     <Compile Include="Entity\MBaseMessage.cs" />
     <Compile Include="Entity\MBaseMessageType.cs" />
+    <Compile Include="Entity\VerifyCitizenID.cs" />
+    <Compile Include="Entity\CIFDetailInquiryResponse.cs" />
+    <Compile Include="Entity\VerifyCitizenIDResponse.cs" />
     <Compile Include="MBaseSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

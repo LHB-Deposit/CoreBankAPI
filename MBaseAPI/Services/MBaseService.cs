@@ -14,10 +14,28 @@ namespace MBaseAPI.Services
     public class MBaseService : IMBaseService
     {
         private readonly ISQLService sQLService;
+        private readonly IAs400Service as400Service;
 
-        public MBaseService(ISQLService sQLService)
+        public MBaseService(ISQLService sQLService, IAs400Service as400Service)
         {
             this.sQLService = sQLService;
+            this.as400Service = as400Service;
+        }
+
+        public VerifyCitizenIDResponseModel VerifyCitizenID(VerifyCitizenIDModel model)
+        {
+            // Input Matching Object
+            VerifyCitizenID verifyCitizen = new VerifyCitizenID();
+            PropertyMatcher<VerifyCitizenIDModel, VerifyCitizenID>.GenerateMatchedObject(model, verifyCitizen);
+
+            // MBase Verify Citizen ID
+            var mBaseResponse = MBaseSingleton.Instance.VerifyCitizenID();
+
+            // Output Matching Object
+            VerifyCitizenIDResponseModel responseModel = new VerifyCitizenIDResponseModel();
+            PropertyMatcher<VerifyCitizenIDResponse, VerifyCitizenIDResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+
+            return responseModel;
         }
         public CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate, string terminalId, DateTime processDateTime)
         {
@@ -37,18 +55,30 @@ namespace MBaseAPI.Services
                 ResponseMessages = mBaseResponseMessages
             };
 
-            // Matching Object
+            // Input Matching Object
             CIFAccount cIFAccount = new CIFAccount();
             PropertyMatcher<CIFCreateRequestModel, CIFAccount>.GenerateMatchedObject(cIFCreate, cIFAccount);
 
             // MBase CIFCreate
-            CIFAccountResponse mBaseResponse = MBaseSingleton.Instance.CIFCreation(cIFAccount, mBaseMessage, terminalId, referenceNo, processDateTime);
+            var mBaseResponse = MBaseSingleton.Instance.CIFCreation(cIFAccount, mBaseMessage, terminalId, referenceNo, processDateTime);
 
-            // Matching Object
+            // Output Matching Object
             CIFCreateResponseModel responseModel = new CIFCreateResponseModel();
             PropertyMatcher<CIFAccountResponse, CIFCreateResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
 
             return responseModel;
         }
+
+        public void GetMBaseMessages(MBaseParameterModel parameterModel)
+        {
+            var mBaseMessageType = as400Service.GetMBaseMessages(parameterModel);
+            foreach (var message in mBaseMessageType)
+            {
+                sQLService.AddMBaseMessage(message);
+            }
+            
+        }
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Http;
 
@@ -22,14 +23,9 @@ namespace MBaseAPI.Controllers
 
         // POST: api/MBase
         [HttpPost]
-        public VerifyCitizenIDNumberResponse VerifyCitizenID([FromBody]VerifyCitizenIDNumber verifyCitizen)
+        public VerifyCitizenIDResponseModel VerifyCitizenID([FromBody]VerifyCitizenIDModel verifyCitizen)
         {
-
-
-            return new VerifyCitizenIDNumberResponse
-            {
-
-            };
+            return mBaseService.VerifyCitizenID(verifyCitizen);
         }
 
         // POST: api/MBase
@@ -42,5 +38,11 @@ namespace MBaseAPI.Controllers
             return mBaseService.CIFCreation(cIFCreate, terminalId, processDatetime);
         }
 
+        //[Authorize(Roles = "Developer")]
+        [HttpPost]
+        public void FetchMBaseMessageForDevelopOnly([FromBody]MBaseParameterModel model)
+        {
+            mBaseService.GetMBaseMessages(model);
+        }
     }
 }

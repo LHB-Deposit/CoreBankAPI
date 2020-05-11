@@ -46,6 +46,7 @@ namespace MBaseAPI
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<ISQLService, SQLService>();
             container.RegisterType<IMBaseService, MBaseService>();
+            container.RegisterType<IAs400Service, As400Service>();
         }
     }
 }
