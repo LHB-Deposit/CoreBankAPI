@@ -9,7 +9,7 @@ namespace MBaseAPI.Models
 {
     public class CIFCreateRequestModel
     {
-        public string TranCode { get; set; } = "1732";
+        public string TranCode { get; set; }
 
         [Required]
         [MaxLength(7)]

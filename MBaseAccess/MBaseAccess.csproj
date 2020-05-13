@@ -50,6 +50,7 @@
     <Compile Include="Entity\CIFAccount.cs" />
     <Compile Include="Entity\CIFAccountResponse.cs" />
     <Compile Include="Entity\MBaseHeader.cs" />
+    <Compile Include="Entity\MBaseHeaderTransaction.cs" />
     <Compile Include="Entity\MBaseMessage.cs" />
     <Compile Include="Entity\MBaseMessageType.cs" />
     <Compile Include="Entity\VerifyCitizenID.cs" />

@@ -7,7 +7,7 @@ namespace MBaseAPI.Interfaces
     {
         MBaseHeaderModel GetMBaseHeader(string tranCode);
         IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode);
+        IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderTransaction();
         IEnumerable<MBaseMessageTypeModel> GetMBaseInputMessages(string tranCode);
 
         void AddMBaseMessage(MBaseMessageTypeModel message);

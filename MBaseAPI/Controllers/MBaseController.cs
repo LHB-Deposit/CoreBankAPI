@@ -25,7 +25,9 @@ namespace MBaseAPI.Controllers
         [HttpPost]
         public VerifyCitizenIDResponseModel VerifyCitizenID([FromBody]VerifyCitizenIDModel verifyCitizen)
         {
-            return mBaseService.VerifyCitizenID(verifyCitizen);
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+            return mBaseService.VerifyCitizenID(verifyCitizen, terminalId, processDatetime);
         }
 
         // POST: api/MBase

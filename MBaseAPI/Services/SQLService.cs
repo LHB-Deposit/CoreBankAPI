@@ -18,17 +18,17 @@ namespace MBaseAPI.Services
 
         public IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode)
         {
-            return ExecuteStoreProcedure(tranCode, "R");
+            return ExecuteStoreProcedure("R", tranCode);
         }
 
-        public IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode)
+        public IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderTransaction()
         {
-            return ExecuteStoreProcedure(tranCode, "H");
+            return ExecuteStoreProcedure("H");
         }
 
         public IEnumerable<MBaseMessageTypeModel> GetMBaseInputMessages(string tranCode)
         {
-            return ExecuteStoreProcedure(tranCode, "I");
+            return ExecuteStoreProcedure("I", tranCode);
         }
 
         public MBaseHeaderModel GetMBaseHeader(string transCode)
@@ -93,15 +93,31 @@ namespace MBaseAPI.Services
             }
         }
 
-        private IEnumerable<MBaseMessageTypeModel> ExecuteStoreProcedure(string tranCode, string messageType)
+        private IEnumerable<MBaseMessageTypeModel> ExecuteStoreProcedure(string messageType, string tranCode = null)
         {
             List<MBaseMessageTypeModel> mBaseMessages = new List<MBaseMessageTypeModel>();
-            SpName = @"mbase_getMessage";
-            SqlParameter[] param =
+            SqlParameter[] param;
+            if (tranCode == null)
             {
-                new SqlParameter("@MessageType", SqlDbType.VarChar, 5) { Value = messageType },
-                new SqlParameter("@TranCode", SqlDbType.VarChar, 10) { Value = tranCode }
-            };
+                SpName = "mbase_getHeaderMessage";
+                SqlParameter[] paraHeader =
+                {
+                    new SqlParameter("@MessageType", SqlDbType.VarChar, 5) { Value = messageType }
+                };
+                param = paraHeader;
+            }
+            else
+            {
+                SpName = @"mbase_getMessage";
+
+                SqlParameter[] paraMessage =
+                {
+                    new SqlParameter("@MessageType", SqlDbType.VarChar, 5) { Value = messageType },
+                    new SqlParameter("@TranCode", SqlDbType.VarChar, 10) { Value = tranCode }
+                };
+                param = paraMessage;
+            }
+            
 
             if (SQLSingleton.Instance.RunStoreProcedure(SpName, param, out DataTable dt, out oMessage))
             {

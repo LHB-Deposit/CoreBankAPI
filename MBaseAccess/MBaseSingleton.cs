@@ -45,7 +45,7 @@ namespace MBaseAccess
                 }
             }
         }
-        private string ServerHost
+        public string ServerHost
         {
             get
             {
@@ -53,7 +53,7 @@ namespace MBaseAccess
                 catch (Exception ex) { throw new Exception("Please enter server host (" + ex.Message + ")"); }
             }
         }
-        private int ServerPort
+        public int ServerPort
         {
             get
             {
@@ -61,7 +61,7 @@ namespace MBaseAccess
                 catch (Exception ex) { throw new Exception("Please enter server port (" + ex.Message + ")"); }
             }
         }
-        private int HeaderMessageLength = 666;
+        public int HeaderMessageLength = 666;
 
         public string Message { get; set; } = string.Empty;
 
@@ -80,23 +80,14 @@ namespace MBaseAccess
             }
         }
 
-        public VerifyCitizenIDResponse VerifyCitizenID()
+        public VerifyCitizenIDResponse VerifyCitizenID(VerifyCitizenID citizenID, MBaseMessage mBaseMessage)
         {
+            if (citizenID == null) return null;
             VerifyCitizenIDResponse responseModel = new VerifyCitizenIDResponse();
-
-
-
-            return responseModel;
-        }
-
-        public CIFAccountResponse CIFCreation(CIFAccount cif, MBaseMessage mBaseMessage, string terminalId, string referenceNumber, DateTime clientDateTime)
-        {
-            CIFAccountResponse responseModel = new CIFAccountResponse();
-            if (mBaseMessage.Header == null) return null;
-
+            TcpClient clientSocket = null;
             try
             {
-                TcpClient clientSocket = new TcpClient
+                clientSocket = new TcpClient
                 {
                     ReceiveBufferSize = HeaderMessageLength + mBaseMessage.Header.InputLength + mBaseMessage.Header.ResponseLength,
                     ReceiveTimeout = ReceiveTimeout,
@@ -108,23 +99,63 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
-                    Logging.WriteLog("TcpClient Connected");
+
+                }
+                else
+                {
+                    Logging.WriteLog($"Cannot connect to { ServerHost }");
+                    return null;
+                }
+                clientSocket.Close();
+            }
+            catch(Exception ex)
+            {
+                Logging.WriteLog(ex.Message);
+            }
+            finally
+            {
+                if (clientSocket != null) clientSocket.Close();
+            }
+
+            return responseModel;
+        }
+
+        public CIFAccountResponse CIFCreation(MBaseMessage mBaseMessage)
+        {
+            if (mBaseMessage.Header == null) return null;
+            CIFAccountResponse responseModel = new CIFAccountResponse();
+            TcpClient clientSocket = null;
+            try
+            {
+                clientSocket = new TcpClient
+                {
+                    ReceiveBufferSize = HeaderMessageLength + mBaseMessage.Header.InputLength + mBaseMessage.Header.ResponseLength,
+                    ReceiveTimeout = ReceiveTimeout,
+                    SendTimeout = SendTimeout
+                };
+
+                if (!clientSocket.Connected)
+                    clientSocket.Connect(ServerHost, ServerPort);
+
+                if (clientSocket.Connected)
+                {
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    byte[] headParameter = CreateInputMessage(mBaseMessage, terminalId, referenceNumber, cif.CFBRNN, clientDateTime.ToString("ddMMyyyy"), clientDateTime.ToString("HHmmss"));
-                    Logging.WriteLog("Create Input Message Success");
+                    byte[] headParameter = CreateInputMessage(mBaseMessage);
 
+                    //Logging.WriteLog($"Write Stream Length: {headParameter.Length}");
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
 
                     int rsMsgLength = HeaderMessageLength + mBaseMessage.Header.InputLength + mBaseMessage.Header.ResponseLength;
+                    //Logging.WriteLog($"Read Stream Length: {rsMsgLength}");
 
                     byte[] outStream = new byte[rsMsgLength];
-                    serverStream.Read(outStream, 0, clientSocket.ReceiveBufferSize);
+                    serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
 
                     bool isEmptyReturn = false;
                     string empty = outStream.ToString();
-
+                    //Logging.WriteLog($"Out Stream Length: {outStream.Length}");
                     if (string.IsNullOrEmpty(empty.Trim())) isEmptyReturn = true;
                     if (!isEmptyReturn)
                     {
@@ -159,6 +190,7 @@ namespace MBaseAccess
                             return null;
                         }
 
+                        Logging.WriteLog("Start Response");
                         foreach (var response in mBaseMessage.ResponseMessages)
                         {
                             int startIndex = response.StartIndex - 1;
@@ -211,30 +243,31 @@ namespace MBaseAccess
             {
                 Logging.WriteLog(ex.Message);
             }
+            finally
+            {
+                if (clientSocket != null) clientSocket.Close();
+            }
 
             return responseModel;
         }
 
-        private byte[] CreateInputMessage(MBaseMessage mBaseMessage, string terminalId, string referenceNo, string branchNo, string clientDate, string clientTime)
+        private byte[] CreateInputMessage(MBaseMessage mBaseMessage)
         {
             //string as400UserId = "LHD8899201";
 
             int rqMsgLength = HeaderMessageLength + mBaseMessage.Header.InputLength;
-            Logging.WriteLog($"Request Message Length:{ rqMsgLength }");
 
             byte[] oByte = new byte[rqMsgLength];
             
             foreach (var header in mBaseMessage.HeaderMessages)
             {
-                SetDataBytePosition( ref oByte, header);
+                SetDataBytePosition(ref oByte, header);
             }
-            Logging.WriteLog($"Set Header Data Byte Position");
 
             foreach (var input in mBaseMessage.InputMessages)
             {
                 SetDataBytePosition(ref oByte, input);
             }
-            Logging.WriteLog($"Set Input Data Byte Position");
 
             return oByte;
         }
@@ -268,7 +301,7 @@ namespace MBaseAccess
                         break;
                 }
 
-                Logging.WriteLog($"Data: {default_val}, StartIndex: {start_idx}, EndIndex: {end_idx}, DataType: {dType}");
+                //Logging.WriteLog($"Data: {default_val}, StartIndex: {start_idx}, EndIndex: {end_idx}, DataType: {dType}");
                 byte[] data = ConvertData(default_val, start_idx, end_idx, dType);
 
                 idx = 0;
@@ -298,7 +331,7 @@ namespace MBaseAccess
             if ((type == DataType.A) || (type == DataType.S))
             {
                 //if convert to EBCDIC or Zoned Decimal
-                Logging.WriteLog($"Convert to EBCDIC or Zoned Decimal:{data} {startIndex} {endIndex}");
+                //Logging.WriteLog($"Convert to EBCDIC or Zoned Decimal:{data} {startIndex} {endIndex}");
                 Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
 
                 if (data.Length < len)
@@ -311,7 +344,7 @@ namespace MBaseAccess
                 //if convert to Binary 
                 //if (data.Length < len)
                 //data = data.PadLeft(len, data == "0" ? '0' : ' ');
-                Logging.WriteLog($"Convert to Binary:{data} {startIndex} {endIndex}");
+                //Logging.WriteLog($"Convert to Binary:{data} {startIndex} {endIndex}");
                 int i = Convert.ToInt32(data);
                 byte[] pB = System.BitConverter.GetBytes(i);
                 Array.Reverse(pB);
@@ -323,7 +356,7 @@ namespace MBaseAccess
                 //if convert to packed decimal or other else
                 //if (data.Length < len)
                 //    data = data.PadLeft(len, '0');
-                Logging.WriteLog($"Convert to Packed Decimal:{data} {startIndex} {endIndex}");
+                //Logging.WriteLog($"Convert to Packed Decimal:{data} {startIndex} {endIndex}");
                 Stack<byte> comp3 = new Stack<byte>();
                 int value = Convert.ToInt32(data);
 

@@ -9,6 +9,14 @@ namespace MBaseAPI.Models
     public class VerifyCitizenIDModel
     {
         [Required]
+        [MaxLength(4)]
+        public string TranCode { get; set; }
+
+        [Required]
+        [MaxLength(7)]
+        public string ReferenceNo { get; set; }
+
+        [Required]
         [MaxLength(15)]
         public string IDNumber { get; set; }
 
