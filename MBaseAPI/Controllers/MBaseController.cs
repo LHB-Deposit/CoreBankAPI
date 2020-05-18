@@ -36,7 +36,6 @@ namespace MBaseAPI.Controllers
         {
             var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
             var processDatetime = DateTime.Now;
-
             return mBaseService.CIFCreation(cIFCreate, terminalId, processDatetime);
         }
 
@@ -44,7 +43,7 @@ namespace MBaseAPI.Controllers
         [HttpPost]
         public void FetchMBaseMessageForDevelopOnly([FromBody]MBaseParameterModel model)
         {
-            mBaseService.GetMBaseMessages(model);
+            mBaseService.GetConfigMessages(model);
         }
     }
 }

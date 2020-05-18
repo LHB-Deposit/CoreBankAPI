@@ -19,15 +19,15 @@ namespace MBaseAPI.Services
         {
 
         }
-        public IEnumerable<MBaseMessageTypeModel> ExecuteGetMessage(string sql)
+        public IEnumerable<MessageTypeModel> ExecuteGetMessage(string sql)
         {
-            List<MBaseMessageTypeModel> parameters = new List<MBaseMessageTypeModel>();
+            List<MessageTypeModel> parameters = new List<MessageTypeModel>();
             try
             {
                 AS400Singleton.Instance.ExecuteSql(sql, out DataTable dt, out string Message);
                 foreach (DataRow row in dt.Rows)
                 {
-                    parameters.Add(new MBaseMessageTypeModel
+                    parameters.Add(new MessageTypeModel
                     {
                         MessageType = row["INPUTR"].ToString(),
                         TranCode = row["MTRAN"].ToString(),
@@ -50,12 +50,12 @@ namespace MBaseAPI.Services
             }
             return parameters;
         }
-        public IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode)
+        public IEnumerable<MessageTypeModel> GetMBaseHeaderMessages(string tranCode)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MBaseMessageTypeModel> GetMBaseMessages(MBaseParameterModel parameterModel)
+        public IEnumerable<MessageTypeModel> GetMBaseMessages(MBaseParameterModel parameterModel)
         {
             if (string.IsNullOrEmpty(parameterModel.TranCode))
             {
@@ -69,7 +69,7 @@ namespace MBaseAPI.Services
             return ExecuteGetMessage(SQL);
         }
 
-        public IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode)
+        public IEnumerable<MessageTypeModel> GetMBaseResponseMessages(string tranCode)
         {
             throw new NotImplementedException();
         }

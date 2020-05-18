@@ -1,13 +1,14 @@
 ﻿using SolutionUtility;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class MBaseHeader
+    public class MBaseHeaderMessage
     {
         [MatchParent("SocketMessageLength")]
         public string SKTMLEN { get; set; }

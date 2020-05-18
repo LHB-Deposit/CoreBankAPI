@@ -9,8 +9,8 @@ namespace MBaseAPI.Interfaces
 {
     public interface IAs400Service
     {
-        IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseMessages(MBaseParameterModel model);
+        IEnumerable<MessageTypeModel> GetMBaseResponseMessages(string tranCode);
+        IEnumerable<MessageTypeModel> GetMBaseHeaderMessages(string tranCode);
+        IEnumerable<MessageTypeModel> GetMBaseMessages(MBaseParameterModel model);
     }
 }

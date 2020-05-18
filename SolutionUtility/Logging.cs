@@ -21,7 +21,7 @@ namespace SolutionUtility
 
                 string logFile = Path.Combine(logFolder, currentFile);
 
-                Message = current_date + ":" + current_time.PadRight(20, ' ') + Message;
+                Message = current_date + "|" + current_time.PadRight(2, ' ') + Message;
                 DirectoryInfo dir = new DirectoryInfo(logFolder);
                 if (!dir.Exists) dir.Create();
 
