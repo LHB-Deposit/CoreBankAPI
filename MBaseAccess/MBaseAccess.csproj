@@ -56,7 +56,6 @@
     <Compile Include="Entity\VerifyCitizenID.cs" />
     <Compile Include="Entity\CIFDetailInquiryResponse.cs" />
     <Compile Include="Entity\VerifyCitizenIDResponse.cs" />
-    <Compile Include="MBasePOCSingleton.cs" />
     <Compile Include="MBaseSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

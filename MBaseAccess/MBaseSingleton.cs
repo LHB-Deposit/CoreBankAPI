@@ -2,6 +2,7 @@
 using MBaseAccess.Entity;
 using SolutionUtility;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -88,14 +89,12 @@ namespace MBaseAccess
 
         public CIFAccountResponse CIFCreation(MBaseMessage message)
         {
-
             return GetMessageResponse(message, new CIFAccountResponse());
         }
 
-        private T GetMessageResponse<T>(MBaseMessage message, T response)
+        private T GetMessageResponse<T>(MBaseMessage message, T resResult)
         {
-             
-            if (message.HeaderTransaction == null) return response;
+            if (message.HeaderTransaction == null) return resResult;
 
             int inputLength = Convert.ToInt16(message.HeaderTransaction.InputLength);
             int responseLength = Convert.ToInt16(message.HeaderTransaction.ResponseLength);
@@ -113,32 +112,35 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
-                    Logging.WriteLog("> Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
-                    Logging.WriteLog("> Connected");
+                    #region Header Stream
+                    Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
+                    Logging.WriteLog("Connected");
 
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    Logging.WriteLog("> Create Input Message");
+                    Logging.WriteLog("Create Input Message");
 
                     byte[] headParameter = CreateInputMessage(message);
 
-                    Logging.WriteLog("> Write Stream [Length:" + headParameter.Length + "]");
+                    Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
 
                     int rsMsgLength = HeaderMessageLength + inputLength + responseLength;
-                    Logging.WriteLog("> Read Stream [Length:" + rsMsgLength.ToString() + "]");
+                    Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
+                    #endregion
 
                     byte[] outStream = new byte[rsMsgLength];
-                    //byte[] outsTemp = outStream;
                     serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
 
-                    if (ValidateInputData(ref outStream))
+                    Dictionary<string, string> dictResult = new Dictionary<string, string>();
+                    bool inputMessageValid = CheckInputMessageValid(ref outStream, ref dictResult);
+                    if (inputMessageValid)
                     {
-                        Logging.WriteLog("> Write Response");
-                        List<string> strResults = new List<string>();
+                        Logging.WriteLog("Write Response");
                         foreach (var res in message.ResponseMessages)
                         {
+                            #region Do Somthing
                             int startIndex = Convert.ToInt32(res.StartIndex) - 1;
                             int endIndex = Convert.ToInt32(res.EndIndex) - 1;
 
@@ -157,36 +159,61 @@ namespace MBaseAccess
                                 dType = DataType.P;
                             else //if (dr.ToString() == "S")
                                 dType = DataType.S;
-
-                            strResults.Add(ConvertDataResponse(outStream, startIndex, endIndex, dType));
+                            #endregion
+                            dictResult.Add(res.FieldName, ConvertDataResponse(outStream, startIndex, endIndex, dType));
                         }
-                        Logging.WriteLog($"> Response: " + string.Join(", ", strResults));
+                        Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
+                        switch (resResult.GetType().Name)
+                        {
+                            case nameof(CIFAccountResponse):
+                                var objCIFAccResponse = (CIFAccountResponse)Convert.ChangeType(resResult, typeof(CIFAccountResponse));
+                                objCIFAccResponse.CFCIFN = dictResult[nameof(CIFAccountResponse.CFCIFN)];
+                                objCIFAccResponse.ACCTNO = dictResult[nameof(CIFAccountResponse.ACCTNO)];
+                                objCIFAccResponse.ACTYPE = dictResult[nameof(CIFAccountResponse.ACTYPE)];
+                                resResult = (T)Convert.ChangeType(objCIFAccResponse, typeof(T));
+                                break;
+                            case nameof(VerifyCitizenIDResponse):
+                                var objVerifyResponse = (VerifyCitizenIDResponse)Convert.ChangeType(resResult, typeof(VerifyCitizenIDResponse));
+                                objVerifyResponse.CFCIFN = dictResult[nameof(VerifyCitizenIDResponse.CFCIFN)];
+                                objVerifyResponse.CFCIFT = dictResult[nameof(VerifyCitizenIDResponse.CFCIFT)];
+                                objVerifyResponse.CFNA1 = dictResult[nameof(VerifyCitizenIDResponse.CFNA1)];
+                                objVerifyResponse.CFNA1A = dictResult[nameof(VerifyCitizenIDResponse.CFNA1A)];
+                                objVerifyResponse.CFSSNO = dictResult[nameof(VerifyCitizenIDResponse.CFSSNO)];
+                                objVerifyResponse.CFSSCD = dictResult[nameof(VerifyCitizenIDResponse.CFSSCD)];
+                                objVerifyResponse.CFCIDT = dictResult[nameof(VerifyCitizenIDResponse.CFCIDT)];
+                                objVerifyResponse.CFNAE = dictResult[nameof(VerifyCitizenIDResponse.CFNAE)];
+                                resResult = (T)Convert.ChangeType(objVerifyResponse, typeof(T));
+                                break;
+                        }
                     }
                     else
                     {
-                        Logging.WriteLog("> Outstream Invalid");
+                        // Todo Error Response
+                        Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
                     }
+
+                    
                 }
                 else
                 {
-                    Logging.WriteLog($"> Cannot connect to { ServerHost }");
+                    Logging.WriteLog($"Cannot connect to { ServerHost }");
                 }
             }
             catch (Exception ex)
             {
-                Logging.WriteLog($"> {ex.Message}: {ex.StackTrace}");
+                Logging.WriteLog($"{ex.Message}: {ex.StackTrace}");
             }
             finally
             {
                 if (clientSocket != null) clientSocket.Close();
             }
 
-            return response;
+            return resResult;
         }
 
-        private bool ValidateInputData(ref byte[] outStream)
+        private bool CheckInputMessageValid(ref byte[] outStream, ref Dictionary<string, string> strError)
         {
-            bool isValid = true;
+            bool isValid = false;
 
             try
             {
@@ -217,10 +244,14 @@ namespace MBaseAccess
                     string strCode = ConvertDataResponseCheckError(errCode, 0, 6, DataType.A);
                     string strDesc = ConvertDataResponseCheckError(errDesc, 0, 49, DataType.A);
 
-                    if (strDesc.Trim() != string.Empty)
+                    if (!string.IsNullOrEmpty(strDesc.Trim()))
                     {
-                        Logging.WriteLog("Create CIF Detail Error : " + strCode + " " + strDesc);
-                        isValid = false;
+                        Logging.WriteLog("Error : " + strCode + " " + strDesc);
+                        strError.Add(strCode, strDesc);
+                    }
+                    else
+                    {
+                        isValid = true;
                     }
                 }
             }
@@ -304,7 +335,7 @@ namespace MBaseAccess
 
                 int rqMsgLength = HeaderMessageLength + Convert.ToInt16(inputLength);
 
-                Logging.WriteLog("> Request Msg Length:" + rqMsgLength.ToString());
+                Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
                 byte[] oByte = new byte[rqMsgLength];
 
                 #region Header

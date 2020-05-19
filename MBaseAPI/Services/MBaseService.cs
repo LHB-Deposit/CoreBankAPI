@@ -360,71 +360,71 @@ namespace MBaseAPI.Services
 
         private IEnumerable<MessageTypeModel> GetHeaderMessage(HeaderMessageModel header)
         {
-            var headerMessages = sQLService.GetHeaderMessage();
-            headerMessages.ToList().ForEach(s =>
+            IEnumerable<MessageTypeModel> headerMessages = sQLService.GetHeaderMessage();
+            headerMessages.ToList().ForEach(item =>
             {
                 // Todo Fix DefaultValue From DataBase
-                switch (s.FieldName.Trim())
+                switch (item.FieldName.Trim())
                 {
                     case nameof(MBaseHeaderMessage.SKTMLEN):
-                        s.DefaultValue = ((MBaseSingleton.Instance.HeaderMessageLength + header.InputLength) - 4).ToString();
+                        item.DefaultValue = ((MBaseSingleton.Instance.HeaderMessageLength + header.InputLength) - 4).ToString();
                         break;
                     case nameof(MBaseHeaderMessage.SKTDEVN): // DB
-                        s.DefaultValue = MBaseSingleton.Instance.ServerHost;
+                        item.DefaultValue = MBaseSingleton.Instance.ServerHost;
                         break;
                     case nameof(MBaseHeaderMessage.SKTSKNB): // DB
-                        s.DefaultValue = "2";
+                        item.DefaultValue = "2";
                         break;
                     case nameof(MBaseHeaderMessage.SKTPORT): // DB
-                        s.DefaultValue = MBaseSingleton.Instance.ServerPort.ToString();
+                        item.DefaultValue = MBaseSingleton.Instance.ServerPort.ToString();
                         break;
                     case nameof(MBaseHeaderMessage.I13SSNO):
-                        s.DefaultValue = header.I13SSNO;
+                        item.DefaultValue = header.I13SSNO;
                         break;
                     case nameof(MBaseHeaderMessage.I13TRCD):
-                        s.DefaultValue = header.I13TRCD;
+                        item.DefaultValue = header.I13TRCD;
                         break;
                     case nameof(MBaseHeaderMessage.I13USER): // DB
-                        s.DefaultValue = "LHD8899201";
+                        item.DefaultValue = "LHD8899201";
                         break;
                     case nameof(MBaseHeaderMessage.HDUSID): // DB
-                        s.DefaultValue = "LHD8899201";
+                        item.DefaultValue = "LHD8899201";
                         break;
                     case nameof(MBaseHeaderMessage.HDSRID): // DB
-                        s.DefaultValue = "EFP";
+                        item.DefaultValue = "EFP";
                         break;
                     case nameof(MBaseHeaderMessage.HDBKNO): // DB
-                        s.DefaultValue = "73";
+                        item.DefaultValue = "73";
                         break;
                     case nameof(MBaseHeaderMessage.HDBRNO):
-                        s.DefaultValue = header.HDBRNO.PadLeft(5, '0');
+                        item.DefaultValue = header.HDBRNO.PadLeft(5, '0');
                         break;
                     case nameof(MBaseHeaderMessage.HDTXCD):
-                        s.DefaultValue = header.HDTXCD;
+                        item.DefaultValue = header.HDTXCD;
                         break;
                     case nameof(MBaseHeaderMessage.HDACCD):
-                        s.DefaultValue = header.HDACCD;
+                        item.DefaultValue = header.HDACCD;
                         break;
                     case nameof(MBaseHeaderMessage.HDTMOD):
-                        s.DefaultValue = header.HDTMOD;
+                        item.DefaultValue = header.HDTMOD;
                         break;
                     case nameof(MBaseHeaderMessage.HDNREC):
-                        s.DefaultValue = header.HDNREC;
+                        item.DefaultValue = header.HDNREC;
                         break;
                     case nameof(MBaseHeaderMessage.I13TMID):
-                        s.DefaultValue = header.I13TMID;
+                        item.DefaultValue = header.I13TMID;
                         break;
                     case nameof(MBaseHeaderMessage.HDTMID):
-                        s.DefaultValue = header.HDTMID;
+                        item.DefaultValue = header.HDTMID;
                         break;
                     case nameof(MBaseHeaderMessage.HDRNUM):
-                        s.DefaultValue = header.HDRNUM;
+                        item.DefaultValue = header.HDRNUM;
                         break;
                     case nameof(MBaseHeaderMessage.HDDTIN):
-                        s.DefaultValue = header.HDDTIN;
+                        item.DefaultValue = header.HDDTIN;
                         break;
                     case nameof(MBaseHeaderMessage.HDTMIN):
-                        s.DefaultValue = header.HDTMIN;
+                        item.DefaultValue = header.HDTMIN;
                         break;
                 }
             });
