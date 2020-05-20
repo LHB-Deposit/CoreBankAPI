@@ -84,18 +84,81 @@ namespace MBaseAccess
 
         public VerifyCitizenIDResponse VerifyCitizenID(MBaseMessage message)
         {
-            return GetMessageResponse(message, new VerifyCitizenIDResponse());
+            VerifyCitizenIDResponse response = new VerifyCitizenIDResponse();
+            foreach(var res in GetMessageResponse(message))
+            {
+                switch(res.Key.Trim())
+                {
+                    case nameof(VerifyCitizenIDResponse.CFCIFN):
+                        response.CFCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFCIFT):
+                        response.CFCIFT = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFNA1):
+                        response.CFNA1A = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFNA1A):
+                        response.CFNA1A = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFSSNO):
+                        response.CFSSNO = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFSSCD):
+                        response.CFSSCD = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFCIDT):
+                        response.CFCIDT = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFASN1):
+                        response.CFASN1 = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFASN2):
+                        response.CFASN2 = res.Value;
+                        break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
+                }
+            }
+            return response;
         }
 
         public CIFAccountResponse CIFCreation(MBaseMessage message)
         {
-            return GetMessageResponse(message, new CIFAccountResponse());
+            CIFAccountResponse response = new CIFAccountResponse();
+            foreach(var res in GetMessageResponse(message))
+            {
+                switch (res.Key.Trim())
+                {
+                    case nameof(CIFAccountResponse.CFCIFN):
+                        response.CFCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(CIFAccountResponse.CFACCTNO):
+                        response.CFACCTNO = StringToDigit(res.Value);
+                        break;
+                    case nameof(CIFAccountResponse.CFACCTYP):
+                        response.CFACCTYP = res.Value;
+                        break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
+                }
+            }
+            return response;
         }
 
-        private T GetMessageResponse<T>(MBaseMessage message, T resResult)
+        private string StringToDigit(string value)
         {
-            if (message.HeaderTransaction == null) return resResult;
+            if (!string.IsNullOrEmpty(value)) return long.Parse(value).ToString();
+            else return value;
+        }
 
+        private Dictionary<string, string> GetMessageResponse(MBaseMessage message)
+        {
+            Dictionary<string, string> dictResult = new Dictionary<string, string>();
             int inputLength = Convert.ToInt16(message.HeaderTransaction.InputLength);
             int responseLength = Convert.ToInt16(message.HeaderTransaction.ResponseLength);
             TcpClient clientSocket = new TcpClient
@@ -112,7 +175,6 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
-                    #region Header Stream
                     Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
                     Logging.WriteLog("Connected");
 
@@ -128,71 +190,37 @@ namespace MBaseAccess
 
                     int rsMsgLength = HeaderMessageLength + inputLength + responseLength;
                     Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
-                    #endregion
 
                     byte[] outStream = new byte[rsMsgLength];
                     serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
-
-                    Dictionary<string, string> dictResult = new Dictionary<string, string>();
+                    
                     bool inputMessageValid = CheckInputMessageValid(ref outStream, ref dictResult);
                     if (inputMessageValid)
                     {
                         Logging.WriteLog("Write Response");
                         foreach (var res in message.ResponseMessages)
                         {
-                            #region Do Somthing
                             int startIndex = Convert.ToInt32(res.StartIndex) - 1;
                             int endIndex = Convert.ToInt32(res.EndIndex) - 1;
-
-                            string data_type = res.DataType;
-
                             startIndex = (HeaderMessageLength) + startIndex;
                             endIndex = (HeaderMessageLength) + endIndex;
 
+                            string data_type = res.DataType;
                             DataType dType = DataType.A;
-
-                            if (data_type == "B")
+                            if (data_type == nameof(DataType.B))
                                 dType = DataType.B;
-                            else if (data_type == "A")
+                            else if (data_type == nameof(DataType.A))
                                 dType = DataType.A;
-                            else if (data_type == "P")
+                            else if (data_type == nameof(DataType.P))
                                 dType = DataType.P;
                             else //if (dr.ToString() == "S")
                                 dType = DataType.S;
-                            #endregion
-                            dictResult.Add(res.FieldName, ConvertDataResponse(outStream, startIndex, endIndex, dType));
+
+                            dictResult.Add(res.FieldName.Trim(), ConvertDataResponse(outStream, startIndex, endIndex, dType).Trim());
                         }
-                        Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
-                        switch (resResult.GetType().Name)
-                        {
-                            case nameof(CIFAccountResponse):
-                                var objCIFAccResponse = (CIFAccountResponse)Convert.ChangeType(resResult, typeof(CIFAccountResponse));
-                                objCIFAccResponse.CFCIFN = dictResult[nameof(CIFAccountResponse.CFCIFN)];
-                                objCIFAccResponse.ACCTNO = dictResult[nameof(CIFAccountResponse.ACCTNO)];
-                                objCIFAccResponse.ACTYPE = dictResult[nameof(CIFAccountResponse.ACTYPE)];
-                                resResult = (T)Convert.ChangeType(objCIFAccResponse, typeof(T));
-                                break;
-                            case nameof(VerifyCitizenIDResponse):
-                                var objVerifyResponse = (VerifyCitizenIDResponse)Convert.ChangeType(resResult, typeof(VerifyCitizenIDResponse));
-                                objVerifyResponse.CFCIFN = dictResult[nameof(VerifyCitizenIDResponse.CFCIFN)];
-                                objVerifyResponse.CFCIFT = dictResult[nameof(VerifyCitizenIDResponse.CFCIFT)];
-                                objVerifyResponse.CFNA1 = dictResult[nameof(VerifyCitizenIDResponse.CFNA1)];
-                                objVerifyResponse.CFNA1A = dictResult[nameof(VerifyCitizenIDResponse.CFNA1A)];
-                                objVerifyResponse.CFSSNO = dictResult[nameof(VerifyCitizenIDResponse.CFSSNO)];
-                                objVerifyResponse.CFSSCD = dictResult[nameof(VerifyCitizenIDResponse.CFSSCD)];
-                                objVerifyResponse.CFCIDT = dictResult[nameof(VerifyCitizenIDResponse.CFCIDT)];
-                                objVerifyResponse.CFNAE = dictResult[nameof(VerifyCitizenIDResponse.CFNAE)];
-                                resResult = (T)Convert.ChangeType(objVerifyResponse, typeof(T));
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        // Todo Error Response
-                        Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
                     }
 
-                    
+                    if(dictResult.Count > 0) Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
                 }
                 else
                 {
@@ -208,7 +236,7 @@ namespace MBaseAccess
                 if (clientSocket != null) clientSocket.Close();
             }
 
-            return resResult;
+            return dictResult;
         }
 
         private bool CheckInputMessageValid(ref byte[] outStream, ref Dictionary<string, string> strError)
@@ -246,8 +274,8 @@ namespace MBaseAccess
 
                     if (!string.IsNullOrEmpty(strDesc.Trim()))
                     {
-                        Logging.WriteLog("Error : " + strCode + " " + strDesc);
-                        strError.Add(strCode, strDesc);
+                        Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
+                        strError.Add(strCode.Trim(), strDesc.Trim());
                     }
                     else
                     {
@@ -320,6 +348,7 @@ namespace MBaseAccess
         {
             // Test
             //AS400UserId = "LHD8899201";
+            byte[] oByte = new byte[0];
             try
             {
                 int i, idx, pos, StartIndex, EndIndex;
@@ -336,7 +365,7 @@ namespace MBaseAccess
                 int rqMsgLength = HeaderMessageLength + Convert.ToInt16(inputLength);
 
                 Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
-                byte[] oByte = new byte[rqMsgLength];
+                oByte = new byte[rqMsgLength];
 
                 #region Header
 
@@ -413,12 +442,13 @@ namespace MBaseAccess
                     }
                 }
 
-                return oByte;
+               
             }
             catch (Exception ex)
             {
-                throw ex;
+                Logging.WriteLog(ex.Message + ":" + ex.StackTrace);
             }
+            return oByte;
         }
 
         private byte[] ConvertData(string data, int startIndex, int endIndex, DataType type)

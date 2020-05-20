@@ -53,6 +53,7 @@
     <Compile Include="Entity\MBaseHeaderTransaction.cs" />
     <Compile Include="Entity\MBaseMessage.cs" />
     <Compile Include="Entity\MBaseMessageType.cs" />
+    <Compile Include="Entity\ResponseMessage.cs" />
     <Compile Include="Entity\VerifyCitizenID.cs" />
     <Compile Include="Entity\CIFDetailInquiryResponse.cs" />
     <Compile Include="Entity\VerifyCitizenIDResponse.cs" />

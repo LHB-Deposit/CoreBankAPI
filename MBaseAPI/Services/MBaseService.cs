@@ -357,7 +357,6 @@ namespace MBaseAPI.Services
                 ResponseMessages = responseMessages
             };
         }
-
         private IEnumerable<MessageTypeModel> GetHeaderMessage(HeaderMessageModel header)
         {
             IEnumerable<MessageTypeModel> headerMessages = sQLService.GetHeaderMessage();

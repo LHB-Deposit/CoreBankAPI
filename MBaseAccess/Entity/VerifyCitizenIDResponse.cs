@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class VerifyCitizenIDResponse
+    public class VerifyCitizenIDResponse : ResponseMessage
     {
         [MatchParent("CustomerNumber")]
         public string CFCIFN { get; set; }
@@ -31,9 +31,9 @@ namespace MBaseAccess.Entity
         public string CFCIDT { get; set; }
 
         [MatchParent("CustomerNameEn")]
-        public string CFNAE { get; set; }
+        public string CFASN1 { get; set; }
 
-        //[MatchParent("CustomerNameEn1")]
-        //public string CFNAEA { get; set; } // TODO Fix Field Name: CFCNA1A
+        [MatchParent("CustomerNameEn1")]
+        public string CFASN2 { get; set; }
     }
 }
