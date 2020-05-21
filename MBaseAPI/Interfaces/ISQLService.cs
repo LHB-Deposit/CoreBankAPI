@@ -5,11 +5,11 @@ namespace MBaseAPI.Interfaces
 {
     public interface ISQLService
     {
-        MBaseHeaderModel GetMBaseHeader(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseResponseMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseHeaderMessages(string tranCode);
-        IEnumerable<MBaseMessageTypeModel> GetMBaseInputMessages(string tranCode);
+        HeaderTransactionModel GetHeaderTransaction(string tranCode);
+        IEnumerable<MessageTypeModel> GetResponseMessages(string tranCode);
+        IEnumerable<MessageTypeModel> GetHeaderMessage();
+        IEnumerable<MessageTypeModel> GetInputMessages(string tranCode);
 
-        void AddMBaseMessage(MBaseMessageTypeModel message);
+        void AddMBaseMessage(MessageTypeModel message);
     }
 }

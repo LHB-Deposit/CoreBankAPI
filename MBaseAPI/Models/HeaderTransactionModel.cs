@@ -2,7 +2,7 @@
 
 namespace MBaseAPI.Models
 {
-    public class MBaseHeaderModel : MBaseHeader
+    public class HeaderTransactionModel : MBaseHeaderTransaction
     {
 
     }

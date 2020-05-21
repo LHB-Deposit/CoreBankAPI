@@ -7,13 +7,9 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class CIFCreateRequestModel
+    public class CIFCreateRequestModel : RequestModel
     {
         public string TranCode { get; set; } = "1732";
-
-        [Required]
-        [MaxLength(7)]
-        public string ReferenceNo { get; set; }
 
         [MaxLength(40)]
         public string TitleThaiName { get; set; } = string.Empty;
@@ -56,10 +52,6 @@ namespace MBaseAPI.Models
         [Required]
         [MaxLength(8)]
         public string MajorBusinessType { get; set; }
-
-        [Required]
-        [MaxLength(3)]
-        public string BranchNumber { get; set; }
 
         [Required]
         [MaxLength(3)]

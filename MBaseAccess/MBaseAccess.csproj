@@ -49,9 +49,11 @@
     <Compile Include="Entity\CIFLevelResponse.cs" />
     <Compile Include="Entity\CIFAccount.cs" />
     <Compile Include="Entity\CIFAccountResponse.cs" />
-    <Compile Include="Entity\MBaseHeader.cs" />
+    <Compile Include="Entity\MBaseHeaderMessage.cs" />
+    <Compile Include="Entity\MBaseHeaderTransaction.cs" />
     <Compile Include="Entity\MBaseMessage.cs" />
     <Compile Include="Entity\MBaseMessageType.cs" />
+    <Compile Include="Entity\ResponseMessage.cs" />
     <Compile Include="Entity\VerifyCitizenID.cs" />
     <Compile Include="Entity\CIFDetailInquiryResponse.cs" />
     <Compile Include="Entity\VerifyCitizenIDResponse.cs" />
@@ -62,6 +64,10 @@
     <ProjectReference Include="..\SolutionUtility\SolutionUtility.csproj">
       <Project>{5244D46D-8317-430B-A7E4-22B9CAB8ED91}</Project>
       <Name>SolutionUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440}</Project>
+      <Name>SQLDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

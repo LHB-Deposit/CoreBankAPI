@@ -1,4 +1,5 @@
-﻿using MBaseAPI.Models;
+﻿using MBaseAccess.Entity;
+using MBaseAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,8 @@ namespace MBaseAPI.Interfaces
 {
     public interface IMBaseService
     {
-        VerifyCitizenIDResponseModel VerifyCitizenID(VerifyCitizenIDModel model);
+        VerifyCitizenIDResponseModel VerifyCitizenID(VerifyCitizenIDModel model, string terminalId, DateTime processDateTime);
         CIFCreateResponseModel CIFCreation(CIFCreateRequestModel cIFCreate, string terminalId, DateTime processDateTime);
-
-        void GetMBaseMessages(MBaseParameterModel model);
+        void GetConfigMessages(MBaseParameterModel model);
     }
 }

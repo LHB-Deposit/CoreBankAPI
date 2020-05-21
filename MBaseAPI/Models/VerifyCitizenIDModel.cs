@@ -6,8 +6,12 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenIDModel
+    public class VerifyCitizenIDModel : RequestModel
     {
+        [Required]
+        [MaxLength(4)]
+        public string TranCode { get; set; }
+
         [Required]
         [MaxLength(15)]
         public string IDNumber { get; set; }

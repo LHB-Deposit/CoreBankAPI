@@ -2,8 +2,10 @@
 using MBaseAccess.Entity;
 using SolutionUtility;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -45,7 +47,7 @@ namespace MBaseAccess
                 }
             }
         }
-        private string ServerHost
+        public string ServerHost
         {
             get
             {
@@ -53,7 +55,7 @@ namespace MBaseAccess
                 catch (Exception ex) { throw new Exception("Please enter server host (" + ex.Message + ")"); }
             }
         }
-        private int ServerPort
+        public int ServerPort
         {
             get
             {
@@ -61,7 +63,7 @@ namespace MBaseAccess
                 catch (Exception ex) { throw new Exception("Please enter server port (" + ex.Message + ")"); }
             }
         }
-        private int HeaderMessageLength = 666;
+        public int HeaderMessageLength = 666;
 
         public string Message { get; set; } = string.Empty;
 
@@ -80,226 +82,382 @@ namespace MBaseAccess
             }
         }
 
-        public VerifyCitizenIDResponse VerifyCitizenID()
+        public VerifyCitizenIDResponse VerifyCitizenID(MBaseMessage message)
         {
-            VerifyCitizenIDResponse responseModel = new VerifyCitizenIDResponse();
-
-
-
-            return responseModel;
+            VerifyCitizenIDResponse response = new VerifyCitizenIDResponse();
+            foreach(var res in GetMessageResponse(message))
+            {
+                switch(res.Key.Trim())
+                {
+                    case nameof(VerifyCitizenIDResponse.CFCIFN):
+                        response.CFCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFCIFT):
+                        response.CFCIFT = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFNA1):
+                        response.CFNA1A = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFNA1A):
+                        response.CFNA1A = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFSSNO):
+                        response.CFSSNO = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFSSCD):
+                        response.CFSSCD = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFCIDT):
+                        response.CFCIDT = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFASN1):
+                        response.CFASN1 = res.Value;
+                        break;
+                    case nameof(VerifyCitizenIDResponse.CFASN2):
+                        response.CFASN2 = res.Value;
+                        break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
+                }
+            }
+            return response;
         }
 
-        public CIFAccountResponse CIFCreation(CIFAccount cif, MBaseMessage mBaseMessage, string terminalId, string referenceNumber, DateTime clientDateTime)
+        public CIFAccountResponse CIFCreation(MBaseMessage message)
         {
-            CIFAccountResponse responseModel = new CIFAccountResponse();
-            if (mBaseMessage.Header == null) return null;
+            CIFAccountResponse response = new CIFAccountResponse();
+            foreach(var res in GetMessageResponse(message))
+            {
+                switch (res.Key.Trim())
+                {
+                    case nameof(CIFAccountResponse.CFCIFN):
+                        response.CFCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(CIFAccountResponse.CFACCTNO):
+                        response.CFACCTNO = StringToDigit(res.Value);
+                        break;
+                    case nameof(CIFAccountResponse.CFACCTYP):
+                        response.CFACCTYP = res.Value;
+                        break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
+                }
+            }
+            return response;
+        }
+
+        private string StringToDigit(string value)
+        {
+            if (!string.IsNullOrEmpty(value)) return long.Parse(value).ToString();
+            else return value;
+        }
+
+        private Dictionary<string, string> GetMessageResponse(MBaseMessage message)
+        {
+            Dictionary<string, string> dictResult = new Dictionary<string, string>();
+            int inputLength = Convert.ToInt16(message.HeaderTransaction.InputLength);
+            int responseLength = Convert.ToInt16(message.HeaderTransaction.ResponseLength);
+            TcpClient clientSocket = new TcpClient
+            {
+                ReceiveBufferSize = HeaderMessageLength + inputLength + responseLength,
+                ReceiveTimeout = ReceiveTimeout,
+                SendTimeout = SendTimeout
+            };
 
             try
             {
-                TcpClient clientSocket = new TcpClient
-                {
-                    ReceiveBufferSize = HeaderMessageLength + mBaseMessage.Header.InputLength + mBaseMessage.Header.ResponseLength,
-                    ReceiveTimeout = ReceiveTimeout,
-                    SendTimeout = SendTimeout
-                };
-
                 if (!clientSocket.Connected)
                     clientSocket.Connect(ServerHost, ServerPort);
 
                 if (clientSocket.Connected)
                 {
-                    Logging.WriteLog("TcpClient Connected");
+                    Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
+                    Logging.WriteLog("Connected");
+
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    byte[] headParameter = CreateInputMessage(mBaseMessage, terminalId, referenceNumber, cif.CFBRNN, clientDateTime.ToString("ddMMyyyy"), clientDateTime.ToString("HHmmss"));
-                    Logging.WriteLog("Create Input Message Success");
+                    Logging.WriteLog("Create Input Message");
 
+                    byte[] headParameter = CreateInputMessage(message);
+
+                    Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
 
-                    int rsMsgLength = HeaderMessageLength + mBaseMessage.Header.InputLength + mBaseMessage.Header.ResponseLength;
+                    int rsMsgLength = HeaderMessageLength + inputLength + responseLength;
+                    Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
 
                     byte[] outStream = new byte[rsMsgLength];
-                    serverStream.Read(outStream, 0, clientSocket.ReceiveBufferSize);
-
-                    bool isEmptyReturn = false;
-                    string empty = outStream.ToString();
-
-                    if (string.IsNullOrEmpty(empty.Trim())) isEmptyReturn = true;
-                    if (!isEmptyReturn)
+                    serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
+                    
+                    bool inputMessageValid = CheckInputMessageValid(ref outStream, ref dictResult);
+                    if (inputMessageValid)
                     {
-                        //Check error from server
-                        byte[] errCode = new byte[7];
-                        byte[] errDesc = new byte[50];
-
-                        int i;
-                        int index = 0;
-
-                        //get error code
-                        for (i = 341; i <= 347; i++)
+                        Logging.WriteLog("Write Response");
+                        foreach (var res in message.ResponseMessages)
                         {
-                            errCode[index] = outStream[i];
-                            index++;
-                        }
-
-                        index = 0;
-                        //get error desc
-                        for (i = 348; i <= 397; i++)
-                        {
-                            errDesc[index] = outStream[i];
-                            index++;
-                        }
-
-                        string strCode = ConvertDataResponseCheckError(errCode, 0, 6, DataType.A);
-                        string strDesc = ConvertDataResponseCheckError(errDesc, 0, 49, DataType.A);
-
-                        if (!string.IsNullOrEmpty(strDesc.Trim()))
-                        {
-                            Logging.WriteLog($"Create CIF Detail Error : { strCode } { strDesc }");
-                            return null;
-                        }
-
-                        foreach (var response in mBaseMessage.ResponseMessages)
-                        {
-                            int startIndex = response.StartIndex - 1;
-                            int endIndex = response.EndIndex - 1;
-
+                            int startIndex = Convert.ToInt32(res.StartIndex) - 1;
+                            int endIndex = Convert.ToInt32(res.EndIndex) - 1;
                             startIndex = (HeaderMessageLength) + startIndex;
                             endIndex = (HeaderMessageLength) + endIndex;
 
-                            DataType dType;
-                            switch (response.DataType)
-                            {
-                                case "B":
-                                    dType = DataType.B;
-                                    break;
-                                case "S":
-                                    dType = DataType.S;
-                                    break;
-                                case "P":
-                                    dType = DataType.P;
-                                    break;
-                                default:
-                                    dType = DataType.A;
-                                    break;
-                            }
-                            switch (response.FieldName)
-                            {
-                                case nameof(CIFAccountResponse.CFCIFN):
-                                    responseModel.CFCIFN = ConvertDataResponse(outStream, startIndex, endIndex, dType);
-                                    break;
-                                case nameof(CIFAccountResponse.ACCTNO):
-                                    responseModel.ACCTNO = ConvertDataResponse(outStream, startIndex, endIndex, dType);
-                                    break;
-                                case nameof(CIFAccountResponse.ACTYPE):
-                                    responseModel.ACTYPE = ConvertDataResponse(outStream, startIndex, endIndex, dType);
-                                    break;
-                            }
-                            
+                            string data_type = res.DataType;
+                            DataType dType = DataType.A;
+                            if (data_type == nameof(DataType.B))
+                                dType = DataType.B;
+                            else if (data_type == nameof(DataType.A))
+                                dType = DataType.A;
+                            else if (data_type == nameof(DataType.P))
+                                dType = DataType.P;
+                            else //if (dr.ToString() == "S")
+                                dType = DataType.S;
+
+                            dictResult.Add(res.FieldName.Trim(), ConvertDataResponse(outStream, startIndex, endIndex, dType).Trim());
                         }
                     }
+
+                    if(dictResult.Count > 0) Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
                 }
                 else
                 {
                     Logging.WriteLog($"Cannot connect to { ServerHost }");
-                    return null;
                 }
-
-                clientSocket.Close();
             }
             catch (Exception ex)
             {
-                Logging.WriteLog(ex.Message);
+                Logging.WriteLog($"{ex.Message}: {ex.StackTrace}");
+            }
+            finally
+            {
+                if (clientSocket != null) clientSocket.Close();
             }
 
-            return responseModel;
+            return dictResult;
         }
 
-        private byte[] CreateInputMessage(MBaseMessage mBaseMessage, string terminalId, string referenceNo, string branchNo, string clientDate, string clientTime)
+        private bool CheckInputMessageValid(ref byte[] outStream, ref Dictionary<string, string> strError)
         {
-            //string as400UserId = "LHD8899201";
-
-            int rqMsgLength = HeaderMessageLength + mBaseMessage.Header.InputLength;
-            Logging.WriteLog($"Request Message Length:{ rqMsgLength }");
-
-            byte[] oByte = new byte[rqMsgLength];
-            
-            foreach (var header in mBaseMessage.HeaderMessages)
-            {
-                SetDataBytePosition( ref oByte, header);
-            }
-            Logging.WriteLog($"Set Header Data Byte Position");
-
-            foreach (var input in mBaseMessage.InputMessages)
-            {
-                SetDataBytePosition(ref oByte, input);
-            }
-            Logging.WriteLog($"Set Input Data Byte Position");
-
-            return oByte;
-        }
-        private void SetDataBytePosition(ref byte[] oByte, MBaseMessageType input)
-        {
-            int idx, pos, start_idx, end_idx;
-            string default_val;
+            bool isValid = false;
 
             try
             {
-                start_idx = input.StartIndex;
-                end_idx = input.EndIndex;
-                default_val = input.DefaultValue;
-
-                DataType dType;
-                switch (input.DataType.ToUpper())
+                if (!string.IsNullOrEmpty(outStream.ToString().Trim()))
                 {
-                    case "B":
-                        dType = DataType.B;
-                        break;
-                    case "P":
-                        dType = DataType.P;
-                        default_val = SetDefaultValue(default_val);
-                        break;
-                    case "S":
-                        dType = DataType.S;
-                        default_val = SetDefaultValue(default_val);
-                        break;
-                    default:
-                        dType = DataType.A;
-                        break;
-                }
+                    //Check error from server
+                    byte[] errCode = new byte[7];
+                    byte[] errDesc = new byte[50];
 
-                Logging.WriteLog($"Data: {default_val}, StartIndex: {start_idx}, EndIndex: {end_idx}, DataType: {dType}");
-                byte[] data = ConvertData(default_val, start_idx, end_idx, dType);
+                    int i;
+                    int index = 0;
 
-                idx = 0;
-                for (pos = start_idx - 1; pos < end_idx; pos++)
-                {
-                    oByte[pos] = data[idx];
-                    idx++;
+                    //get error code
+                    for (i = 341; i <= 347; i++)
+                    {
+                        errCode[index] = outStream[i];
+                        index++;
+                    }
+
+                    index = 0;
+                    //get error desc
+                    for (i = 348; i <= 397; i++)
+                    {
+                        errDesc[index] = outStream[i];
+                        index++;
+                    }
+
+                    string strCode = ConvertDataResponseCheckError(errCode, 0, 6, DataType.A);
+                    string strDesc = ConvertDataResponseCheckError(errDesc, 0, 49, DataType.A);
+
+                    if (!string.IsNullOrEmpty(strDesc.Trim()))
+                    {
+                        Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
+                        strError.Add(strCode.Trim(), strDesc.Trim());
+                    }
+                    else
+                    {
+                        isValid = true;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                Logging.WriteLog("StackTrace: " + ex.StackTrace);
-            }
-        }
-        private string SetDefaultValue(string default_val)
-        {
-            if (string.IsNullOrEmpty(default_val))
-            {
-                default_val = "0";
+                throw ex;
             }
 
-            return default_val;
+            return isValid;
         }
+
+        private string ConvertDataResponseCheckError(byte[] allData, int startIndex, int endIndex, DataType type)
+        {
+            int len = (endIndex - startIndex) + 1;
+            byte[] data = new byte[len];
+
+            for (int i = 0; i < data.Length; i++)
+                data[i] = allData[startIndex + i];
+
+            if ((type == DataType.A) || (type == DataType.S))
+            {
+                if (type == DataType.A)
+                {
+                    bool isValid = false;
+                    foreach (byte b in data)
+                    {
+                        if (b != 0)
+                        {
+                            isValid = true;
+                            break;
+                        }
+                    }
+
+                    if (!isValid)
+                        return "Unidentify error.";
+                }
+
+                Encoding eC = JonSkeet.Ebcdic.EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
+                return eC.GetString(data);
+            }
+            else if (type == DataType.B)
+            {
+                Array.Reverse(data);
+                return BitConverter.ToString(data);
+            }
+            else
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (byte b in data)
+                    sb.Append(b.ToString("X2"));
+
+                string hexString = sb.ToString();
+                string signString = hexString.Substring(hexString.Length - 1);
+                hexString = hexString.Substring(0, hexString.Length - 1);
+                if (signString.ToUpper() == "D")
+                {
+                    hexString = "-" + hexString;
+                }
+                sb = null;
+
+                return hexString;
+            }
+        }
+
+        private byte[] CreateInputMessage(MBaseMessage message)
+        {
+            // Test
+            //AS400UserId = "LHD8899201";
+            byte[] oByte = new byte[0];
+            try
+            {
+                int i, idx, pos, StartIndex, EndIndex;
+                string DefaultValue;
+
+                string transactionCode = message.HeaderTransaction.MBaseTranCode;
+                string scenarioNumber = message.HeaderTransaction.ScenarioNumber;
+                string actionMode = message.HeaderTransaction.ActionMode;
+                string transactionMode = message.HeaderTransaction.TransactionMode;
+                string numberOfRetrieve = message.HeaderTransaction.NoOfRecToRetrieve;
+                string inputLength = message.HeaderTransaction.InputLength.ToString();
+                string responseLength = message.HeaderTransaction.ResponseLength.ToString();
+
+                int rqMsgLength = HeaderMessageLength + Convert.ToInt16(inputLength);
+
+                Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
+                oByte = new byte[rqMsgLength];
+
+                #region Header
+
+                foreach (var header in message.HeaderMessages)
+                {
+                    StartIndex = Convert.ToInt16(header.StartIndex.ToString());
+                    EndIndex = Convert.ToInt16(header.EndIndex.ToString());
+                    DefaultValue = header.DefaultValue;
+
+                    DataType dType = DataType.A;
+                    switch (header.DataType.ToUpper())
+                    {
+                        case "B":
+                            dType = DataType.B;
+                            break;
+
+                        case "P":
+                            dType = DataType.P;
+                            if (DefaultValue == string.Empty)
+                                DefaultValue = "0";
+                            break;
+
+                        case "S":
+                            dType = DataType.S;
+                            if (DefaultValue == string.Empty)
+                                DefaultValue = "0";
+                            break;
+                    }
+
+                    byte[] data = ConvertData(DefaultValue, StartIndex, EndIndex, dType);
+
+                    idx = 0;
+                    for (pos = StartIndex - 1; pos < EndIndex; pos++)
+                    {
+                        oByte[pos] = data[idx];
+                        idx++;
+                    }
+                }
+                #endregion
+
+                foreach (var input in message.InputMessages)
+                {
+                    StartIndex = Convert.ToInt16(input.StartIndex.ToString()) + HeaderMessageLength;
+                    EndIndex = Convert.ToInt16(input.EndIndex.ToString()) + HeaderMessageLength;
+                    DefaultValue = input.DefaultValue;
+
+                    DataType dType = DataType.A;
+                    switch (input.DataType.ToUpper())
+                    {
+                        case "B":
+                            dType = DataType.B;
+                            break;
+
+                        case "P":
+                            dType = DataType.P;
+                            if (DefaultValue == "")
+                                DefaultValue = "0";
+                            break;
+
+                        case "S":
+                            dType = DataType.S;
+                            if (DefaultValue == "")
+                                DefaultValue = "0";
+                            break;
+                    }
+
+                    byte[] data = ConvertData(DefaultValue, StartIndex, EndIndex, dType);
+
+                    idx = 0;
+                    for (pos = StartIndex - 1; pos < EndIndex; pos++)
+                    {
+                        oByte[pos] = data[idx];
+                        idx++;
+                    }
+                }
+
+               
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteLog(ex.Message + ":" + ex.StackTrace);
+            }
+            return oByte;
+        }
+
         private byte[] ConvertData(string data, int startIndex, int endIndex, DataType type)
         {
             int len = (endIndex - startIndex) + 1;
+
             if ((type == DataType.A) || (type == DataType.S))
-            {
-                //if convert to EBCDIC or Zoned Decimal
-                Logging.WriteLog($"Convert to EBCDIC or Zoned Decimal:{data} {startIndex} {endIndex}");
-                Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
+            {//if convert to EBCDIC or Zoned Decimal
+                Encoding eC = JonSkeet.Ebcdic.EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
 
                 if (data.Length < len)
                     data = data.PadRight(len, data == "0" ? '0' : ' ');
@@ -307,23 +465,15 @@ namespace MBaseAccess
                 return eC.GetBytes(data);
             }
             else if (type == DataType.B)
-            {
-                //if convert to Binary 
-                //if (data.Length < len)
-                //data = data.PadLeft(len, data == "0" ? '0' : ' ');
-                Logging.WriteLog($"Convert to Binary:{data} {startIndex} {endIndex}");
+            {//if convert to Binary 
                 int i = Convert.ToInt32(data);
                 byte[] pB = System.BitConverter.GetBytes(i);
                 Array.Reverse(pB);
                 return pB;
-                //return  System.BitConverter.GetBytes(i).Reverse().ToArray(); ;// Encoding.ASCII.GetBytes(data);
             }
             else
-            {
-                //if convert to packed decimal or other else
-                //if (data.Length < len)
-                //    data = data.PadLeft(len, '0');
-                Logging.WriteLog($"Convert to Packed Decimal:{data} {startIndex} {endIndex}");
+            {//if convert to packed decimal or other else
+
                 Stack<byte> comp3 = new Stack<byte>();
                 int value = Convert.ToInt32(data);
 
@@ -362,7 +512,6 @@ namespace MBaseAccess
                         if (i < len - comp3.ToArray().Length)
                         {
                             returnValue[i] = 0000;
-                            //returnValue[i] = 0x0d;
                         }
                         else
                         {
@@ -377,60 +526,7 @@ namespace MBaseAccess
                 return returnValue;
             }
         }
-        private string ConvertDataResponseCheckError(byte[] allData, int startIndex, int endIndex, DataType type)
-        {
-            int len = (endIndex - startIndex) + 1;
-            byte[] data = new byte[len];
 
-            for (int i = 0; i < data.Length; i++)
-                data[i] = allData[startIndex + i];
-
-            if ((type == DataType.A) || (type == DataType.S))
-            {
-                if (type == DataType.A)
-                {
-                    bool isValid = false;
-                    foreach (byte b in data)
-                    {
-                        if (b != 0)
-                        {
-                            isValid = true;
-                            break;
-                        }
-                    }
-
-                    if (!isValid)
-                        return "Unidentify error.";
-                }
-
-                Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
-                return eC.GetString(data);
-            }
-            else if (type == DataType.B)
-            {
-                Array.Reverse(data);
-                //return BitConverter.ToString(data.Reverse().ToArray());
-                return BitConverter.ToString(data);
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                //data[data.Length - 1] = (byte)((Convert.ToInt32(data[data.Length - 1])) >> 4);
-                foreach (byte b in data)
-                    sb.Append(b.ToString("X2"));
-
-                string hexString = sb.ToString();
-                string signString = hexString.Substring(hexString.Length - 1);
-                hexString = hexString.Substring(0, hexString.Length - 1);
-                if (signString.ToUpper() == "D")
-                {
-                    hexString = "-" + hexString;
-                }
-                sb = null;
-
-                return hexString;
-            }
-        }
         private string ConvertDataResponse(byte[] allData, int startIndex, int endIndex, DataType type)
         {
             int len = (endIndex - startIndex) + 1;
@@ -462,13 +558,11 @@ namespace MBaseAccess
             else if (type == DataType.B)
             {
                 Array.Reverse(data);
-                //return BitConverter.ToString(data.Reverse().ToArray());
                 return BitConverter.ToString(data);
             }
             else
             {
                 StringBuilder sb = new StringBuilder();
-                //data[data.Length - 1] = (byte)((Convert.ToInt32(data[data.Length - 1])) >> 4);
                 foreach (byte b in data)
                     sb.Append(b.ToString("X2"));
 

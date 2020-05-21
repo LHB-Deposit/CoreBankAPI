@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace MBaseAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class MBaseController : ApiController
     {
         private readonly IMBaseService mBaseService;
@@ -25,7 +25,9 @@ namespace MBaseAPI.Controllers
         [HttpPost]
         public VerifyCitizenIDResponseModel VerifyCitizenID([FromBody]VerifyCitizenIDModel verifyCitizen)
         {
-            return mBaseService.VerifyCitizenID(verifyCitizen);
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+            return mBaseService.VerifyCitizenID(verifyCitizen, terminalId, processDatetime);
         }
 
         // POST: api/MBase
@@ -34,15 +36,14 @@ namespace MBaseAPI.Controllers
         {
             var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
             var processDatetime = DateTime.Now;
-
             return mBaseService.CIFCreation(cIFCreate, terminalId, processDatetime);
         }
 
-        //[Authorize(Roles = "Developer")]
+        [Authorize(Roles = "Developer")]
         [HttpPost]
         public void FetchMBaseMessageForDevelopOnly([FromBody]MBaseParameterModel model)
         {
-            mBaseService.GetMBaseMessages(model);
+            mBaseService.GetConfigMessages(model);
         }
     }
 }

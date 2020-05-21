@@ -1,4 +1,5 @@
-﻿using SolutionUtility;
+﻿using MBaseAccess.Entity;
+using SolutionUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenIDResponseModel
+    public class VerifyCitizenIDResponseModel : ResponseModel
     {
         [MatchParent("CFCIFN")]
         public string CustomerNumber { get; set; } = string.Empty;
@@ -29,10 +30,10 @@ namespace MBaseAPI.Models
         [MatchParent("CFCIDT")]
         public string IDIssueCountryCode { get; set; } = string.Empty;
 
-        [MatchParent("CFNAE")]
+        [MatchParent("CFASN1")]
         public string CustomerNameEng { get; set; } = string.Empty;
 
-        //[MatchParent("")]
+        [MatchParent("CFASN2")]
         public string CustomerNameEng1 { get; set; } = string.Empty;
 
     }

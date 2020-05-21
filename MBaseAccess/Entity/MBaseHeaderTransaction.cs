@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class MBaseHeader
+    public class MBaseHeaderTransaction
     {
         public string MBaseTranCode { get; set; }
         public string ScenarioNumber { get; set; }

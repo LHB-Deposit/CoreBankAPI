@@ -197,9 +197,12 @@
     <Compile Include="Models\CIFInfoResponseModel.cs" />
     <Compile Include="Models\CIFLevelRequestModel.cs" />
     <Compile Include="Models\CIFLevelResponseModel.cs" />
-    <Compile Include="Models\MBaseHeaderModel.cs" />
-    <Compile Include="Models\MBaseMessageTypeModel.cs" />
+    <Compile Include="Models\HeaderMessageModel.cs" />
+    <Compile Include="Models\HeaderTransactionModel.cs" />
+    <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Models\MBaseParameterModel.cs" />
+    <Compile Include="Models\RequestModel.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\VerifyCitizenIDModel.cs" />
     <Compile Include="Models\VerifyCitizenIDResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
