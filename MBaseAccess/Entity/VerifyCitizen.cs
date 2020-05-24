@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class VerifyCitizenID
+    public class VerifyCitizen
     {
         [MatchParent("IDNumber")]
         public string CFSSNO { get; set; }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MBaseAccess.Entity;
 
-namespace MBaseAccess.Entity
+namespace MBaseAPI.Models
 {
-    public class CIFLevelResponse
+    public class KycCIFLevelResponseModel
     {
         public string CustomerNumber { get; set; }
         public string PreviousRiskLevel { get; set; }

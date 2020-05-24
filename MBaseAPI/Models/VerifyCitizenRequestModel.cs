@@ -6,7 +6,7 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenIDModel : RequestModel
+    public class VerifyCitizenRequestModel : RequestModel
     {
         [Required]
         [MaxLength(4)]

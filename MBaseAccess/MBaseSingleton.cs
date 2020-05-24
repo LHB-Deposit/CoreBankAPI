@@ -81,40 +81,40 @@ namespace MBaseAccess
                 return mbase;
             }
         }
-
-        public VerifyCitizenIDResponse VerifyCitizenID(MBaseMessage message)
+        public VerifyCitizenResponse VerifyCitizenID(MBaseMessage message)
         {
-            VerifyCitizenIDResponse response = new VerifyCitizenIDResponse();
-            foreach(var res in GetMessageResponse(message))
+            VerifyCitizenResponse response = new VerifyCitizenResponse();
+            var resMessages = GetMessageResponse(message);
+            foreach (var res in resMessages)
             {
                 switch(res.Key.Trim())
                 {
-                    case nameof(VerifyCitizenIDResponse.CFCIFN):
+                    case nameof(VerifyCitizenResponse.CFCIFN):
                         response.CFCIFN = StringToDigit(res.Value);
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFCIFT):
-                        response.CFCIFT = res.Value;
+                    case nameof(VerifyCitizenResponse.CFCIFT):
+                        response.CFCIFT = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFNA1):
-                        response.CFNA1A = res.Value;
+                    case nameof(VerifyCitizenResponse.CFNA1):
+                        response.CFNA1A = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFNA1A):
-                        response.CFNA1A = res.Value;
+                    case nameof(VerifyCitizenResponse.CFNA1A):
+                        response.CFNA1A = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFSSNO):
-                        response.CFSSNO = res.Value;
+                    case nameof(VerifyCitizenResponse.CFSSNO):
+                        response.CFSSNO = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFSSCD):
-                        response.CFSSCD = res.Value;
+                    case nameof(VerifyCitizenResponse.CFSSCD):
+                        response.CFSSCD = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFCIDT):
-                        response.CFCIDT = res.Value;
+                    case nameof(VerifyCitizenResponse.CFCIDT):
+                        response.CFCIDT = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFASN1):
-                        response.CFASN1 = res.Value;
+                    case nameof(VerifyCitizenResponse.CFASN1):
+                        response.CFASN1 = res.Value.Trim();
                         break;
-                    case nameof(VerifyCitizenIDResponse.CFASN2):
-                        response.CFASN2 = res.Value;
+                    case nameof(VerifyCitizenResponse.CFASN2):
+                        response.CFASN2 = res.Value.Trim();
                         break;
                     default:
                         response.ErrorCode = res.Key;
@@ -124,11 +124,11 @@ namespace MBaseAccess
             }
             return response;
         }
-
         public CIFAccountResponse CIFCreation(MBaseMessage message)
         {
             CIFAccountResponse response = new CIFAccountResponse();
-            foreach(var res in GetMessageResponse(message))
+            var resMessages = GetMessageResponse(message);
+            foreach (var res in resMessages)
             {
                 switch (res.Key.Trim())
                 {
@@ -149,13 +149,90 @@ namespace MBaseAccess
             }
             return response;
         }
+        public CIFAddressResponse CIFAddressCreation(MBaseMessage message)
+        {
+            CIFAddressResponse response = new CIFAddressResponse();
+            var resMessages = GetMessageResponse(message);
+            foreach (var res in resMessages)
+            {
+                switch (res.Key.Trim())
+                {
+                    case nameof(CIFAddressResponse.CFCIFN):
+                        response.CFCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(CIFAddressResponse.CFADSQ):
+                        response.CFADSQ = StringToDigit(res.Value);
+                        break;
+                }
+            }
+            return response;
+        }
+        public KycCIFLevelResponse KycCIFLevelCreateMessage(MBaseMessage message)
+        {
+            KycCIFLevelResponse response = new KycCIFLevelResponse();
+            var resMessages = GetMessageResponse(message);
+            foreach (var res in resMessages)
+            {
+                switch (res.Key.Trim())
+                {
+                    case nameof(KycCIFLevelResponse.KCCIFN):
+                        response.KCCIFN = StringToDigit(res.Value);
+                        break;
+                    case nameof(KycCIFLevelResponse.KCFRKL):
+                        response.KCFRKL = res.Value;
+                        break;
+                    case nameof(KycCIFLevelResponse.KCRRKL):
+                        response.KCRRKL = res.Value;
+                        break;
+                    case nameof(KycCIFLevelResponse.KCLRDT):
+                        response.KCLRDT = res.Value;
+                        break;
+                    case nameof(KycCIFLevelResponse.KCNRDT):
+                        response.KCNRDT = res.Value;
+                        break;
+                    case nameof(KycCIFLevelResponse.WDTEXT):
+                        response.WDTEXT = res.Value;
+                        break;
+                }
+            }
+            return response;
+        }
+        public KycAccountLevelResponse KycAccountLevelCreateMessage(MBaseMessage message)
+        {
+            KycAccountLevelResponse response = new KycAccountLevelResponse();
+            var resMessages = GetMessageResponse(message);
+            foreach (var res in resMessages)
+            {
+                switch (res.Key.Trim())
+                {
+                    case nameof(KycAccountLevelResponse.KCATYP):
+                        response.KCATYP = res.Value;
+                        break;
+                    case nameof(KycAccountLevelResponse.KCACCN):
+                        response.KCACCN = StringToDigit(res.Value);
+                        break;
+                    case nameof(KycAccountLevelResponse.DEPPURINV):
+                        response.DEPPURINV = res.Value;
+                        break;
+                    case nameof(KycAccountLevelResponse.DEPSRCINV):
+                        response.DEPSRCINV = res.Value;
+                        break;
+                    case nameof(KycAccountLevelResponse.KCSCOU):
+                        response.KCSCOU = res.Value;
+                        break;
+                    case nameof(KycAccountLevelResponse.KCOPAM):
+                        response.KCOPAM = StringToDigit(res.Value);
+                        break;
+                }
+            }
+            return response;
+        }
 
         private string StringToDigit(string value)
         {
             if (!string.IsNullOrEmpty(value)) return long.Parse(value).ToString();
             else return value;
         }
-
         private Dictionary<string, string> GetMessageResponse(MBaseMessage message)
         {
             Dictionary<string, string> dictResult = new Dictionary<string, string>();
@@ -238,7 +315,6 @@ namespace MBaseAccess
 
             return dictResult;
         }
-
         private bool CheckInputMessageValid(ref byte[] outStream, ref Dictionary<string, string> strError)
         {
             bool isValid = false;
@@ -269,8 +345,8 @@ namespace MBaseAccess
                         index++;
                     }
 
-                    string strCode = ConvertDataResponseCheckError(errCode, 0, 6, DataType.A);
-                    string strDesc = ConvertDataResponseCheckError(errDesc, 0, 49, DataType.A);
+                    string strCode = ConvertDataResponse(errCode, 0, 6, DataType.A);
+                    string strDesc = ConvertDataResponse(errDesc, 0, 49, DataType.A);
 
                     if (!string.IsNullOrEmpty(strDesc.Trim()))
                     {
@@ -290,60 +366,6 @@ namespace MBaseAccess
 
             return isValid;
         }
-
-        private string ConvertDataResponseCheckError(byte[] allData, int startIndex, int endIndex, DataType type)
-        {
-            int len = (endIndex - startIndex) + 1;
-            byte[] data = new byte[len];
-
-            for (int i = 0; i < data.Length; i++)
-                data[i] = allData[startIndex + i];
-
-            if ((type == DataType.A) || (type == DataType.S))
-            {
-                if (type == DataType.A)
-                {
-                    bool isValid = false;
-                    foreach (byte b in data)
-                    {
-                        if (b != 0)
-                        {
-                            isValid = true;
-                            break;
-                        }
-                    }
-
-                    if (!isValid)
-                        return "Unidentify error.";
-                }
-
-                Encoding eC = JonSkeet.Ebcdic.EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
-                return eC.GetString(data);
-            }
-            else if (type == DataType.B)
-            {
-                Array.Reverse(data);
-                return BitConverter.ToString(data);
-            }
-            else
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (byte b in data)
-                    sb.Append(b.ToString("X2"));
-
-                string hexString = sb.ToString();
-                string signString = hexString.Substring(hexString.Length - 1);
-                hexString = hexString.Substring(0, hexString.Length - 1);
-                if (signString.ToUpper() == "D")
-                {
-                    hexString = "-" + hexString;
-                }
-                sb = null;
-
-                return hexString;
-            }
-        }
-
         private byte[] CreateInputMessage(MBaseMessage message)
         {
             // Test
@@ -450,7 +472,6 @@ namespace MBaseAccess
             }
             return oByte;
         }
-
         private byte[] ConvertData(string data, int startIndex, int endIndex, DataType type)
         {
             int len = (endIndex - startIndex) + 1;
@@ -526,7 +547,6 @@ namespace MBaseAccess
                 return returnValue;
             }
         }
-
         private string ConvertDataResponse(byte[] allData, int startIndex, int endIndex, DataType type)
         {
             int len = (endIndex - startIndex) + 1;

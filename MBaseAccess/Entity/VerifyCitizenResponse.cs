@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class VerifyCitizenIDResponse : ResponseMessage
+    public class VerifyCitizenResponse : ResponseMessage
     {
         [MatchParent("CustomerNumber")]
         public string CFCIFN { get; set; }

@@ -2,7 +2,7 @@
 
 namespace KYCAPI.Models
 {
-    public class CIFLevelResponseModel : CIFLevelResponse
+    public class CIFLevelResponseModel
     {
 
     }

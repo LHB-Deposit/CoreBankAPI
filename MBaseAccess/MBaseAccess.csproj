@@ -45,18 +45,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entity\CIFLevel.cs" />
-    <Compile Include="Entity\CIFLevelResponse.cs" />
+    <Compile Include="Entity\CIFAddress.cs" />
+    <Compile Include="Entity\CIFAddressResponse.cs" />
     <Compile Include="Entity\CIFAccount.cs" />
     <Compile Include="Entity\CIFAccountResponse.cs" />
+    <Compile Include="Entity\KycAccountLevel.cs" />
+    <Compile Include="Entity\KycAccountLevelResponse.cs" />
+    <Compile Include="Entity\KycCIFLevel.cs" />
+    <Compile Include="Entity\KycCIFLevelResponse.cs" />
     <Compile Include="Entity\MBaseHeaderMessage.cs" />
     <Compile Include="Entity\MBaseHeaderTransaction.cs" />
     <Compile Include="Entity\MBaseMessage.cs" />
     <Compile Include="Entity\MBaseMessageType.cs" />
     <Compile Include="Entity\ResponseMessage.cs" />
-    <Compile Include="Entity\VerifyCitizenID.cs" />
+    <Compile Include="Entity\VerifyCitizen.cs" />
     <Compile Include="Entity\CIFDetailInquiryResponse.cs" />
-    <Compile Include="Entity\VerifyCitizenIDResponse.cs" />
+    <Compile Include="Entity\VerifyCitizenResponse.cs" />
     <Compile Include="MBaseSingleton.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
