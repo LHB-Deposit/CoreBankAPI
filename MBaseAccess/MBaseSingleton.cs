@@ -373,7 +373,7 @@ namespace MBaseAccess
             byte[] oByte = new byte[0];
             try
             {
-                int i, idx, pos, StartIndex, EndIndex;
+                int idx, pos, StartIndex, EndIndex;
                 string DefaultValue;
 
                 string transactionCode = message.HeaderTransaction.MBaseTranCode;
