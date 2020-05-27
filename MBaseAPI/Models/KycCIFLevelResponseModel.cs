@@ -2,7 +2,7 @@
 
 namespace MBaseAPI.Models
 {
-    public class KycCIFLevelResponseModel
+    public class KycCIFLevelResponseModel : ResponseModel
     {
         public string CustomerNumber { get; set; }
         public string PreviousRiskLevel { get; set; }

@@ -96,7 +96,7 @@ namespace MBaseAccess
                         response.CFCIFT = res.Value.Trim();
                         break;
                     case nameof(VerifyCitizenResponse.CFNA1):
-                        response.CFNA1A = res.Value.Trim();
+                        response.CFNA1 = res.Value.Trim();
                         break;
                     case nameof(VerifyCitizenResponse.CFNA1A):
                         response.CFNA1A = res.Value.Trim();
@@ -257,7 +257,7 @@ namespace MBaseAccess
 
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    Logging.WriteLog("Create Input Message");
+                    Logging.WriteLog("Create Input Message TranCode:" + message.HeaderTransaction.MBaseTranCode);
 
                     byte[] headParameter = CreateInputMessage(message);
 
@@ -306,6 +306,7 @@ namespace MBaseAccess
             }
             catch (Exception ex)
             {
+                dictResult.Add("Exception", ex.Message);
                 Logging.WriteLog($"{ex.Message}: {ex.StackTrace}");
             }
             finally
@@ -573,7 +574,7 @@ namespace MBaseAccess
                         return string.Empty;
                 }
                 Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
-                return eC.GetString(data);
+                return eC.GetString(data).Replace("\u0000", string.Empty);
             }
             else if (type == DataType.B)
             {

@@ -15,10 +15,10 @@ namespace MBaseAccess.Entity
         [MatchParent("CustomerType")]
         public string CFCIFT { get; set; }
 
-        [MatchParent("CustomerNameTh")]
+        [MatchParent("CustomerNameThai")]
         public string CFNA1 { get; set; }
 
-        [MatchParent("CustomerNameTh1")]
+        [MatchParent("CustomerNameThai1")]
         public string CFNA1A { get; set; }
 
         [MatchParent("IDNumber")]
@@ -30,10 +30,10 @@ namespace MBaseAccess.Entity
         [MatchParent("IDIssueCountryCode")]
         public string CFCIDT { get; set; }
 
-        [MatchParent("CustomerNameEn")]
+        [MatchParent("CustomerNameEng")]
         public string CFASN1 { get; set; }
 
-        [MatchParent("CustomerNameEn1")]
+        [MatchParent("CustomerNameEng1")]
         public string CFASN2 { get; set; }
     }
 }
