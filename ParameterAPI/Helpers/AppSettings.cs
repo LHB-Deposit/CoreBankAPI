@@ -56,5 +56,13 @@ namespace ParameterAPI.Helpers
         public string OccupationKey { get; set; }
         public string OccupationValue { get; set; }
         public string OccupationFile { get; set; }
+
+        public string StateOfThailandKey { get; set; }
+        public string StateOfThailandValue { get; set; }
+        public string StateOfThailandFile { get; set; }
+
+        public string AddressTypeKey { get; set; }
+        public string AddressTypeValue { get; set; }
+        public string AddressTypeFile { get; set; }
     }
 }

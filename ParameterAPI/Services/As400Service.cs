@@ -210,7 +210,20 @@ namespace ParameterAPI.Services
         {
             return GetParameter(appSettings);
         }
+        public IEnumerable<ParameterModel> GetState(AppSettings appSettings)
+        {
+            var keyconcat = "TRIM(TRIM(SSSCOC) CONCAT '' CONCAT SSSTAC)";
+            string[] cond =
+            {
+                "SSSCOC = 'TH'"
+            };
+            return GetParameter(appSettings, cond, keyconcat);
+        }
+        public IEnumerable<ParameterModel> GetAddressType(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
 
-        
+
     }
 }

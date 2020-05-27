@@ -15,7 +15,7 @@ namespace MBaseAPI.Controllers
     public class MBaseController : ApiController
     {
         private readonly IMBaseService mBaseService;
-
+        
         public MBaseController(IMBaseService mBaseService)
         {
             this.mBaseService = mBaseService;
@@ -23,20 +23,45 @@ namespace MBaseAPI.Controllers
 
         // POST: api/MBase
         [HttpPost]
-        public VerifyCitizenIDResponseModel VerifyCitizenID([FromBody]VerifyCitizenIDModel verifyCitizen)
+        public VerifyCitizenResponseModel VerifyCitizenID([FromBody]VerifyCitizenRequestModel model)
         {
             var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
             var processDatetime = DateTime.Now;
-            return mBaseService.VerifyCitizenID(verifyCitizen, terminalId, processDatetime);
+            return mBaseService.VerifyCitizenID(model, terminalId, processDatetime);
         }
 
         // POST: api/MBase
         [HttpPost]
-        public CIFCreateResponseModel CIFCreate([FromBody]CIFCreateRequestModel cIFCreate)
+        public CIFCreateResponseModel CIFCreate([FromBody]CIFCreateRequestModel model)
         {
             var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
             var processDatetime = DateTime.Now;
-            return mBaseService.CIFCreation(cIFCreate, terminalId, processDatetime);
+            return mBaseService.CIFCreation(model, terminalId, processDatetime);
+        }
+
+        // POST: api/MBase
+        [HttpPost]
+        public CIFAddressResponseModel CIFAddressCreate([FromBody]CIFAddresRequestModel model)
+        {
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+            return mBaseService.CIFAddressCreate(model, terminalId, processDatetime);
+        }
+
+        [HttpPost]
+        public KycCIFLevelResponseModel KycCIFLevelCreate([FromBody]KycCIFLevelRequestModel model)
+        {
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+            return mBaseService.KycCIFLevelCreate(model, terminalId, processDatetime);
+        }
+
+        [HttpPost]
+        public KycAccountLevelResponseModel KycAccountLevelCreate([FromBody]KycAccountLevelRequestModel model)
+        {
+            var terminalId = Dns.GetHostEntry(HttpContext.Current.Request.ServerVariables["REMOTE_HOST"].ToString()).HostName.ToLower().Replace(".lhb.net", "");
+            var processDatetime = DateTime.Now;
+            return mBaseService.KycAccountLevelCreate(model, terminalId, processDatetime);
         }
 
         [Authorize(Roles = "Developer")]

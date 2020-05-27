@@ -153,6 +153,7 @@
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountTypeController.cs" />
+    <Compile Include="Controllers\AddressTypeController.cs" />
     <Compile Include="Controllers\BOTOccupationController.cs" />
     <Compile Include="Controllers\BusinessTypeController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Controllers\OccupationRiskController.cs" />
     <Compile Include="Controllers\PrefixNameController.cs" />
     <Compile Include="Controllers\PurposeOfAccountOpenController.cs" />
+    <Compile Include="Controllers\StateOfThailandController.cs" />
     <Compile Include="Controllers\SourceOfDepositController.cs" />
     <Compile Include="Controllers\SourceOfIncomeController.cs" />
     <Compile Include="Controllers\StatusController.cs" />

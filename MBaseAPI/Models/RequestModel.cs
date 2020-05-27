@@ -15,5 +15,7 @@ namespace MBaseAPI.Models
         [Required]
         [MaxLength(3)]
         public string BranchNumber { get; set; } = string.Empty;
+
+        public string TerminalId { get; set; }
     }
 }

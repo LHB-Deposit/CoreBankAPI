@@ -2,7 +2,7 @@
 
 namespace KYCAPI.Models
 {
-    public class CIFLevelRequestModel : CIFLevel
+    public class CIFLevelRequestModel
     {
     }
 }

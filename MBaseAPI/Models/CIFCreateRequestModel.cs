@@ -242,37 +242,5 @@ namespace MBaseAPI.Models
         [MaxLength(30)]
         public string ElectronicAddress { get; set; } = string.Empty;
 
-        [MaxLength(1)]
-        public string AddressType { get; set; } = string.Empty;
-
-        [MaxLength(30)]
-        public string HouseNo { get; set; } = string.Empty;
-
-        [MaxLength(10)]
-        public string VillageNo { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Building { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Alley { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Lane { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Road { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string SubDistrict { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Distirict { get; set; } = string.Empty;
-
-        [MaxLength(50)]
-        public string Province { get; set; } = string.Empty;
-
-        [MaxLength(9)]
-        public string PostalCode { get; set; } = string.Empty;
     }
 }

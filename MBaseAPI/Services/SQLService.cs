@@ -74,15 +74,15 @@ namespace MBaseAPI.Services
                         new SqlParameter("@MessageType", SqlDbType.VarChar, 5){ Value = message.MessageType },
                         new SqlParameter("@TranCode", SqlDbType.VarChar, 5){ Value = message.TranCode },
                         new SqlParameter("@Seq", SqlDbType.Int){ Value = message.Seq },
-                        new SqlParameter("@FieldName", SqlDbType.VarChar, 20){ Value = message.FieldName },
+                        new SqlParameter("@FieldName", SqlDbType.VarChar, 20){ Value = message.FieldName.Trim() },
                         new SqlParameter("@Length", SqlDbType.VarChar, 3){ Value = message.Length },
                         new SqlParameter("@DataType", SqlDbType.VarChar, 2){ Value = message.DataType },
                         new SqlParameter("@StartIndex", SqlDbType.Int){ Value = message.StartIndex },
-                        new SqlParameter("@EndIndex", SqlDbType.Int){ Value = message.EndIndex },
+                        new SqlParameter("@EndIndex", SqlDbType.Int){ Value = (int.Parse(message.Length) + message.StartIndex) - 1 },
                         new SqlParameter("@Mandatory", SqlDbType.VarChar, 3){ Value = message.Mandatory },
-                        new SqlParameter("@Description", SqlDbType.VarChar, 200){ Value = message.Description },
+                        new SqlParameter("@Description", SqlDbType.VarChar, 200){ Value = message.Description.Trim() },
                         new SqlParameter("@DefaultValue", SqlDbType.VarChar, 50){ Value = message.DefaultValue },
-                        new SqlParameter("@Remark", SqlDbType.NVarChar, 200){ Value = message.Remark }
+                        new SqlParameter("@Remark", SqlDbType.NVarChar, 200){ Value = message.Remark.Trim() }
                     };
 
                 SQLSingleton.Instance.RunStoreProcedure(SpName, param, out oMessage);

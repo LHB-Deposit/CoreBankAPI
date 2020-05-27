@@ -7,7 +7,7 @@ using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenIDResponseModel : ResponseModel
+    public class VerifyCitizenResponseModel : ResponseModel
     {
         [MatchParent("CFCIFN")]
         public string CustomerNumber { get; set; } = string.Empty;

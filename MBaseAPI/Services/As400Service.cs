@@ -50,10 +50,6 @@ namespace MBaseAPI.Services
             }
             return parameters;
         }
-        public IEnumerable<MessageTypeModel> GetMBaseHeaderMessages(string tranCode)
-        {
-            throw new NotImplementedException();
-        }
 
         public IEnumerable<MessageTypeModel> GetMBaseMessages(MBaseParameterModel parameterModel)
         {
@@ -69,9 +65,5 @@ namespace MBaseAPI.Services
             return ExecuteGetMessage(SQL);
         }
 
-        public IEnumerable<MessageTypeModel> GetMBaseResponseMessages(string tranCode)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

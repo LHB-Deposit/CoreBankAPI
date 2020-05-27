@@ -14,6 +14,8 @@ namespace ParameterAPI.Interfaces
         IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings);
         IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings);
         IEnumerable<ParameterModel> GetStatus(AppSettings appSettings);
+        IEnumerable<ParameterModel> GetState(AppSettings appSettings);
+        IEnumerable<ParameterModel> GetAddressType(AppSettings appSettings);
 
         IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null, string keyconcat = "");
         IEnumerable<ParameterModel> ExecuteGetParameter(string sql);
