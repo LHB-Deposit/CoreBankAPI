@@ -9,7 +9,7 @@ namespace MBaseAPI.Models
     public class RequestModel
     {
         [Required]
-        [MaxLength(7)]
+        [MaxLength(20)]
         public string ReferenceNo { get; set; }
 
         [Required]

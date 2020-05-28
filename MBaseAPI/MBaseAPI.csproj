@@ -203,6 +203,7 @@
     <Compile Include="Models\KycCIFLevelResponseModel.cs" />
     <Compile Include="Models\HeaderMessageModel.cs" />
     <Compile Include="Models\HeaderTransactionModel.cs" />
+    <Compile Include="Models\MBaseMessageModel.cs" />
     <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Models\MBaseParameterModel.cs" />
     <Compile Include="Models\RequestModel.cs" />

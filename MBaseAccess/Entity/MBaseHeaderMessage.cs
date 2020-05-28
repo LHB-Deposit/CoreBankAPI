@@ -1,21 +1,19 @@
 ﻿using SolutionUtility;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace MBaseAccess.Entity
 {
     public class MBaseHeaderMessage
     {
+        [Required]
         [MatchParent("SocketMessageLength")]
         public string SKTMLEN { get; set; }
 
+        [Required]
         [MatchParent("HeaderType")]
         public string SKTHEAD { get; set; }
 
+        [Required]
         [MatchParent("DeviceName")]
         public string SKTDEVN { get; set; }
 
@@ -40,9 +38,11 @@ namespace MBaseAccess.Entity
         [MatchParent("HeaderFormatId")]
         public string I13HFMID { get; set; }
 
+        [Required]
         [MatchParent("DataFormatId")]
         public string I13FMID { get; set; }
 
+        [Required]
         [MatchParent("SourceId")]
         public string I13SID { get; set; }
 
@@ -64,9 +64,11 @@ namespace MBaseAccess.Entity
         [MatchParent("ExchangeId")]
         public string I13XID { get; set; }
 
+        [Required]
         [MatchParent("ScenarioNumber")]
         public string I13SSNO { get; set; }
 
+        [Required]
         [MatchParent("TransactionCode")]
         public string I13TRCD { get; set; }
 
@@ -85,15 +87,18 @@ namespace MBaseAccess.Entity
         [MatchParent("NumberOfErrorsToBeLoaded")]
         public string I13NERR { get; set; }
 
+        [Required]
         [MatchParent("UserId")]
         public string I13USER { get; set; }
 
+        [Required]
         [MatchParent("TerminalId")]
         public string I13TMID { get; set; }
 
         [MatchParent("SupervisorId")]
         public string I13SUPV { get; set; }
 
+        [Required]
         [MatchParent("MoreRecordIndicator")]
         public string I13MORE { get; set; }
 
@@ -106,36 +111,44 @@ namespace MBaseAccess.Entity
         [MatchParent("ResponseResultCode")]
         public string HDRIND { get; set; }
 
+        [Required]
         [MatchParent("HUserID")]
         public string HDUSID { get; set; }
 
+        [Required]
         [MatchParent("ReferenceNumber")]
         public string HDRNUM { get; set; }
 
         [MatchParent("RebidNumber")]
         public string HDRBID { get; set; }
 
+        [Required]
         [MatchParent("EndOfGroupIndicator")]
         public string HDEGPI { get; set; }
 
         [MatchParent("BlockMessageNumber")]
         public string HDBMSG { get; set; }
 
+        [Required]
         [MatchParent("AppSourceID")]
         public string HDSRID { get; set; }
 
+        [Required]
         [MatchParent("DestinationID")]
         public string HDDSID { get; set; }
 
         [MatchParent("ReturnDataQueueName")]
         public string HDRTDQ { get; set; }
 
+        [Required]
         [MatchParent("ComputerTerminalID")]
         public string HDTMID { get; set; }
 
+        [Required]
         [MatchParent("BankNumber")]
         public string HDBKNO { get; set; }
 
+        [Required]
         [MatchParent("BranchNumber")]
         public string HDBRNO { get; set; }
 
@@ -148,21 +161,27 @@ namespace MBaseAccess.Entity
         [MatchParent("HostSupervisorId")]
         public string HDHSID { get; set; }
 
+        [Required]
         [MatchParent("TransactionCode")]
         public string HDTXCD { get; set; }
 
+        [Required]
         [MatchParent("ActionCode")]
         public string HDACCD { get; set; }
 
+        [Required]
         [MatchParent("TransactionMode")]
         public string HDTMOD { get; set; }
 
+        [Required]
         [MatchParent("NoOfRecordsToRetrieve")]
         public string HDNREC { get; set; }
 
+        [Required]
         [MatchParent("MoreRecordsIndicator")]
         public string HDMREC { get; set; }
 
+        [Required]
         [MatchParent("SearchMethod")]
         public string HDSMTD { get; set; }
 
@@ -196,9 +215,11 @@ namespace MBaseAccess.Entity
         [MatchParent("ResponseReasonForCode5")]
         public string HDRRE5 { get; set; }
 
+        [Required]
         [MatchParent("DateInFromClient")]
         public string HDDTIN { get; set; }
 
+        [Required]
         [MatchParent("TimeInFromClient")]
         public string HDTMIN { get; set; }
 
