@@ -1,8 +1,12 @@
-﻿using SolutionUtility;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MBaseAPI.Models
+namespace SolutionUtility
 {
-    public class ResponseModel
+    public class BaseResponseModel
     {
         [MatchParent("ErrorCode")]
         public string ErrorCode { get; set; }

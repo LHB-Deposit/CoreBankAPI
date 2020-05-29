@@ -1,8 +1,8 @@
-﻿using MBaseAccess.Entity;
+﻿using SolutionUtility;
 
 namespace MBaseAPI.Models
 {
-    public class KycCIFLevelResponseModel : ResponseModel
+    public class KycCIFLevelResponseModel : BaseResponseModel
     {
         public string CustomerNumber { get; set; }
         public string PreviousRiskLevel { get; set; }

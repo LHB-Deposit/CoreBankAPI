@@ -2,7 +2,7 @@
 
 namespace MBaseAPI.Models
 {
-    public class KycAccountLevelResponseModel : ResponseModel
+    public class KycAccountLevelResponseModel : BaseResponseModel
     {
         [MatchParent("KCATYP")]
         public string AccountType { get; set; }

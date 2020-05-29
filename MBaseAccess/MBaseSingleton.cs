@@ -296,8 +296,6 @@ namespace MBaseAccess
                             dictResult.Add(res.FieldName.Trim(), ConvertDataResponse(outStream, startIndex, endIndex, dType).Trim());
                         }
                     }
-
-                    if(dictResult.Count > 0) Logging.WriteLog($"Response: " + string.Join(", ", dictResult));
                 }
                 else
                 {
@@ -479,7 +477,7 @@ namespace MBaseAccess
 
             if ((type == DataType.A) || (type == DataType.S))
             {//if convert to EBCDIC or Zoned Decimal
-                Encoding eC = JonSkeet.Ebcdic.EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
+                Encoding eC = EbcdicEncoding.GetEncoding(20838);//"EBCDIC-US"
 
                 if (data.Length < len)
                     data = data.PadRight(len, data == "0" ? '0' : ' ');

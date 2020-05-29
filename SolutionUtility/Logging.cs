@@ -32,5 +32,21 @@ namespace SolutionUtility
             }
             catch { }
         }
+
+        public static void WriteLog<T>(T obj)
+        {
+            Dictionary<string, object> dictLog = new Dictionary<string, object>();
+            
+            var objProperties = obj.GetType().GetProperties();
+            foreach (var prop in objProperties)
+            {
+                dictLog.Add(prop.Name, prop.GetValue(obj));
+            }
+            string logTitle = string.Empty;
+            if (obj.GetType().Name.Contains("Request")) logTitle = "Request";
+            else if (obj.GetType().Name.Contains("Response")) logTitle = "Response";
+
+            WriteLog($"{logTitle}: {string.Join(", ", dictLog)}");
+        }
     }
 }

@@ -1,13 +1,8 @@
-﻿using MBaseAccess.Entity;
-using SolutionUtility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using SolutionUtility;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenResponseModel : ResponseModel
+    public class VerifyCitizenResponseModel : BaseResponseModel
     {
         [MatchParent("CFCIFN")]
         public string CustomerNumber { get; set; } = string.Empty;
