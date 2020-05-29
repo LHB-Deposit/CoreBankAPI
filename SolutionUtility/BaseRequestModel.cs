@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MBaseAPI.Models
+namespace SolutionUtility
 {
-    public class RequestModel
+    public class BaseRequestModel
     {
         [Required]
-        [MaxLength(20)]
+        [RegularExpression("")]
+        [StringLength(20, MinimumLength = 20)]
         public string ReferenceNo { get; set; }
 
         [Required]
-        [MaxLength(3)]
+        [StringLength(3, MinimumLength = 3)]
         public string BranchNumber { get; set; } = string.Empty;
 
+        [Required]
+        [StringLength(10)]
         public string TerminalId { get; set; }
     }
 }

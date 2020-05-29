@@ -206,8 +206,6 @@
     <Compile Include="Models\MBaseMessageModel.cs" />
     <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Models\MBaseParameterModel.cs" />
-    <Compile Include="Models\RequestModel.cs" />
-    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\VerifyCitizenRequestModel.cs" />
     <Compile Include="Models\VerifyCitizenResponseModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

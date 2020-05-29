@@ -24,6 +24,7 @@ namespace MBaseAPI.Controllers
 
         // POST: api/MBase
         [HttpPost]
+        [ValidateModel]
         public VerifyCitizenResponseModel VerifyCitizenID([FromBody]VerifyCitizenRequestModel model)
         {
             

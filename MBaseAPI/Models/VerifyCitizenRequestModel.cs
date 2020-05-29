@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using SolutionUtility;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace MBaseAPI.Models
 {
-    public class VerifyCitizenRequestModel : RequestModel
+    public class VerifyCitizenRequestModel : BaseRequestModel
     {
         [Required]
-        [MaxLength(4)]
+        [StringLength(4)]
         public string TranCode { get; set; }
 
         [Required]
-        [MaxLength(15)]
+        [StringLength(15)]
         public string IDNumber { get; set; }
 
         [Required]
-        [MaxLength(2)]
+        [StringLength(2)]
         public string IDTypeCode { get; set; }
 
         [Required]
-        [MaxLength(3)]
+        [StringLength(3)]
         public string IDIssueCountryCode { get; set; }
     }
 }

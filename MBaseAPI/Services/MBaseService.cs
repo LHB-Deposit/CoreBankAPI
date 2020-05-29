@@ -27,17 +27,25 @@ namespace MBaseAPI.Services
         public VerifyCitizenResponseModel VerifyCitizenID(VerifyCitizenRequestModel requestModel, DateTime processDateTime)
         {
             Logging.WriteLog(requestModel);
-            MBaseMessageModel mBaseMessageModel = VerifyCitizenMessage(requestModel, processDateTime);
-
-            var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
-            // MBase Verify Citizen ID
-            var mBaseResponse = MBaseSingleton.Instance.VerifyCitizenID(mBaseMessage);
-
-            // Output Matching Object
             VerifyCitizenResponseModel responseModel = new VerifyCitizenResponseModel();
-            PropertyMatcher<VerifyCitizenResponse, VerifyCitizenResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+            try
+            {
+                MBaseMessageModel mBaseMessageModel = VerifyCitizenMessage(requestModel, processDateTime);
 
-            Logging.WriteLog(responseModel);
+                var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
+                // MBase Verify Citizen ID
+                var mBaseResponse = MBaseSingleton.Instance.VerifyCitizenID(mBaseMessage);
+
+                // Output Matching Object
+                
+                PropertyMatcher<VerifyCitizenResponse, VerifyCitizenResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+
+                Logging.WriteLog(responseModel);
+            }
+            catch (Exception ex)
+            {
+                Logging.WriteLog(ex.Message + ":" + ex.StackTrace);
+            }
             return responseModel;
         }
         public CIFCreateResponseModel CIFCreation(CIFCreateRequestModel requestModel, DateTime processDateTime)
@@ -681,13 +689,13 @@ namespace MBaseAPI.Services
                     case nameof(MBaseHeaderMessage.SKTMLEN):
                         item.DefaultValue = ((MBaseSingleton.Instance.HeaderMessageLength + header.InputLength) - 4).ToString();
                         break;
-                    case nameof(MBaseHeaderMessage.SKTDEVN): // DB
+                    case nameof(MBaseHeaderMessage.SKTDEVN):
                         item.DefaultValue = MBaseSingleton.Instance.ServerHost;
                         break;
-                    case nameof(MBaseHeaderMessage.SKTSKNB): // DB
-                        item.DefaultValue = "2";
-                        break;
-                    case nameof(MBaseHeaderMessage.SKTPORT): // DB
+                    //case nameof(MBaseHeaderMessage.SKTSKNB): // DB
+                    //    item.DefaultValue = he;
+                    //    break;
+                    case nameof(MBaseHeaderMessage.SKTPORT):
                         item.DefaultValue = MBaseSingleton.Instance.ServerPort.ToString();
                         break;
                     case nameof(MBaseHeaderMessage.I13SSNO):
