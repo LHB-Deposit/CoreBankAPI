@@ -45,6 +45,7 @@ namespace SolutionUtility
             string logTitle = string.Empty;
             if (obj.GetType().Name.Contains("Request")) logTitle = "Request";
             else if (obj.GetType().Name.Contains("Response")) logTitle = "Response";
+            else logTitle = obj.GetType().Name;
 
             WriteLog($"{logTitle}: {string.Join(", ", dictLog)}");
         }

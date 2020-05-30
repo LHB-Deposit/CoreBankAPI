@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace MBaseAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class MBaseController : ApiController
     {
         private readonly IMBaseService mBaseService;

@@ -257,8 +257,8 @@ namespace MBaseAccess
 
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    Logging.WriteLog("Create Input Message TranCode:" + message.HeaderTransaction.MBaseTranCode);
-
+                    Logging.WriteLog($"Create Input Message TranCode: {message.HeaderTransaction.MBaseTranCode}");
+                    Logging.WriteLog("RefNo: " + message.HeaderMessages.Where(s => s.FieldName == nameof(MBaseHeaderMessage.HDRNUM)).Select(s => s.DefaultValue).FirstOrDefault());
                     byte[] headParameter = CreateInputMessage(message);
 
                     Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");

@@ -10,8 +10,7 @@ namespace SolutionUtility
     public class BaseRequestModel
     {
         [Required]
-        [RegularExpression("")]
-        [StringLength(20, MinimumLength = 20)]
+        [StringLength(23, MinimumLength = 23)]
         public string ReferenceNo { get; set; }
 
         [Required]

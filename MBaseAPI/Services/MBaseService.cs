@@ -673,10 +673,19 @@ namespace MBaseAPI.Services
                 HDNREC = headerTransactionModel.NoOfRecToRetrieve,
                 I13TMID = terminalId,
                 HDTMID = terminalId,
-                HDRNUM = referenceNo.Substring(13, 7),
+                HDRNUM = RandomReferenceNo(referenceNo.Substring(16, 7)),
                 HDDTIN = processDateTime.ToString("ddMMyyyy"),
                 HDTMIN = processDateTime.ToString("HHmmss")
             };
+        }
+
+        private string RandomReferenceNo(string strRef)
+        {
+            int maxValue = 9999999;
+            int minValue = 0;
+            Random random = new Random();
+            if (!string.IsNullOrEmpty(strRef)) minValue = int.Parse(strRef);
+            return random.Next(minValue, maxValue).ToString("D7");
         }
         private IEnumerable<MessageTypeModel> GetHeaderMessage(HeaderMessageModel header)
         {
