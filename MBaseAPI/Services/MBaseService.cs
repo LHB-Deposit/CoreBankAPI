@@ -115,7 +115,7 @@ namespace MBaseAPI.Services
         private MBaseMessageModel VerifyCitizenMessage(VerifyCitizenRequestModel requestModel, DateTime processDateTime)
         {
             var headerTransaction = sQLService.GetHeaderTransaction(requestModel.TranCode);
-            HeaderMessageModel header = InItializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
+            HeaderMessageModel header = InitializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
             IEnumerable<MessageTypeModel> headerMessages = GetHeaderMessage(header);
 
             var inputMessages = sQLService.GetInputMessages(requestModel.TranCode);
@@ -148,7 +148,7 @@ namespace MBaseAPI.Services
         {
             // Header
             var headerTransaction = sQLService.GetHeaderTransaction(requestModel.TranCode);
-            HeaderMessageModel header = InItializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
+            HeaderMessageModel header = InitializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
             IEnumerable<MessageTypeModel> headerMessages = GetHeaderMessage(header);
 
             // Input
@@ -338,7 +338,7 @@ namespace MBaseAPI.Services
                         s.DefaultValue = requestModel.AccountType;
                         break;
                     case nameof(CIFAccount.TLBSRC):
-                        s.DefaultValue = requestModel.SourceOfFunds;
+                        s.DefaultValue = requestModel.TransactionSource;
                         break;
                     case nameof(CIFAccount.CRTAC):
                         s.DefaultValue = requestModel.CreateAccountFlag;
@@ -375,7 +375,7 @@ namespace MBaseAPI.Services
         private MBaseMessageModel CIFAddressCreateMessage(CIFAddresRequestModel requestModel, DateTime processDateTime)
         {
             var headerTransaction = sQLService.GetHeaderTransaction(requestModel.TranCode);
-            HeaderMessageModel header = InItializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
+            HeaderMessageModel header = InitializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
             IEnumerable<MessageTypeModel> headerMessages = GetHeaderMessage(header);
 
             var inputMessages = sQLService.GetInputMessages(requestModel.TranCode);
@@ -464,7 +464,7 @@ namespace MBaseAPI.Services
         private MBaseMessageModel KycCIFLevelCreateMessage(KycCIFLevelRequestModel requestModel, DateTime processDateTime)
         {
             var headerTransaction = sQLService.GetHeaderTransaction(requestModel.TranCode);
-            HeaderMessageModel header = InItializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
+            HeaderMessageModel header = InitializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
             IEnumerable<MessageTypeModel> headerMessages = GetHeaderMessage(header);
 
             var inputMessages = sQLService.GetInputMessages(requestModel.TranCode);
@@ -580,7 +580,7 @@ namespace MBaseAPI.Services
         private MBaseMessageModel KycAccountLevelCreateMessage(KycAccountLevelRequestModel requestModel, DateTime processDateTime)
         {
             var headerTransaction = sQLService.GetHeaderTransaction(requestModel.TranCode);
-            HeaderMessageModel header = InItializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
+            HeaderMessageModel header = InitializeHeader(headerTransaction, requestModel.BranchNumber, requestModel.ReferenceNo, requestModel.TerminalId, processDateTime);
             IEnumerable<MessageTypeModel> headerMessages = GetHeaderMessage(header);
 
             var inputMessages = sQLService.GetInputMessages(requestModel.TranCode);
@@ -659,7 +659,7 @@ namespace MBaseAPI.Services
                 ResponseMessages = responseMessages
             };
         }
-        private HeaderMessageModel InItializeHeader(HeaderTransactionModel headerTransactionModel, string branchNumber, string referenceNo, string terminalId, DateTime processDateTime)
+        private HeaderMessageModel InitializeHeader(HeaderTransactionModel headerTransactionModel, string branchNumber, string referenceNo, string terminalId, DateTime processDateTime)
         {
             return new HeaderMessageModel
             {
@@ -673,7 +673,7 @@ namespace MBaseAPI.Services
                 HDNREC = headerTransactionModel.NoOfRecToRetrieve,
                 I13TMID = terminalId,
                 HDTMID = terminalId,
-                HDRNUM = RandomReferenceNo(referenceNo.Substring(16, 7)),
+                HDRNUM = RandomReferenceNo(referenceNo),
                 HDDTIN = processDateTime.ToString("ddMMyyyy"),
                 HDTMIN = processDateTime.ToString("HHmmss")
             };

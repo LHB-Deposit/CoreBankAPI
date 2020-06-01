@@ -224,7 +224,7 @@ namespace MBaseAPI.Models
 
         [Required]
         [StringLength(1)]
-        public string SourceOfFunds { get; set; }
+        public string TransactionSource { get; set; }
 
         [Required]
         [StringLength(1)]
