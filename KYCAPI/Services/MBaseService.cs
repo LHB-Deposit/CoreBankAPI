@@ -27,32 +27,54 @@ namespace KYCAPI.Services
         public KycCIFLevelResponseModel CreateKycCIFLevel(KycCIFLevelRequestModel requestModel, DateTime processDateTime)
         {
             Logging.WriteLog(requestModel);
-            MBaseMessageModel mBaseMessageModel = CreateKycCIFLevelMessage(requestModel, processDateTime);
-
-            var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
-            // MBase CIFCreate
-            var mBaseResponse = MBaseSingleton.Instance.KycCIFLevelCreateMessage(mBaseMessage);
-
-            // Output Matching Object
             KycCIFLevelResponseModel responseModel = new KycCIFLevelResponseModel();
-            PropertyMatcher<KycCIFLevelResponse, KycCIFLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+            try
+            {
+                MBaseMessageModel mBaseMessageModel = CreateKycCIFLevelMessage(requestModel, processDateTime);
 
-            Logging.WriteLog(responseModel);
+                var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
+                // MBase CIFCreate
+                var mBaseResponse = MBaseSingleton.Instance.KycCIFLevelCreateMessage(mBaseMessage);
+
+                // Output Matching Object
+
+                PropertyMatcher<KycCIFLevelResponse, KycCIFLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+            }
+            catch (Exception ex)
+            {
+                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorDescription = ex.Message;
+            }
+            finally
+            {
+                Logging.WriteLog(responseModel);
+            }
             return responseModel;
         }
         public KycAccountLevelResponseModel CreateKycAccountLevel(KycAccountLevelRequestModel requestModel, DateTime processDateTime)
         {
             Logging.WriteLog(requestModel);
-            MBaseMessageModel mBaseMessageModel = CreateKycAccountLevelMessage(requestModel, processDateTime);
-
-            var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
-            // MBase CIFCreate
-            var mBaseResponse = MBaseSingleton.Instance.KycAccountLevelCreateMessage(mBaseMessage);
-
-            // Output Matching Object
             KycAccountLevelResponseModel responseModel = new KycAccountLevelResponseModel();
-            PropertyMatcher<KycAccountLevelResponse, KycAccountLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
-            Logging.WriteLog(responseModel);
+            try
+            {
+                MBaseMessageModel mBaseMessageModel = CreateKycAccountLevelMessage(requestModel, processDateTime);
+
+                var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
+                // MBase CIFCreate
+                var mBaseResponse = MBaseSingleton.Instance.KycAccountLevelCreateMessage(mBaseMessage);
+
+                // Output Matching Object
+                PropertyMatcher<KycAccountLevelResponse, KycAccountLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
+            }
+            catch (Exception ex)
+            {
+                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorDescription = ex.Message;
+            }
+            finally
+            {
+                Logging.WriteLog(responseModel);
+            }
             return responseModel;
         }
         public KycRiskLevelResponseModel CheckKycRiskLevel(KycRiskLevelRequestModel requestModel, AppSettings appSettings)
@@ -74,14 +96,14 @@ namespace KYCAPI.Services
                 }
                 else
                 {
-                    responseModel.ErrorCode = "Query";
+                    responseModel.ErrorCode = ErrorCode.SQL0001;
                     responseModel.ErrorDescription = oMessage;
                     Logging.WriteLog(oMessage);
                 }
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = "Exception";
+                responseModel.ErrorCode = ErrorCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
                 Logging.WriteLog(ex.Message);
             }
@@ -300,19 +322,12 @@ namespace KYCAPI.Services
                 HDNREC = headerTransactionModel.NoOfRecToRetrieve,
                 I13TMID = terminalId,
                 HDTMID = terminalId,
-                HDRNUM = RandomReferenceNo(referenceNo),
+                HDRNUM = NumberUtils.RandomReferenceNo(referenceNo.Substring(16, 7)).ToString("D7"),
                 HDDTIN = processDateTime.ToString("ddMMyyyy"),
                 HDTMIN = processDateTime.ToString("HHmmss")
             };
         }
-        private string RandomReferenceNo(string strRef)
-        {
-            int maxValue = 9999999;
-            int minValue = 0;
-            Random random = new Random();
-            if (!string.IsNullOrEmpty(strRef)) minValue = int.Parse(strRef);
-            return random.Next(minValue, maxValue).ToString("D7");
-        }
+
         // TodoFix UserAS400
         private IEnumerable<MessageTypeModel> GetHeaderMessage(HeaderMessageModel header)
         {

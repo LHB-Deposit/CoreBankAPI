@@ -252,21 +252,21 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
-                    Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
-                    Logging.WriteLog("Connected");
+                    //Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
+                    //Logging.WriteLog("Connected");
 
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    Logging.WriteLog($"Create Input Message TranCode: {message.HeaderTransaction.MBaseTranCode}");
-                    Logging.WriteLog("RefNo: " + message.HeaderMessages.Where(s => s.FieldName == nameof(MBaseHeaderMessage.HDRNUM)).Select(s => s.DefaultValue).FirstOrDefault());
+                    //Logging.WriteLog($"Create Input Message TranCode: {message.HeaderTransaction.MBaseTranCode}");
+                    //Logging.WriteLog("RefNo: " + message.HeaderMessages.Where(s => s.FieldName == nameof(MBaseHeaderMessage.HDRNUM)).Select(s => s.DefaultValue).FirstOrDefault());
                     byte[] headParameter = CreateInputMessage(message);
 
-                    Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
+                    //Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
 
                     int rsMsgLength = HeaderMessageLength + inputLength + responseLength;
-                    Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
+                    //Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
 
                     byte[] outStream = new byte[rsMsgLength];
                     serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
@@ -274,7 +274,7 @@ namespace MBaseAccess
                     bool inputMessageValid = CheckInputMessageValid(ref outStream, ref dictResult);
                     if (inputMessageValid)
                     {
-                        Logging.WriteLog("Write Response");
+                        //Logging.WriteLog("Write Response");
                         foreach (var res in message.ResponseMessages)
                         {
                             int startIndex = Convert.ToInt32(res.StartIndex) - 1;
@@ -299,13 +299,12 @@ namespace MBaseAccess
                 }
                 else
                 {
-                    Logging.WriteLog($"Cannot connect to { ServerHost }");
+                    dictResult.Add(ErrorCode.NTW0001, $"Cannot connect to { ServerHost }");
                 }
             }
             catch (Exception ex)
             {
-                dictResult.Add("Exception", ex.Message);
-                Logging.WriteLog($"{ex.Message}: {ex.StackTrace}");
+                dictResult.Add(ErrorCode.EXC0001, ex.Message);
             }
             finally
             {
@@ -349,7 +348,7 @@ namespace MBaseAccess
 
                     if (!string.IsNullOrEmpty(strDesc.Trim()))
                     {
-                        Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
+                        //Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
                         strError.Add(strCode.Trim(), strDesc.Trim());
                     }
                     else
@@ -385,7 +384,7 @@ namespace MBaseAccess
 
                 int rqMsgLength = HeaderMessageLength + Convert.ToInt16(inputLength);
 
-                Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
+                //Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
                 oByte = new byte[rqMsgLength];
 
                 #region Header
@@ -467,7 +466,7 @@ namespace MBaseAccess
             }
             catch (Exception ex)
             {
-                Logging.WriteLog(ex.Message + ":" + ex.StackTrace);
+                throw ex;
             }
             return oByte;
         }

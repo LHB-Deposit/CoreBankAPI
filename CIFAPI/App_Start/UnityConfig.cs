@@ -1,10 +1,10 @@
-using KYCAPI.Interfaces;
-using KYCAPI.Services;
+using CIFAPI.Interfaces;
+using CIFAPI.Services;
 using System;
 
 using Unity;
 
-namespace KYCAPI
+namespace CIFAPI
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
@@ -44,8 +44,8 @@ namespace KYCAPI
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<IMBaseService, MBaseService>();
             container.RegisterType<ISQLService, SQLService>();
+            container.RegisterType<IMBaseService, MBaseService>();
         }
     }
 }

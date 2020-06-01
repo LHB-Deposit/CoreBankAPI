@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace KYCAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class KYCController : ApiController
     {
         private readonly IMBaseService mBaseService;

@@ -43,8 +43,8 @@ namespace SolutionUtility
                 dictLog.Add(prop.Name, prop.GetValue(obj));
             }
             string logTitle = string.Empty;
-            if (obj.GetType().Name.Contains("Request")) logTitle = "Request";
-            else if (obj.GetType().Name.Contains("Response")) logTitle = "Response";
+            if (obj.GetType().Name.Contains("Request")) logTitle = "Req";
+            else if (obj.GetType().Name.Contains("Response")) logTitle = "Res";
             else logTitle = obj.GetType().Name;
 
             WriteLog($"{logTitle}: {string.Join(", ", dictLog)}");

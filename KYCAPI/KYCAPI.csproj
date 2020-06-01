@@ -154,7 +154,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
-    <Compile Include="Interfaces\IAs400Service.cs" />
     <Compile Include="Interfaces\IMBaseService.cs" />
     <Compile Include="Interfaces\ISQLService.cs" />
     <Compile Include="Models\HeaderMessageModel.cs" />
@@ -168,7 +167,6 @@
     <Compile Include="Models\MBaseMessageModel.cs" />
     <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\As400Service.cs" />
     <Compile Include="Services\MBaseService.cs" />
     <Compile Include="Services\SQLService.cs" />
   </ItemGroup>
