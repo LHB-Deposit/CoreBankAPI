@@ -87,7 +87,7 @@ namespace MBaseAPI.Services
 
             var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
             // MBase CIFCreate
-            var mBaseResponse = MBaseSingleton.Instance.KycCIFLevelCreateMessage(mBaseMessage);
+            var mBaseResponse = MBaseSingleton.Instance.CreateKycCIFLevelMessage(mBaseMessage);
 
             // Output Matching Object
             KycCIFLevelResponseModel responseModel = new KycCIFLevelResponseModel();
@@ -103,7 +103,7 @@ namespace MBaseAPI.Services
 
             var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
             // MBase CIFCreate
-            var mBaseResponse = MBaseSingleton.Instance.KycAccountLevelCreateMessage(mBaseMessage);
+            var mBaseResponse = MBaseSingleton.Instance.CreateKycAccountLevelMessage(mBaseMessage);
 
             // Output Matching Object
             KycAccountLevelResponseModel responseModel = new KycAccountLevelResponseModel();

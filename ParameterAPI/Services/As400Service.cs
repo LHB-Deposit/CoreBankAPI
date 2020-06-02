@@ -224,6 +224,9 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings);
         }
 
-
+        public IEnumerable<ParameterModel> GetFatcaDescription(AppSettings appSettings)
+        {
+            return GetParameter(appSettings);
+        }
     }
 }

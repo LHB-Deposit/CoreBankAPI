@@ -34,5 +34,11 @@ namespace SolutionUtility
 
         // Network
         public static string NTW0001 = "NTW0001";
+
+        // Information
+        public static string INF0001 = "INF0001";
+
+        // MBase
+        public static string MBX0001 = "MBX0001";
     }
 }

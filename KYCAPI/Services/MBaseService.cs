@@ -34,10 +34,9 @@ namespace KYCAPI.Services
 
                 var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
                 // MBase CIFCreate
-                var mBaseResponse = MBaseSingleton.Instance.KycCIFLevelCreateMessage(mBaseMessage);
+                var mBaseResponse = MBaseSingleton.Instance.CreateKycCIFLevelMessage(mBaseMessage);
 
                 // Output Matching Object
-
                 PropertyMatcher<KycCIFLevelResponse, KycCIFLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
             }
             catch (Exception ex)
@@ -61,7 +60,7 @@ namespace KYCAPI.Services
 
                 var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
                 // MBase CIFCreate
-                var mBaseResponse = MBaseSingleton.Instance.KycAccountLevelCreateMessage(mBaseMessage);
+                var mBaseResponse = MBaseSingleton.Instance.CreateKycAccountLevelMessage(mBaseMessage);
 
                 // Output Matching Object
                 PropertyMatcher<KycAccountLevelResponse, KycAccountLevelResponseModel>.GenerateMatchedObject(mBaseResponse, responseModel);
@@ -88,10 +87,18 @@ namespace KYCAPI.Services
             {
                 if(AS400Singleton.Instance.ExecuteSql(sql, out DataTable dt, out string oMessage))
                 {
-                    foreach (DataRow row in dt.Rows)
+                    if(dt.Rows.Count > 0)
                     {
-                        responseModel.CustomerNumber = row[nameof(KCMAST.KCCIFN)].ToString();
-                        responseModel.RiskLevel = row[nameof(KCMAST.KCRRKL)].ToString();
+                        foreach (DataRow row in dt.Rows)
+                        {
+                            responseModel.CustomerNumber = row[nameof(KCMAST.KCCIFN)].ToString();
+                            responseModel.RiskLevel = row[nameof(KCMAST.KCRRKL)].ToString();
+                        }
+                    }
+                    else
+                    {
+                        responseModel.ErrorCode = ErrorCode.INF0001;
+                        responseModel.ErrorDescription = "Record not found";
                     }
                 }
                 else

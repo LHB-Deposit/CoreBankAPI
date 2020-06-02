@@ -1,4 +1,4 @@
-﻿using SQLDataAccess.Entity;
+﻿using SolutionUtility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,8 @@ using System.Web;
 
 namespace FATCAAPI.Models
 {
-    public class VerifyFATCAFlagRequesstModel : RequestBaseEntity
+    public class FlagRequesstModel : BaseRequestModel
     {
+
     }
 }

@@ -6,11 +6,11 @@ using System.Web;
 
 namespace FATCAAPI.Models
 {
-    public class FatcaResponseModel : BaseRequestModel
+    public class FlagResponseModel : BaseResponseModel
     {
         public string CustomerId { get; set; }
         public string CustomerNumber { get; set; }
-        public string YorN { get; set; }
+        public bool Flag { get; set; }
         public string FATCACode { get; set; }
     }
 }

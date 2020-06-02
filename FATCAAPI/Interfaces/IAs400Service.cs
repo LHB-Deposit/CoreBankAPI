@@ -9,6 +9,6 @@ namespace FATCAAPI.Interfaces
 {
     public interface IAs400Service
     {
-        IEnumerable<FatcaResponseModel> Get();
+        IEnumerable<FlagResponseModel> Get();
     }
 }

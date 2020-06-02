@@ -11,17 +11,17 @@ using System.Web.Http;
 namespace FATCAAPI.Controllers
 {
     //[Authorize]
-    public class VerifyFatcaFlagController : ApiController
+    public class FatcaController : ApiController
     {
         private readonly IAs400Service service;
 
-        public VerifyFatcaFlagController(IAs400Service service)
+        public FatcaController(IAs400Service service)
         {
             this.service = service;
         }
 
         [HttpGet]
-        public IEnumerable<FatcaResponseModel> Get()
+        public IEnumerable<FlagResponseModel> Get()
         {
             return service.Get();
         }
