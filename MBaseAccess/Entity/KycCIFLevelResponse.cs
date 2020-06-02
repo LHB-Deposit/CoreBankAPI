@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class KycCIFLevelResponse
+    public class KycCIFLevelResponse : ResponseMessage
     {
         [MatchParent("CustomerNumber")]
         public string KCCIFN { get; set; }

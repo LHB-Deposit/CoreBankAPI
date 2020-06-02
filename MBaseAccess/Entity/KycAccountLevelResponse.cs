@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MBaseAccess.Entity
 {
-    public class KycAccountLevelResponse
+    public class KycAccountLevelResponse : ResponseMessage
     {
         [MatchParent("AccountType")]
         public string KCATYP { get; set; }
