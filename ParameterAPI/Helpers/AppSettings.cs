@@ -64,5 +64,10 @@ namespace ParameterAPI.Helpers
         public string AddressTypeKey { get; set; }
         public string AddressTypeValue { get; set; }
         public string AddressTypeFile { get; set; }
+
+        public string FatcaDescriptionKey { get; set; }
+        public string FatcaDescriptionTHValue { get; set; }
+        public string FatcaDescriptionENValue { get; set; }
+        public string FatcaDescriptionFile { get; set; }
     }
 }

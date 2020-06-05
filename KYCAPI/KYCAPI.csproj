@@ -154,11 +154,21 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
-    <Compile Include="Interfaces\IAs400Service.cs" />
-    <Compile Include="Models\CIFLevelRequestModel.cs" />
-    <Compile Include="Models\CIFLevelResponseModel.cs" />
+    <Compile Include="Interfaces\IMBaseService.cs" />
+    <Compile Include="Interfaces\ISQLService.cs" />
+    <Compile Include="Models\HeaderMessageModel.cs" />
+    <Compile Include="Models\HeaderTransactionModel.cs" />
+    <Compile Include="Models\KycAccountLevelRequestModel.cs" />
+    <Compile Include="Models\KycAccountLevelResponseModel.cs" />
+    <Compile Include="Models\KycCIFLevelRequestModel.cs" />
+    <Compile Include="Models\KycCIFLevelResponseModel.cs" />
+    <Compile Include="Models\KycRiskLevelRequestModel.cs" />
+    <Compile Include="Models\KycRiskLevelResponseModel.cs" />
+    <Compile Include="Models\MBaseMessageModel.cs" />
+    <Compile Include="Models\MessageTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\As400Service.cs" />
+    <Compile Include="Services\MBaseService.cs" />
+    <Compile Include="Services\SQLService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -189,6 +199,10 @@
     <ProjectReference Include="..\SolutionUtility\SolutionUtility.csproj">
       <Project>{5244D46D-8317-430B-A7E4-22B9CAB8ED91}</Project>
       <Name>SolutionUtility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDataAccess\SQLDataAccess.csproj">
+      <Project>{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440}</Project>
+      <Name>SQLDataAccess</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CIFAPI.Interfaces
+namespace SolutionUtility
 {
-    public interface IAs400Service
+    public class StringUtils
     {
     }
 }

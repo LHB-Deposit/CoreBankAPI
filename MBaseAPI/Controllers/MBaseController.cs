@@ -12,7 +12,7 @@ using System.Web.Http;
 
 namespace MBaseAPI.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class MBaseController : ApiController
     {
         private readonly IMBaseService mBaseService;
@@ -34,6 +34,7 @@ namespace MBaseAPI.Controllers
 
         // POST: api/MBase
         [HttpPost]
+        [ValidateModel]
         public CIFCreateResponseModel CIFCreate([FromBody]CIFCreateRequestModel model)
         {
             
@@ -43,6 +44,7 @@ namespace MBaseAPI.Controllers
 
         // POST: api/MBase
         [HttpPost]
+        [ValidateModel]
         public CIFAddressResponseModel CIFAddressCreate([FromBody]CIFAddresRequestModel model)
         {
             
@@ -50,21 +52,21 @@ namespace MBaseAPI.Controllers
             return mBaseService.CIFAddressCreate(model, processDatetime);
         }
 
-        [HttpPost]
-        public KycCIFLevelResponseModel KycCIFLevelCreate([FromBody]KycCIFLevelRequestModel model)
-        {
+        //[HttpPost]
+        //public KycCIFLevelResponseModel KycCIFLevelCreate([FromBody]KycCIFLevelRequestModel model)
+        //{
             
-            var processDatetime = DateTime.Now;
-            return mBaseService.KycCIFLevelCreate(model, processDatetime);
-        }
+        //    var processDatetime = DateTime.Now;
+        //    return mBaseService.KycCIFLevelCreate(model, processDatetime);
+        //}
 
-        [HttpPost]
-        public KycAccountLevelResponseModel KycAccountLevelCreate([FromBody]KycAccountLevelRequestModel model)
-        {
+        //[HttpPost]
+        //public KycAccountLevelResponseModel KycAccountLevelCreate([FromBody]KycAccountLevelRequestModel model)
+        //{
             
-            var processDatetime = DateTime.Now;
-            return mBaseService.KycAccountLevelCreate(model, processDatetime);
-        }
+        //    var processDatetime = DateTime.Now;
+        //    return mBaseService.KycAccountLevelCreate(model, processDatetime);
+        //}
 
         [Authorize(Roles = "Developer")]
         [HttpPost]

@@ -159,6 +159,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\DocumentTypeController.cs" />
     <Compile Include="Controllers\EducationLevelController.cs" />
+    <Compile Include="Controllers\FatcaDescriptionController.cs" />
     <Compile Include="Controllers\OccupationController.cs" />
     <Compile Include="Controllers\OccupationRiskController.cs" />
     <Compile Include="Controllers\PrefixNameController.cs" />

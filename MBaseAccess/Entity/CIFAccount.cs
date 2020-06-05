@@ -189,7 +189,7 @@ namespace MBaseAccess.Entity
         [MatchParent("AccountType")]
         public string ACTYPE { get; set; }
 
-        [MatchParent("SourceOfFunds")]
+        [MatchParent("TransactionSource")]
         public string TLBSRC { get; set; }
 
         [MatchParent("CreateAccountFlag")]

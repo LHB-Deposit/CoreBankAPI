@@ -27,5 +27,6 @@ namespace ParameterAPI.Interfaces
         IEnumerable<ParameterModel> GetPurposeOfAccountOpenCorp(AppSettings appSettings);
         IEnumerable<ParameterModel> GetSourceOfDeposit(AppSettings appSettings);
         IEnumerable<ParameterModel> GetSourceOfDepositCorp(AppSettings appSettings);
+        IEnumerable<ParameterModel> GetFatcaDescription(AppSettings appSettings);
     }
 }

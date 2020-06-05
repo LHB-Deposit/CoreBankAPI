@@ -84,7 +84,7 @@ namespace MBaseAccess
         public VerifyCitizenResponse VerifyCitizenID(MBaseMessage message)
         {
             VerifyCitizenResponse response = new VerifyCitizenResponse();
-            var resMessages = GetMessageResponse(message);
+            var resMessages = GetResponseMessage(message);
             foreach (var res in resMessages)
             {
                 switch(res.Key.Trim())
@@ -127,7 +127,7 @@ namespace MBaseAccess
         public CIFAccountResponse CIFCreation(MBaseMessage message)
         {
             CIFAccountResponse response = new CIFAccountResponse();
-            var resMessages = GetMessageResponse(message);
+            var resMessages = GetResponseMessage(message);
             foreach (var res in resMessages)
             {
                 switch (res.Key.Trim())
@@ -152,7 +152,7 @@ namespace MBaseAccess
         public CIFAddressResponse CIFAddressCreation(MBaseMessage message)
         {
             CIFAddressResponse response = new CIFAddressResponse();
-            var resMessages = GetMessageResponse(message);
+            var resMessages = GetResponseMessage(message);
             foreach (var res in resMessages)
             {
                 switch (res.Key.Trim())
@@ -163,14 +163,18 @@ namespace MBaseAccess
                     case nameof(CIFAddressResponse.CFADSQ):
                         response.CFADSQ = StringToDigit(res.Value);
                         break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
                 }
             }
             return response;
         }
-        public KycCIFLevelResponse KycCIFLevelCreateMessage(MBaseMessage message)
+        public KycCIFLevelResponse CreateKycCIFLevelMessage(MBaseMessage message)
         {
             KycCIFLevelResponse response = new KycCIFLevelResponse();
-            var resMessages = GetMessageResponse(message);
+            var resMessages = GetResponseMessage(message);
             foreach (var res in resMessages)
             {
                 switch (res.Key.Trim())
@@ -193,14 +197,18 @@ namespace MBaseAccess
                     case nameof(KycCIFLevelResponse.WDTEXT):
                         response.WDTEXT = res.Value;
                         break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
                 }
             }
             return response;
         }
-        public KycAccountLevelResponse KycAccountLevelCreateMessage(MBaseMessage message)
+        public KycAccountLevelResponse CreateKycAccountLevelMessage(MBaseMessage message)
         {
             KycAccountLevelResponse response = new KycAccountLevelResponse();
-            var resMessages = GetMessageResponse(message);
+            var resMessages = GetResponseMessage(message);
             foreach (var res in resMessages)
             {
                 switch (res.Key.Trim())
@@ -223,6 +231,10 @@ namespace MBaseAccess
                     case nameof(KycAccountLevelResponse.KCOPAM):
                         response.KCOPAM = StringToDigit(res.Value);
                         break;
+                    default:
+                        response.ErrorCode = res.Key;
+                        response.ErrorDescription = res.Value;
+                        break;
                 }
             }
             return response;
@@ -233,7 +245,7 @@ namespace MBaseAccess
             if (!string.IsNullOrEmpty(value)) return long.Parse(value).ToString();
             else return value;
         }
-        private Dictionary<string, string> GetMessageResponse(MBaseMessage message)
+        private Dictionary<string, string> GetResponseMessage(MBaseMessage message)
         {
             Dictionary<string, string> dictResult = new Dictionary<string, string>();
             int inputLength = Convert.ToInt16(message.HeaderTransaction.InputLength);
@@ -252,21 +264,21 @@ namespace MBaseAccess
 
                 if (clientSocket.Connected)
                 {
-                    Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
-                    Logging.WriteLog("Connected");
+                    //Logging.WriteLog("Connect [Host:" + ServerHost + "] [Port:" + ServerPort + "]");
+                    //Logging.WriteLog("Connected");
 
                     NetworkStream serverStream = clientSocket.GetStream();
 
-                    Logging.WriteLog("Create Input Message TranCode:" + message.HeaderTransaction.MBaseTranCode);
-
+                    //Logging.WriteLog($"Create Input Message TranCode: {message.HeaderTransaction.MBaseTranCode}");
+                    Logging.WriteLog($"MBase Ref: [{message.HeaderMessages.Where(s => s.FieldName == nameof(MBaseHeaderMessage.HDRNUM)).Select(s => s.DefaultValue).FirstOrDefault()}]");
                     byte[] headParameter = CreateInputMessage(message);
 
-                    Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
+                    //Logging.WriteLog("Write Stream [Length:" + headParameter.Length + "]");
                     serverStream.Write(headParameter, 0, headParameter.Length);
                     serverStream.Flush();
 
                     int rsMsgLength = HeaderMessageLength + inputLength + responseLength;
-                    Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
+                    //Logging.WriteLog("Read Stream [Length:" + rsMsgLength.ToString() + "]");
 
                     byte[] outStream = new byte[rsMsgLength];
                     serverStream.Read(outStream, 0, (int)clientSocket.ReceiveBufferSize);
@@ -274,7 +286,7 @@ namespace MBaseAccess
                     bool inputMessageValid = CheckInputMessageValid(ref outStream, ref dictResult);
                     if (inputMessageValid)
                     {
-                        Logging.WriteLog("Write Response");
+                        //Logging.WriteLog("Write Response");
                         foreach (var res in message.ResponseMessages)
                         {
                             int startIndex = Convert.ToInt32(res.StartIndex) - 1;
@@ -299,13 +311,12 @@ namespace MBaseAccess
                 }
                 else
                 {
-                    Logging.WriteLog($"Cannot connect to { ServerHost }");
+                    dictResult.Add(ErrorCode.NTW0001, $"Cannot connect to { ServerHost }");
                 }
             }
             catch (Exception ex)
             {
-                dictResult.Add("Exception", ex.Message);
-                Logging.WriteLog($"{ex.Message}: {ex.StackTrace}");
+                dictResult.Add(ErrorCode.MBX0001, string.Format("Message:{0} : {1}", ex.Message, ex.StackTrace));
             }
             finally
             {
@@ -349,7 +360,7 @@ namespace MBaseAccess
 
                     if (!string.IsNullOrEmpty(strDesc.Trim()))
                     {
-                        Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
+                        //Logging.WriteLog("Reject Code: " + strCode + " " + strDesc);
                         strError.Add(strCode.Trim(), strDesc.Trim());
                     }
                     else
@@ -385,7 +396,7 @@ namespace MBaseAccess
 
                 int rqMsgLength = HeaderMessageLength + Convert.ToInt16(inputLength);
 
-                Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
+                //Logging.WriteLog("Request Msg Length:" + rqMsgLength.ToString());
                 oByte = new byte[rqMsgLength];
 
                 #region Header
@@ -467,7 +478,7 @@ namespace MBaseAccess
             }
             catch (Exception ex)
             {
-                Logging.WriteLog(ex.Message + ":" + ex.StackTrace);
+                throw ex;
             }
             return oByte;
         }

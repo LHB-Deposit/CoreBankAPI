@@ -44,7 +44,8 @@ namespace KYCAPI
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
-            container.RegisterType<IAs400Service, As400Service>();
+            container.RegisterType<IMBaseService, MBaseService>();
+            container.RegisterType<ISQLService, SQLService>();
         }
     }
 }

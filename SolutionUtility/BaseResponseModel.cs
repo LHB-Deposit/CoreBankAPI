@@ -9,9 +9,9 @@ namespace SolutionUtility
     public class BaseResponseModel
     {
         [MatchParent("ErrorCode")]
-        public string ErrorCode { get; set; }
+        public string ErrorCode { get; set; } = string.Empty;
 
         [MatchParent("ErrorDescription")]
-        public string ErrorDescription { get; set; }
+        public string ErrorDescription { get; set; } = string.Empty;
     }
 }

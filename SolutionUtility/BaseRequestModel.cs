@@ -10,11 +10,11 @@ namespace SolutionUtility
     public class BaseRequestModel
     {
         [Required]
-        [RegularExpression("")]
-        [StringLength(20, MinimumLength = 20)]
+        [RegularExpression("(^[A-Z]{2}[0-9]{21})")]
         public string ReferenceNo { get; set; }
 
         [Required]
+        [RegularExpression("^[0-9]*$")]
         [StringLength(3, MinimumLength = 3)]
         public string BranchNumber { get; set; } = string.Empty;
 

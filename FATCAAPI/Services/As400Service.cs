@@ -11,13 +11,13 @@ namespace FATCAAPI.Services
 {
     public class As400Service : IAs400Service
     {
-        public IEnumerable<FatcaResponseModel> Get()
+        public IEnumerable<FlagResponseModel> Get()
         {
-            List<FatcaResponseModel> models = new List<FatcaResponseModel>();
+            List<FlagResponseModel> models = new List<FlagResponseModel>();
             DataTable dt = new DataTable();
             string oMessage = string.Empty;
             AS400Singleton.Instance.ExecuteSql("", out dt, out oMessage);
-            models.Add(new FatcaResponseModel
+            models.Add(new FlagResponseModel
             {
                 CIF = "12345"
             });

@@ -32,7 +32,7 @@ namespace CIFAPI
                         // hold additional metadata for an API. Version and title are required but you can also provide
                         // additional fields by chaining methods off SingleApiVersion.
                         //
-                        c.SingleApiVersion("v1", "CIFAPI");
+                        c.SingleApiVersion("v1", "CIF Management API");
 
                         // If you want the output Swagger docs to be indented properly, enable the "PrettyPrint" option.
                         //

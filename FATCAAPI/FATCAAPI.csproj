@@ -152,14 +152,14 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\VerifyFatcaFlagController.cs" />
+    <Compile Include="Controllers\FatcaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
     <Compile Include="Interfaces\IAs400Service.cs" />
-    <Compile Include="Models\FatcaResponseModel.cs" />
-    <Compile Include="Models\VerifyFATCAFlagRequesstModel.cs" />
+    <Compile Include="Models\FlagResponseModel.cs" />
+    <Compile Include="Models\FlagRequesstModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\As400Service.cs" />
   </ItemGroup>
