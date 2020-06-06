@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FATCAAPI.Models
 {
-    public class FatcaFlagRequesstModel : BaseRequestModel
+    public class CreateFatcaFlagRequestModel : BaseRequestModel
     {
         [Required]
         [RegularExpression("^[0-9]*$")]
@@ -12,15 +12,19 @@ namespace FATCAAPI.Models
 
         [Required]
         [RegularExpression("^[0-9]*$")]
+        [StringLength(13)]
         public string CustomerId { get; set; }
 
+        [Required]
         [RegularExpression("^(Y|N){1}")]
         public string Individual { get; set; }
 
+        [Required]
         [RegularExpression("^(Y|N)[0-9]{2}")]
         public string FatcaCode { get; set; }
 
-        [RegularExpression("[A-Z]{4}")]
+        [RegularExpression("^[A-Z]*$")]
+        [StringLength(4)]
         public string Corporation { get; set; }
 
         [StringLength(15)]
@@ -28,6 +32,8 @@ namespace FATCAAPI.Models
 
         [StringLength(19)]
         public string GIIN { get; set; }
+
+        [StringLength(10)]
         public string Username { get; set; }
 
     }

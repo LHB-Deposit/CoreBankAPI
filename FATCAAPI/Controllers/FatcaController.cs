@@ -25,14 +25,14 @@ namespace FATCAAPI.Controllers
 
         [HttpPost]
         [ValidateModel]
-        public FatcaFlagResponseModel VerifyFatcaFlag([FromBody] FatcaFlagRequesstModel model)
+        public VerifyFatcaFlagResponseModel VerifyFatcaFlag([FromBody] VerifyFatcaFlagRequestModel model)
         {
             return service.VerifyFatcaFlag(model);
         }
 
         [HttpPost]
         [ValidateModel]
-        public FatcaFlagResponseModel CreateFatcaFlag([FromBody] FatcaFlagRequesstModel model)
+        public CreateFatcaFlagResponseModel CreateFatcaFlag([FromBody] CreateFatcaFlagRequestModel model)
         {
             return service.CreateFatcaFlag(model);
         }

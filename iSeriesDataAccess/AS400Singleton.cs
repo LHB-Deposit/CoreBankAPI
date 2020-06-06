@@ -64,6 +64,7 @@ namespace iSeriesDataAccess
             oMessage = string.Empty;
             try
             {
+
                 string Cmd = "SBMJOB CMD(CALL " + jobName + " PARM('" + param + "')) ";
                 string sql = "CALL QSYS.QCMDEXC('" + Cmd.Replace("'", "''") + "'," + Cmd.Length.ToString("0000000000.00000") + ")";
 

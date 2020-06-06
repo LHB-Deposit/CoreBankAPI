@@ -19,41 +19,49 @@ namespace FATCAAPI.Services
         {
             this.appSettingService = appSettingService;
         }
-        public FatcaFlagResponseModel VerifyFatcaFlag(FatcaFlagRequesstModel model)
+        public VerifyFatcaFlagResponseModel VerifyFatcaFlag(VerifyFatcaFlagRequestModel model)
         {
-            FatcaFlagResponseModel responseModel = new FatcaFlagResponseModel();
+            VerifyFatcaFlagResponseModel responseModel = new VerifyFatcaFlagResponseModel();
 
             string _sql = $"SELECT {nameof(DPI2195F1.F1STS)}, {nameof(DPI2195F1.F1COD)} " +
-                $"FROM {appSettingService.GetLibrary(nameof(DPI2195F1))}.{nameof(DPI2195F1)}" +
-                $"WHERE {nameof(DPI2195F1.F1CIFNO)} = '{model.CustomerNumber}'";
+                $"FROM {appSettingService.GetLibrary(nameof(DPI2195F1))}.{nameof(DPI2195F1)} " +
+                $"WHERE {nameof(DPI2195F1.F1ID)} = '{model.CustomerId}' AND {nameof(DPI2195F1.F1CIFNO)} = '{model.CustomerNumber}'";
 
             if(AS400Singleton.Instance.ExecuteSql(_sql, out DataTable oDt, out string oMessage))
             {
-                foreach (DataRow row in oDt.Rows)
+                if(oDt.Rows.Count > 0)
                 {
-                    responseModel.FatcaFlag = row[nameof(DPI2195F1.F1STS)].ToString().Trim();
-                    responseModel.FatcaCode = row[nameof(DPI2195F1.F1COD)].ToString().Trim();
-                    break;
+                    foreach (DataRow row in oDt.Rows)
+                    {
+                        responseModel.FatcaFlag = row[nameof(DPI2195F1.F1STS)].ToString().Trim();
+                        responseModel.FatcaCode = row[nameof(DPI2195F1.F1COD)].ToString().Trim();
+                        break;
+                    }
+                }
+                else
+                {
+                    responseModel.ErrorCode = ErrorCode.AS40000;
+                    responseModel.ErrorDescription = "Record not found.";
                 }
             }
             else
             {
-                responseModel.ErrorCode = ErrorCode.AS40001;
+                responseModel.ErrorCode = ErrorCode.EXC0001;
                 responseModel.ErrorDescription = oMessage;
             }
 
             return responseModel;
         }
-        public FatcaFlagResponseModel CreateFatcaFlag(FatcaFlagRequesstModel requestModel)
+        public CreateFatcaFlagResponseModel CreateFatcaFlag(CreateFatcaFlagRequestModel requestModel)
         {
             Logging.WriteLog(requestModel);
-            FatcaFlagResponseModel responseModel = new FatcaFlagResponseModel();
+            CreateFatcaFlagResponseModel responseModel = new CreateFatcaFlagResponseModel();
             string jobName, outFile, ref_key;
             try
             {
                 jobName = $"{appSettingService.GetLibJob(nameof(DPI21953))}/{nameof(DPI21953)}";
                 outFile = $"{appSettingService.GetLibrary(nameof(DPI2195F4))}.{nameof(DPI2195F4)}";
-                ref_key = $"{requestModel.BranchNumber.PadLeft(5, '0')}{requestModel.ReferenceNo}";
+                ref_key = $"{requestModel.BranchNumber.PadLeft(5, '0')}{requestModel.ReferenceNo.Substring(6,requestModel.ReferenceNo.Length - 6)}";
                 List<string> param = new List<string>
                 {
                     ref_key.PadRight(30, ' '),
@@ -62,6 +70,10 @@ namespace FATCAAPI.Services
                     requestModel.Individual.PadRight(1, ' '),
                     requestModel.FatcaCode.PadRight(10, ' '),
                     requestModel.Corporation.PadRight(4, ' '),
+                    requestModel.SSNITIN.PadRight(15, ' '),
+                    requestModel.GIIN.PadRight(19, ' '),
+                    $"{DateTime.Now.Day.ToString().PadLeft(2, '0')}{DateTime.Now.Month.ToString().PadLeft(2, '0')}{DateTime.Now.Year.ToString().PadLeft(2, '0')}",
+                    requestModel.BranchNumber.PadLeft(3, '0'),
                     requestModel.Username.PadRight(10, ' ')
                 };
 
@@ -85,8 +97,8 @@ namespace FATCAAPI.Services
                                 }
                                 else
                                 {
-                                    responseModel.ErrorCode = ErrorCode.AS40001;
-                                    responseModel.ErrorDescription = row[nameof(DPI2195F4.F4STDESC)].ToString();
+                                    responseModel.ErrorCode = ErrorCode.AS40000;
+                                    responseModel.ErrorDescription = row[nameof(DPI2195F4.F4STDESC)].ToString().Trim();
                                 }
                                 break;
                             }
@@ -95,7 +107,7 @@ namespace FATCAAPI.Services
                 }
                 else
                 {
-                    responseModel.ErrorCode = ErrorCode.AS40001;
+                    responseModel.ErrorCode = ErrorCode.AS40000;
                     responseModel.ErrorDescription = oMessage;
                 }
             }

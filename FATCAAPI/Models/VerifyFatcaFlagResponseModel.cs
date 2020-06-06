@@ -6,9 +6,8 @@ using System.Web;
 
 namespace FATCAAPI.Models
 {
-    public class FatcaFlagResponseModel : BaseResponseModel
+    public class VerifyFatcaFlagResponseModel : BaseResponseModel
     {
-        public string ReferenceNo { get; set; } = string.Empty;
         public string FatcaFlag { get; set; } = string.Empty;
         public string FatcaCode { get; set; } = string.Empty;
     }

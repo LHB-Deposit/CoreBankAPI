@@ -9,7 +9,8 @@ namespace SolutionUtility
     public class ErrorCode
     {
         // SQL Error Code
-        public static string SQL0001 = "SQL0001";
+        public static string SQL0000 = "SQL0000"; // Not found.
+        public static string SQL0001 = "SQL0001"; // Exception.
         public static string SQL0002 = "SQL0002";
         public static string SQL0003 = "SQL0003";
         public static string SQL0004 = "SQL0004";
@@ -21,7 +22,8 @@ namespace SolutionUtility
         public static string SQL0010 = "SQL0010";
 
         // Exception
-        public static string EXC0001 = "EXC0001";
+        public static string EXC0000 = "EXC0000"; // Not found.
+        public static string EXC0001 = "EXC0001"; // Exception.
         public static string EXC0002 = "EXC0002";
         public static string EXC0003 = "EXC0003";
         public static string EXC0004 = "EXC0004";
@@ -33,21 +35,26 @@ namespace SolutionUtility
         public static string EXC0010 = "EXC0010";
 
         // Network
+        public static string NTW0000 = "NTW0000";
         public static string NTW0001 = "NTW0001";
+        public static string NTW0002 = "NTW0002";
 
         // Information
+        public static string INF0000 = "INF0000";
         public static string INF0001 = "INF0001";
+        public static string INF0002 = "INF0002";
 
         // MBase
-        public static string MBX0001 = "MBX0001";
+        public static string MBX0000 = "MBX0000"; // Not found.
+        public static string MBX0001 = "MBX0001"; // Exception.
         public static string MBX0002 = "MBX0002";
 
         // AS400
-        public static string AS40001 = "AS40001";
-        public static string AS40002 = "AS40002"; // Library and file not found.
+        public static string AS40000 = "AS40000"; // Not found.
+        public static string AS40001 = "AS40001"; // Exception.
 
         // AppSetting
-        public static string AST0001 = "AST0001"; // Key not found
-        public static string AST0002 = "AST0002"; // Value invalid
+        public static string AST0000 = "AST0000"; // Not found.
+        public static string AST0002 = "AST0002"; // Exception.
     }
 }

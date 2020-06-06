@@ -10,8 +10,8 @@ namespace FATCAAPI.Interfaces
 {
     public interface IAs400Service
     {
-        FatcaFlagResponseModel VerifyFatcaFlag(FatcaFlagRequesstModel model);
-        FatcaFlagResponseModel CreateFatcaFlag(FatcaFlagRequesstModel model);
+        VerifyFatcaFlagResponseModel VerifyFatcaFlag(VerifyFatcaFlagRequestModel model);
+        CreateFatcaFlagResponseModel CreateFatcaFlag(CreateFatcaFlagRequestModel model);
         
     }
 }
