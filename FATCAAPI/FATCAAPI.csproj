@@ -27,6 +27,10 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -157,10 +161,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AppSettings.cs" />
+    <Compile Include="Interfaces\IAppSettingService.cs" />
     <Compile Include="Interfaces\IAs400Service.cs" />
-    <Compile Include="Models\FlagResponseModel.cs" />
-    <Compile Include="Models\FlagRequesstModel.cs" />
+    <Compile Include="Models\FatcaFlagResponseModel.cs" />
+    <Compile Include="Models\FatcaFlagRequesstModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AppSettingService.cs" />
     <Compile Include="Services\As400Service.cs" />
   </ItemGroup>
   <ItemGroup>

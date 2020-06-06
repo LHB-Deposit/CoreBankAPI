@@ -1,18 +1,15 @@
 ﻿using iSeriesDataAccess;
-using iSeriesDataAccess.FileEntity;
+using iSeriesDataAccess.FileModel;
 using KYCAPI.Helpers;
 using KYCAPI.Interfaces;
 using KYCAPI.Models;
 using MBaseAccess;
 using MBaseAccess.Entity;
 using SolutionUtility;
-using SQLDataAccess;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.Linq;
-using System.Web;
 
 namespace KYCAPI.Services
 {

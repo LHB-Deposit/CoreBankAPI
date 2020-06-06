@@ -40,5 +40,14 @@ namespace SolutionUtility
 
         // MBase
         public static string MBX0001 = "MBX0001";
+        public static string MBX0002 = "MBX0002";
+
+        // AS400
+        public static string AS40001 = "AS40001";
+        public static string AS40002 = "AS40002"; // Library and file not found.
+
+        // AppSetting
+        public static string AST0001 = "AST0001"; // Key not found
+        public static string AST0002 = "AST0002"; // Value invalid
     }
 }

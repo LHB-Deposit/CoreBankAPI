@@ -23,7 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisclosureAPI", "Disclosure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterAPI", "ParameterAPI\ParameterAPI.csproj", "{30E695E6-FBD9-48AE-85C0-1196D4F30C82}"
 EndProject
-
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBaseAPI", "MBaseAPI\MBaseAPI.csproj", "{85386D8C-AB47-44B9-8656-8EA9EF8ACB13}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MBaseAccess", "MBaseAccess\MBaseAccess.csproj", "{E18F6FAA-05EB-436F-B52F-26868253431D}"
@@ -31,7 +30,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDataAccess", "SQLDataAccess\SQLDataAccess.csproj", "{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionUtility", "SolutionUtility\SolutionUtility.csproj", "{5244D46D-8317-430B-A7E4-22B9CAB8ED91}"
-
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,7 +69,6 @@ Global
 		{30E695E6-FBD9-48AE-85C0-1196D4F30C82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{30E695E6-FBD9-48AE-85C0-1196D4F30C82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{30E695E6-FBD9-48AE-85C0-1196D4F30C82}.Release|Any CPU.Build.0 = Release|Any CPU
-
 		{85386D8C-AB47-44B9-8656-8EA9EF8ACB13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{85386D8C-AB47-44B9-8656-8EA9EF8ACB13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85386D8C-AB47-44B9-8656-8EA9EF8ACB13}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -87,7 +85,6 @@ Global
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Release|Any CPU.Build.0 = Release|Any CPU
-
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,14 +98,62 @@ Global
 		{CFC03FB2-0B7D-47BA-B838-DC92163395E4} = {5DBEEE69-7503-4EB6-B75E-87071BAB8380}
 		{B872702B-0CCC-4B04-8E8C-1B278E6BDC60} = {5DBEEE69-7503-4EB6-B75E-87071BAB8380}
 		{30E695E6-FBD9-48AE-85C0-1196D4F30C82} = {5DBEEE69-7503-4EB6-B75E-87071BAB8380}
-
 		{85386D8C-AB47-44B9-8656-8EA9EF8ACB13} = {5DBEEE69-7503-4EB6-B75E-87071BAB8380}
 		{E18F6FAA-05EB-436F-B52F-26868253431D} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
 		{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
-
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60AED03C-DE68-418C-B2F4-79FC49309665}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 12
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://w2wasdho126:8080/tfs/depositcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = AuthenticationService\\AuthenticationAPIService.csproj
+		SccProjectTopLevelParentUniqueName1 = CoreBankAPI.sln
+		SccProjectName1 = AuthenticationService
+		SccLocalPath1 = AuthenticationService
+		SccProjectUniqueName2 = iSeriesDataAccess\\iSeriesDataAccess.csproj
+		SccProjectTopLevelParentUniqueName2 = CoreBankAPI.sln
+		SccProjectName2 = iSeriesDataAccess
+		SccLocalPath2 = iSeriesDataAccess
+		SccProjectUniqueName3 = CIFAPI\\CIFAPI.csproj
+		SccProjectTopLevelParentUniqueName3 = CoreBankAPI.sln
+		SccProjectName3 = CIFAPI
+		SccLocalPath3 = CIFAPI
+		SccProjectUniqueName4 = FATCAAPI\\FATCAAPI.csproj
+		SccProjectTopLevelParentUniqueName4 = CoreBankAPI.sln
+		SccProjectName4 = FATCAAPI
+		SccLocalPath4 = FATCAAPI
+		SccProjectUniqueName5 = KYCAPI\\KYCAPI.csproj
+		SccProjectTopLevelParentUniqueName5 = CoreBankAPI.sln
+		SccProjectName5 = KYCAPI
+		SccLocalPath5 = KYCAPI
+		SccProjectUniqueName6 = DisclosureAPI\\DisclosureAPI.csproj
+		SccProjectTopLevelParentUniqueName6 = CoreBankAPI.sln
+		SccProjectName6 = DisclosureAPI
+		SccLocalPath6 = DisclosureAPI
+		SccProjectUniqueName7 = ParameterAPI\\ParameterAPI.csproj
+		SccProjectTopLevelParentUniqueName7 = CoreBankAPI.sln
+		SccProjectName7 = ParameterAPI
+		SccLocalPath7 = ParameterAPI
+		SccProjectUniqueName8 = MBaseAPI\\MBaseAPI.csproj
+		SccProjectTopLevelParentUniqueName8 = CoreBankAPI.sln
+		SccProjectName8 = MBaseAPI
+		SccLocalPath8 = MBaseAPI
+		SccProjectUniqueName9 = MBaseAccess\\MBaseAccess.csproj
+		SccProjectTopLevelParentUniqueName9 = CoreBankAPI.sln
+		SccProjectName9 = MBaseAccess
+		SccLocalPath9 = MBaseAccess
+		SccProjectUniqueName10 = SQLDataAccess\\SQLDataAccess.csproj
+		SccProjectTopLevelParentUniqueName10 = CoreBankAPI.sln
+		SccProjectName10 = SQLDataAccess
+		SccLocalPath10 = SQLDataAccess
+		SccProjectUniqueName11 = SolutionUtility\\SolutionUtility.csproj
+		SccProjectTopLevelParentUniqueName11 = CoreBankAPI.sln
+		SccProjectName11 = SolutionUtility
+		SccLocalPath11 = SolutionUtility
 	EndGlobalSection
 EndGlobal
