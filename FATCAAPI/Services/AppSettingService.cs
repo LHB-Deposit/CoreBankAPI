@@ -33,7 +33,7 @@ namespace FATCAAPI.Services
                         }
                         break;
                     case nameof(LHBPDATINH):
-                        if (HasProperty(new LHBDDATINH(), fileName))
+                        if (HasProperty(new LHBPDATINH(), fileName))
                         {
                             _lib = $"{libName.Value}";
                         }
@@ -94,7 +94,7 @@ namespace FATCAAPI.Services
                         }
                         break;
                     case nameof(LHBTRUNINH):
-                        if (HasProperty(new LHBDRUNINH(), jobName))
+                        if (HasProperty(new LHBTRUNINH(), jobName))
                         {
                             _jobName = $"{file.Value}";
                         }

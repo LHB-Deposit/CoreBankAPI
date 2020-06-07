@@ -35,7 +35,7 @@ namespace ConsentAPI.Services
                         }
                         break;
                     case nameof(LHBPDATINH):
-                        if (HasProperty(new LHBDDATINH(), fileName))
+                        if (HasProperty(new LHBPDATINH(), fileName))
                         {
                             _lib = $"{libName.Value}";
                         }
