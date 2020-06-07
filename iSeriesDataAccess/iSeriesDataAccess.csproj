@@ -52,6 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AS400Singleton.cs" />
+    <Compile Include="FileModel\CFMAST.cs" />
+    <Compile Include="FileModel\DPI2142F1.cs" />
     <Compile Include="FileModel\DPI21953.cs" />
     <Compile Include="FileModel\DPI2195F1.cs" />
     <Compile Include="FileModel\DPI2195F4.cs" />

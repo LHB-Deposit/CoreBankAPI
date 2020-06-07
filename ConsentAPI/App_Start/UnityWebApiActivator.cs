@@ -2,10 +2,10 @@ using System.Web.Http;
 
 using Unity.AspNet.WebApi;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(DisclosureAPI.UnityWebApiActivator), nameof(DisclosureAPI.UnityWebApiActivator.Start))]
-[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(DisclosureAPI.UnityWebApiActivator), nameof(DisclosureAPI.UnityWebApiActivator.Shutdown))]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(ConsentAPI.UnityWebApiActivator), nameof(ConsentAPI.UnityWebApiActivator.Start))]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(ConsentAPI.UnityWebApiActivator), nameof(ConsentAPI.UnityWebApiActivator.Shutdown))]
 
-namespace DisclosureAPI
+namespace ConsentAPI
 {
     /// <summary>
     /// Provides the bootstrapping for integrating Unity with WebApi when it is hosted in ASP.NET.

@@ -1,6 +1,6 @@
 ﻿using SolutionUtility;
 
-namespace DisclosureAPI.Helpers
+namespace ConsentAPI.Helpers
 {
     public class AppSettings : ProjectAppSettings
     {

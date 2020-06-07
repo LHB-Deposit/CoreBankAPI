@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FATCAAPI", "FATCAAPI\FATCAA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KYCAPI", "KYCAPI\KYCAPI.csproj", "{CFC03FB2-0B7D-47BA-B838-DC92163395E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisclosureAPI", "DisclosureAPI\DisclosureAPI.csproj", "{B872702B-0CCC-4B04-8E8C-1B278E6BDC60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsentAPI", "ConsentAPI\ConsentAPI.csproj", "{B872702B-0CCC-4B04-8E8C-1B278E6BDC60}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParameterAPI", "ParameterAPI\ParameterAPI.csproj", "{30E695E6-FBD9-48AE-85C0-1196D4F30C82}"
 EndProject
@@ -105,55 +105,5 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60AED03C-DE68-418C-B2F4-79FC49309665}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://w2wasdho126:8080/tfs/depositcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = AuthenticationService\\AuthenticationAPIService.csproj
-		SccProjectTopLevelParentUniqueName1 = CoreBankAPI.sln
-		SccProjectName1 = AuthenticationService
-		SccLocalPath1 = AuthenticationService
-		SccProjectUniqueName2 = iSeriesDataAccess\\iSeriesDataAccess.csproj
-		SccProjectTopLevelParentUniqueName2 = CoreBankAPI.sln
-		SccProjectName2 = iSeriesDataAccess
-		SccLocalPath2 = iSeriesDataAccess
-		SccProjectUniqueName3 = CIFAPI\\CIFAPI.csproj
-		SccProjectTopLevelParentUniqueName3 = CoreBankAPI.sln
-		SccProjectName3 = CIFAPI
-		SccLocalPath3 = CIFAPI
-		SccProjectUniqueName4 = FATCAAPI\\FATCAAPI.csproj
-		SccProjectTopLevelParentUniqueName4 = CoreBankAPI.sln
-		SccProjectName4 = FATCAAPI
-		SccLocalPath4 = FATCAAPI
-		SccProjectUniqueName5 = KYCAPI\\KYCAPI.csproj
-		SccProjectTopLevelParentUniqueName5 = CoreBankAPI.sln
-		SccProjectName5 = KYCAPI
-		SccLocalPath5 = KYCAPI
-		SccProjectUniqueName6 = DisclosureAPI\\DisclosureAPI.csproj
-		SccProjectTopLevelParentUniqueName6 = CoreBankAPI.sln
-		SccProjectName6 = DisclosureAPI
-		SccLocalPath6 = DisclosureAPI
-		SccProjectUniqueName7 = ParameterAPI\\ParameterAPI.csproj
-		SccProjectTopLevelParentUniqueName7 = CoreBankAPI.sln
-		SccProjectName7 = ParameterAPI
-		SccLocalPath7 = ParameterAPI
-		SccProjectUniqueName8 = MBaseAPI\\MBaseAPI.csproj
-		SccProjectTopLevelParentUniqueName8 = CoreBankAPI.sln
-		SccProjectName8 = MBaseAPI
-		SccLocalPath8 = MBaseAPI
-		SccProjectUniqueName9 = MBaseAccess\\MBaseAccess.csproj
-		SccProjectTopLevelParentUniqueName9 = CoreBankAPI.sln
-		SccProjectName9 = MBaseAccess
-		SccLocalPath9 = MBaseAccess
-		SccProjectUniqueName10 = SQLDataAccess\\SQLDataAccess.csproj
-		SccProjectTopLevelParentUniqueName10 = CoreBankAPI.sln
-		SccProjectName10 = SQLDataAccess
-		SccLocalPath10 = SQLDataAccess
-		SccProjectUniqueName11 = SolutionUtility\\SolutionUtility.csproj
-		SccProjectTopLevelParentUniqueName11 = CoreBankAPI.sln
-		SccProjectName11 = SolutionUtility
-		SccLocalPath11 = SolutionUtility
 	EndGlobalSection
 EndGlobal

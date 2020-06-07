@@ -8,6 +8,7 @@ namespace iSeriesDataAccess.LibraryModel
 {
     public class LHBPDATINH
     {
+        public string DPI2142F1 { get; set; }
         public string DPI2195F1 { get; set; }
         public string DPI2195F4 { get; set; }
         public string DPI2195FP { get; set; }

@@ -93,6 +93,7 @@
     <Compile Include="BaseRequestModel.cs" />
     <Compile Include="BaseResponseModel.cs" />
     <Compile Include="Cryptography.cs" />
+    <Compile Include="DateTimeUtils.cs" />
     <Compile Include="ErrorCodeHandler.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="MatchParentAttribute.cs" />

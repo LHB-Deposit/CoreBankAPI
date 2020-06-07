@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DisclosureAPI.Interfaces
+namespace iSeriesDataAccess.FileModel
 {
-    public interface IAs400Service
+    public class CFMAST
     {
+        public string CFCIFN { get; set; }
+
     }
 }

@@ -1,10 +1,10 @@
-using DisclosureAPI.Interfaces;
-using DisclosureAPI.Services;
+using ConsentAPI.Interfaces;
+using ConsentAPI.Services;
 using System;
 
 using Unity;
 
-namespace DisclosureAPI
+namespace ConsentAPI
 {
     /// <summary>
     /// Specifies the Unity configuration for the main container.
@@ -45,6 +45,7 @@ namespace DisclosureAPI
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
             container.RegisterType<IAs400Service, As400Service>();
+            container.RegisterType<IAppSettingService, AppSettingService>();
         }
     }
 }

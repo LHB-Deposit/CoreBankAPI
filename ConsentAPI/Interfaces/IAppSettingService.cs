@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace iSeriesDataAccess.LibraryModel
+namespace ConsentAPI.Interfaces
 {
-    public class LHBPDATMAS
+    public interface IAppSettingService
     {
-        public string CFMAST { get; set; }
+        string GetLibrary(string fileName);
     }
 }
