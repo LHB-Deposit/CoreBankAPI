@@ -94,7 +94,8 @@
     <Compile Include="BaseResponseModel.cs" />
     <Compile Include="Cryptography.cs" />
     <Compile Include="DateTimeUtils.cs" />
-    <Compile Include="ErrorCodeHandler.cs" />
+    <Compile Include="NotFoundException.cs" />
+    <Compile Include="ResponseCodeHandler.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="MatchParentAttribute.cs" />
     <Compile Include="NumberUtils.cs" />

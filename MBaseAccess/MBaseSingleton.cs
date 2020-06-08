@@ -311,12 +311,12 @@ namespace MBaseAccess
                 }
                 else
                 {
-                    dictResult.Add(ErrorCode.NTW0001, $"Cannot connect to { ServerHost }");
+                    dictResult.Add(ResponseCode.NTW0001, $"Cannot connect to { ServerHost }");
                 }
             }
             catch (Exception ex)
             {
-                dictResult.Add(ErrorCode.MBX0001, string.Format("Message:{0} : {1}", ex.Message, ex.StackTrace));
+                dictResult.Add(ResponseCode.MBX0001, string.Format("Message:{0} : {1}", ex.Message, ex.StackTrace));
             }
             finally
             {

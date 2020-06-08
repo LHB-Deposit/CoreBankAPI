@@ -38,7 +38,7 @@ namespace KYCAPI.Services
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -64,7 +64,7 @@ namespace KYCAPI.Services
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -94,20 +94,20 @@ namespace KYCAPI.Services
                     }
                     else
                     {
-                        responseModel.ErrorCode = ErrorCode.INF0001;
+                        responseModel.ErrorCode = ResponseCode.INF0001;
                         responseModel.ErrorDescription = "Record not found";
                     }
                 }
                 else
                 {
-                    responseModel.ErrorCode = ErrorCode.SQL0001;
+                    responseModel.ErrorCode = ResponseCode.SQL0001;
                     responseModel.ErrorDescription = oMessage;
                     Logging.WriteLog(oMessage);
                 }
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
                 Logging.WriteLog(ex.Message);
             }

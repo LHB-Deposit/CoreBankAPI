@@ -35,7 +35,7 @@ namespace CIFAPI.Services
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -61,7 +61,7 @@ namespace CIFAPI.Services
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -87,7 +87,7 @@ namespace CIFAPI.Services
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally

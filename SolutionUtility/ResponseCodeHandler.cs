@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SolutionUtility
+﻿namespace SolutionUtility
 {
-    public class ErrorCode
+    public class ResponseCode
     {
         // SQL Error Code
         public static string SQL0000 = "SQL0000"; // Not found.
@@ -55,7 +49,14 @@ namespace SolutionUtility
         public static string AS40000 = "AS40000"; // Not found.
         public static string AS40001 = "AS40001"; // Exception.
         public static string AS40002 = "AS40002"; // Invalid.
-        public static string AS40003 = "AS40003"; // 
+        public static string AS40003 = "AS40003"; //
+        public static string AS40004 = "AS40004"; //
+        public static string AS40005 = "AS40005"; //
+        public static string AS40006 = "AS40006"; // Doesn't save.
+        public static string AS40007 = "AS40007"; //
+        public static string AS40008 = "AS40008"; //
+        public static string AS40009 = "AS40009"; //
+        public static string AS40010 = "AS40010"; //
 
         // AppSetting
         public static string AST0000 = "AST0000"; // Not found.

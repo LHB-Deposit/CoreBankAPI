@@ -4,10 +4,7 @@ using iSeriesDataAccess;
 using iSeriesDataAccess.FileModel;
 using SolutionUtility;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 
 namespace ConsentAPI.Services
 {
@@ -47,25 +44,27 @@ namespace ConsentAPI.Services
                         }
                         else
                         {
-                            responseModel.ErrorCode = ErrorCode.AS40003;
-                            responseModel.ErrorDescription = $"Don't have the consent data.";
+                            throw new NotFoundException($"Information on consent");
                         }
                     }
                     else
                     {
-                        responseModel.ErrorCode = ErrorCode.AS40001;
-                        responseModel.ErrorDescription = oMessage;
+                        throw new Exception(oMessage);
                     }
                 }
                 else
                 {
-                    responseModel.ErrorCode = ErrorCode.AS40000;
-                    responseModel.ErrorCode = oMessage;
+                    throw new Exception(oMessage);
                 }
+            }
+            catch(NotFoundException ex)
+            {
+                responseModel.ErrorCode = ResponseCode.AS40000;
+                responseModel.ErrorDescription = ex.Message;
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.AS40001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -75,6 +74,7 @@ namespace ConsentAPI.Services
             
             return responseModel;
         }
+
         public CreateConsentResponseModel CreateConsent(CreateConsentRequestModel requestModel)
         {
             Logging.WriteLog(requestModel);
@@ -105,19 +105,22 @@ namespace ConsentAPI.Services
                     }
                     else
                     {
-                        responseModel.ErrorCode = ErrorCode.AS40001;
-                        responseModel.ErrorDescription = oMessage;
+                        throw new Exception(oMessage);
                     }
                 }
                 else
                 {
-                    responseModel.ErrorCode = ErrorCode.AS40000;
-                    responseModel.ErrorDescription = oMessage;
+                    throw new NotFoundException(oMessage);
                 }
+            }
+            catch(NotFoundException ex)
+            {
+                responseModel.ErrorCode = ResponseCode.AS40000;
+                responseModel.ErrorDescription = ex.Message;
             }
             catch (Exception ex)
             {
-                responseModel.ErrorCode = ErrorCode.EXC0001;
+                responseModel.ErrorCode = ResponseCode.EXC0001;
                 responseModel.ErrorDescription = ex.Message;
             }
             finally
@@ -139,11 +142,7 @@ namespace ConsentAPI.Services
             if (AS400Singleton.Instance.ExecuteSql(sql, out DataTable oDt, out oMessage))
             {
                 if (oDt.Rows.Count > 0) IsExists = true;
-                else oMessage = $"{customerNumber} not found.";
-            }
-            else
-            {
-                throw new Exception(oMessage);
+                else throw new NotFoundException($"{customerNumber}");
             }
 
             return IsExists;
