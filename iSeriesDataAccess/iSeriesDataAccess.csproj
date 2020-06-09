@@ -12,6 +12,10 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +39,7 @@
       <HintPath>..\DLLReference\IBM.Data.DB2.iSeries.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -47,7 +52,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AS400Singleton.cs" />
-    <Compile Include="FileEntity\KCMAST.cs" />
+    <Compile Include="FileModel\CFMAST.cs" />
+    <Compile Include="FileModel\DPI2142F1.cs" />
+    <Compile Include="FileModel\DPI21953.cs" />
+    <Compile Include="FileModel\DPI2195F1.cs" />
+    <Compile Include="FileModel\DPI2195F4.cs" />
+    <Compile Include="FileModel\DPI2195FP.cs" />
+    <Compile Include="FileModel\KCMAST.cs" />
+    <Compile Include="LibraryModel\LHBDDATINH.cs" />
+    <Compile Include="LibraryModel\LHBDDATMAS.cs" />
+    <Compile Include="LibraryModel\LHBDDATPAR.cs" />
+    <Compile Include="LibraryModel\LHBDRUNINH.cs" />
+    <Compile Include="LibraryModel\LHBPDATINH.cs" />
+    <Compile Include="LibraryModel\LHBPDATMAS.cs" />
+    <Compile Include="LibraryModel\LHBPDATPAR.cs" />
+    <Compile Include="LibraryModel\LHBPRUNINH.cs" />
+    <Compile Include="LibraryModel\LHBTDATINH.cs" />
+    <Compile Include="LibraryModel\LHBTDATMAS.cs" />
+    <Compile Include="LibraryModel\LHBTDATPAR.cs" />
+    <Compile Include="LibraryModel\LHBTRUNINH.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

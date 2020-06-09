@@ -12,6 +12,10 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -89,7 +93,9 @@
     <Compile Include="BaseRequestModel.cs" />
     <Compile Include="BaseResponseModel.cs" />
     <Compile Include="Cryptography.cs" />
-    <Compile Include="ErrorCodeHandler.cs" />
+    <Compile Include="DateTimeUtils.cs" />
+    <Compile Include="NotFoundException.cs" />
+    <Compile Include="ResponseCodeHandler.cs" />
     <Compile Include="Logging.cs" />
     <Compile Include="MatchParentAttribute.cs" />
     <Compile Include="NumberUtils.cs" />

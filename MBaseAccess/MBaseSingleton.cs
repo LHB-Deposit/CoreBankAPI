@@ -311,12 +311,12 @@ namespace MBaseAccess
                 }
                 else
                 {
-                    dictResult.Add(ErrorCode.NTW0001, $"Cannot connect to { ServerHost }");
+                    dictResult.Add(ResponseCode.NTW0001, $"Cannot connect to { ServerHost }");
                 }
             }
             catch (Exception ex)
             {
-                dictResult.Add(ErrorCode.MBX0001, string.Format("Message:{0} : {1}", ex.Message, ex.StackTrace));
+                dictResult.Add(ResponseCode.MBX0001, string.Format("Message:{0} : {1}", ex.Message, ex.StackTrace));
             }
             finally
             {
@@ -400,11 +400,10 @@ namespace MBaseAccess
                 oByte = new byte[rqMsgLength];
 
                 #region Header
-
                 foreach (var header in message.HeaderMessages)
                 {
-                    StartIndex = Convert.ToInt16(header.StartIndex.ToString());
-                    EndIndex = Convert.ToInt16(header.EndIndex.ToString());
+                    StartIndex = header.StartIndex;
+                    EndIndex = header.EndIndex;
                     DefaultValue = header.DefaultValue;
 
                     DataType dType = DataType.A;
@@ -437,11 +436,10 @@ namespace MBaseAccess
                     }
                 }
                 #endregion
-
                 foreach (var input in message.InputMessages)
                 {
-                    StartIndex = Convert.ToInt16(input.StartIndex.ToString()) + HeaderMessageLength;
-                    EndIndex = Convert.ToInt16(input.EndIndex.ToString()) + HeaderMessageLength;
+                    StartIndex = input.StartIndex + HeaderMessageLength;
+                    EndIndex = input.EndIndex + HeaderMessageLength;
                     DefaultValue = input.DefaultValue;
 
                     DataType dType = DataType.A;
@@ -463,7 +461,6 @@ namespace MBaseAccess
                                 DefaultValue = "0";
                             break;
                     }
-
                     byte[] data = ConvertData(DefaultValue, StartIndex, EndIndex, dType);
 
                     idx = 0;
@@ -473,8 +470,6 @@ namespace MBaseAccess
                         idx++;
                     }
                 }
-
-               
             }
             catch (Exception ex)
             {
@@ -506,7 +501,7 @@ namespace MBaseAccess
             {//if convert to packed decimal or other else
 
                 Stack<byte> comp3 = new Stack<byte>();
-                int value = Convert.ToInt32(data);
+                long value = Convert.ToInt64(data);
 
                 byte currentByte;
                 if (value < 0)

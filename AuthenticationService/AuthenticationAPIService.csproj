@@ -1,5 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <PropertyGroup Label="Globals">
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+  </PropertyGroup>
+
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>97c5a04b-4de3-4210-ad29-234c9570eb9e</UserSecretsId>

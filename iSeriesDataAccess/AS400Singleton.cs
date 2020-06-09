@@ -58,6 +58,34 @@ namespace iSeriesDataAccess
             }
         }
 
+        public bool SubmitJob(string jobName, string param, out string oMessage)
+        {
+            bool res = false;
+            oMessage = string.Empty;
+            try
+            {
+
+                string Cmd = "SBMJOB CMD(CALL " + jobName + " PARM('" + param + "')) ";
+                string sql = "CALL QSYS.QCMDEXC('" + Cmd.Replace("'", "''") + "'," + Cmd.Length.ToString("0000000000.00000") + ")";
+
+                _conn = new iDB2Connection(ConnectionString);
+                _conn.Open();
+                _command = new iDB2Command(sql, _conn);
+                _command.ExecuteNonQuery();
+
+                _conn.Close();
+                res = true;
+            }
+            catch (iDB2Exception iEx)
+            {
+                oMessage = iEx.Message;
+            }
+            catch (Exception ex)
+            {
+                oMessage = ex.Message;
+            }
+            return res;
+        }
         public bool ExecuteSql(string sql, out DataTable oDataTable, out string oMessage)
         {
             bool res = false;
