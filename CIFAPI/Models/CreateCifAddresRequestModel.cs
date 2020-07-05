@@ -20,7 +20,6 @@ namespace CIFAPI.Models
         [MatchParent("CFCIFN")]
         public string CustomerNumber { get; set; }
 
-        [Required]
         [StringLength(40)]
         [MatchParent("CFNA2")]
         public string AddressLine1 { get; set; }

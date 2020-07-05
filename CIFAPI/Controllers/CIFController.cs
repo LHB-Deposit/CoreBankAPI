@@ -2,10 +2,6 @@
 using CIFAPI.Models;
 using SolutionUtility;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace CIFAPI.Controllers
@@ -44,6 +40,7 @@ namespace CIFAPI.Controllers
         public CreateCifAddressResponseModel CreateCifAddress([FromBody] CreateCifAddresRequestModel model)
         {
             var processDatetime = DateTime.Now;
+            
             return mBaseService.CreateCifAddress(model, processDatetime);
         }
     }

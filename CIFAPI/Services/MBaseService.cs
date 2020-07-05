@@ -72,10 +72,21 @@ namespace CIFAPI.Services
         }
         public CreateCifAddressResponseModel CreateCifAddress(CreateCifAddresRequestModel requestModel, DateTime processDateTime)
         {
-            Logging.WriteLog(requestModel);
             CreateCifAddressResponseModel responseModel = new CreateCifAddressResponseModel();
             try
             {
+                string building = requestModel.Building.Length > 50
+                    ? requestModel.Building.Substring(0, requestModel.Building.Length - 11)
+                    : requestModel.Building;
+                requestModel.AddressLine1 = $"{requestModel.HouseNo} {requestModel.VillageNo}";
+                requestModel.AddressLine2 = $"";
+                requestModel.AddressLine3 = $"";
+                requestModel.AddressLine4 = $"";
+                requestModel.AddressLine5 = $"";
+                requestModel.CityStateZip = $"";
+
+                Logging.WriteLog(requestModel);
+
                 MBaseMessageModel mBaseMessageModel = CreateCifAddressMessage(requestModel, processDateTime);
 
                 var mBaseMessage = MBaseMessageMatchObject(mBaseMessageModel);
