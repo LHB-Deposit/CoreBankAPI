@@ -97,7 +97,7 @@ namespace AuthenticationService
                     },
                     License = new OpenApiLicense
                     {
-                        Name = $"Copyright©{DateTime.Now.Year} LAND AND HOUSES BANK PUBLIC COMPANY LIMITED",
+                        Name = $"Copyright{DateTime.Now.Year} LAND AND HOUSES BANK PUBLIC COMPANY LIMITED",
                         Url = new Uri("https://www.lhbank.co.th")
                     }
                 });
