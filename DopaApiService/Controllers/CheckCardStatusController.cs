@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DopaApiService.Interfaces;
+using DopaApiService.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,17 +13,23 @@ namespace DopaApiService.Controllers
     [ApiController]
     public class CheckCardStatusController : ControllerBase
     {
-        private readonly IApiService apiService;
+        private readonly ICheckCardStatusService cardService;
 
-        public CheckCardStatusController(IApiService apiService)
+        public CheckCardStatusController(ICheckCardStatusService cardService)
         {
-            this.apiService = apiService;
+            this.cardService = cardService;
         }
 
-        [HttpGet]
-        public IEnumerable<string> CheckCardStatusByCID()
+        [HttpPost]
+        public CardInfoResponseModel CheckCardStatusByCID([FromBody] CardInfoRequestModel requestModel)
         {
-            return new List<string> { };
+            return cardService.CheckCardStatusByCID(requestModel);
+        }
+
+        [HttpPost]
+        public CardInfoResponseModel CheckCardStatusByLaser([FromBody] CardInfoRequestModel requestModel)
+        {
+            return cardService.CheckCardStatusByLaser(requestModel);
         }
     }
 }

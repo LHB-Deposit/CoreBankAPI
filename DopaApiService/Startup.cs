@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Core.Utility;
+using DopaApi.DataAccess;
 using DopaApiService.Helpers;
 using DopaApiService.Interfaces;
 using DopaApiService.Services;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -39,18 +42,18 @@ namespace DopaApiService
             var appSettings = appSettingsSection.Get<AppSettings>();
             if (appSettings.ISTEST.Equals("Y"))
             {
-            //    connectionStrings = Configuration.GetValue<string>("ConnectionStrings:Development:SQLConnection")
-            //        .Replace($"[{ nameof(AppSettings.SQL_USERID) }]", Cryptography.DecryptString(appSettings.SQL_USERID))
-            //        .Replace($"[{ nameof(AppSettings.SQL_PASSWD) }]", Cryptography.DecryptString(appSettings.SQL_PASSWD));
-            //}
-            //else
-            //{
-            //    connectionStrings = Configuration.GetValue<string>("ConnectionStrings:Production:SQLConnection")
-            //        .Replace($"[{ nameof(AppSettings.SQL_USERID) }]", Cryptography.DecryptString(appSettings.SQL_USERID))
-            //        .Replace($"[{ nameof(AppSettings.SQL_PASSWD) }]", Cryptography.DecryptString(appSettings.SQL_PASSWD));
+                connectionStrings = Configuration.GetValue<string>("ConnectionStrings:Development:SQLConnection")
+                    .Replace($"[{ nameof(AppSettings.SQL_USERID) }]", Cryptography.DecryptString(appSettings.SQL_USERID))
+                    .Replace($"[{ nameof(AppSettings.SQL_PASSWD) }]", Cryptography.DecryptString(appSettings.SQL_PASSWD));
+            }
+            else
+            {
+                connectionStrings = Configuration.GetValue<string>("ConnectionStrings:Production:SQLConnection")
+                    .Replace($"[{ nameof(AppSettings.SQL_USERID) }]", Cryptography.DecryptString(appSettings.SQL_USERID))
+                    .Replace($"[{ nameof(AppSettings.SQL_PASSWD) }]", Cryptography.DecryptString(appSettings.SQL_PASSWD));
             }
 
-            //services.AddDbContext<ApplicationSQLContext>(options => options.UseSqlServer(ConnectionName));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionStrings));
 
             // configure jwt authentication
             var key = Encoding.ASCII.GetBytes(appSettings.SECRET);
@@ -100,6 +103,8 @@ namespace DopaApiService
             {
                 options.DefaultRequestCulture = new RequestCulture("en-US");
             });
+
+            services.AddScoped(typeof(ICheckCardStatusService), typeof(CheckCardStatusService));
             services.AddScoped(typeof(IApiService), typeof(ApiService));
             services.AddControllers();
         }

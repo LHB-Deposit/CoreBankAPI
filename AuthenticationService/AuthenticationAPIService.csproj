@@ -36,5 +36,9 @@
     <Folder Include="Keypairs\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Utility\Core.Utility.csproj" />
+  </ItemGroup>
+
 
 </Project>

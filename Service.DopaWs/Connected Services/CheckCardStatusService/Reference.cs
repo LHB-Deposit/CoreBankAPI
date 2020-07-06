@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CheckCardBankService
+namespace CheckCardStatusService
 {
     using System.Runtime.Serialization;
     
@@ -15,7 +15,7 @@ namespace CheckCardBankService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ResponseOut", Namespace="http://tempuri.org/")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CheckCardBankService.CardStatusOut))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(CheckCardStatusService.CardStatusOut))]
     public partial class ResponseOut : object
     {
         
@@ -53,7 +53,7 @@ namespace CheckCardBankService
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Runtime.Serialization.DataContractAttribute(Name="CardStatusOut", Namespace="http://tempuri.org/")]
-    public partial class CardStatusOut : CheckCardBankService.ResponseOut
+    public partial class CardStatusOut : CheckCardStatusService.ResponseOut
     {
         
         private ushort CodeField;
@@ -88,15 +88,15 @@ namespace CheckCardBankService
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CheckCardBankService.CheckCardBankServiceSoap")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CheckCardStatusService.CheckCardBankServiceSoap")]
     public interface CheckCardBankServiceSoap
     {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckCardByLaser", ReplyAction="*")]
-        System.Threading.Tasks.Task<CheckCardBankService.CheckCardByLaserResponse> CheckCardByLaserAsync(CheckCardBankService.CheckCardByLaserRequest request);
+        System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByLaserResponse> CheckCardByLaserAsync(CheckCardStatusService.CheckCardByLaserRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/CheckCardByCID", ReplyAction="*")]
-        System.Threading.Tasks.Task<CheckCardBankService.CheckCardByCIDResponse> CheckCardByCIDAsync(CheckCardBankService.CheckCardByCIDRequest request);
+        System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByCIDResponse> CheckCardByCIDAsync(CheckCardStatusService.CheckCardByCIDRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -107,13 +107,13 @@ namespace CheckCardBankService
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckCardByLaser", Namespace="http://tempuri.org/", Order=0)]
-        public CheckCardBankService.CheckCardByLaserRequestBody Body;
+        public CheckCardStatusService.CheckCardByLaserRequestBody Body;
         
         public CheckCardByLaserRequest()
         {
         }
         
-        public CheckCardByLaserRequest(CheckCardBankService.CheckCardByLaserRequestBody Body)
+        public CheckCardByLaserRequest(CheckCardStatusService.CheckCardByLaserRequestBody Body)
         {
             this.Body = Body;
         }
@@ -163,13 +163,13 @@ namespace CheckCardBankService
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckCardByLaserResponse", Namespace="http://tempuri.org/", Order=0)]
-        public CheckCardBankService.CheckCardByLaserResponseBody Body;
+        public CheckCardStatusService.CheckCardByLaserResponseBody Body;
         
         public CheckCardByLaserResponse()
         {
         }
         
-        public CheckCardByLaserResponse(CheckCardBankService.CheckCardByLaserResponseBody Body)
+        public CheckCardByLaserResponse(CheckCardStatusService.CheckCardByLaserResponseBody Body)
         {
             this.Body = Body;
         }
@@ -183,13 +183,13 @@ namespace CheckCardBankService
     {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public CheckCardBankService.CardStatusOut CheckCardByLaserResult;
+        public CheckCardStatusService.CardStatusOut CheckCardByLaserResult;
         
         public CheckCardByLaserResponseBody()
         {
         }
         
-        public CheckCardByLaserResponseBody(CheckCardBankService.CardStatusOut CheckCardByLaserResult)
+        public CheckCardByLaserResponseBody(CheckCardStatusService.CardStatusOut CheckCardByLaserResult)
         {
             this.CheckCardByLaserResult = CheckCardByLaserResult;
         }
@@ -203,13 +203,13 @@ namespace CheckCardBankService
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckCardByCID", Namespace="http://tempuri.org/", Order=0)]
-        public CheckCardBankService.CheckCardByCIDRequestBody Body;
+        public CheckCardStatusService.CheckCardByCIDRequestBody Body;
         
         public CheckCardByCIDRequest()
         {
         }
         
-        public CheckCardByCIDRequest(CheckCardBankService.CheckCardByCIDRequestBody Body)
+        public CheckCardByCIDRequest(CheckCardStatusService.CheckCardByCIDRequestBody Body)
         {
             this.Body = Body;
         }
@@ -251,13 +251,13 @@ namespace CheckCardBankService
     {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="CheckCardByCIDResponse", Namespace="http://tempuri.org/", Order=0)]
-        public CheckCardBankService.CheckCardByCIDResponseBody Body;
+        public CheckCardStatusService.CheckCardByCIDResponseBody Body;
         
         public CheckCardByCIDResponse()
         {
         }
         
-        public CheckCardByCIDResponse(CheckCardBankService.CheckCardByCIDResponseBody Body)
+        public CheckCardByCIDResponse(CheckCardStatusService.CheckCardByCIDResponseBody Body)
         {
             this.Body = Body;
         }
@@ -271,26 +271,26 @@ namespace CheckCardBankService
     {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public CheckCardBankService.CardStatusOut CheckCardByCIDResult;
+        public CheckCardStatusService.CardStatusOut CheckCardByCIDResult;
         
         public CheckCardByCIDResponseBody()
         {
         }
         
-        public CheckCardByCIDResponseBody(CheckCardBankService.CardStatusOut CheckCardByCIDResult)
+        public CheckCardByCIDResponseBody(CheckCardStatusService.CardStatusOut CheckCardByCIDResult)
         {
             this.CheckCardByCIDResult = CheckCardByCIDResult;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public interface CheckCardBankServiceSoapChannel : CheckCardBankService.CheckCardBankServiceSoap, System.ServiceModel.IClientChannel
+    public interface CheckCardBankServiceSoapChannel : CheckCardStatusService.CheckCardBankServiceSoap, System.ServiceModel.IClientChannel
     {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    public partial class CheckCardBankServiceSoapClient : System.ServiceModel.ClientBase<CheckCardBankService.CheckCardBankServiceSoap>, CheckCardBankService.CheckCardBankServiceSoap
+    public partial class CheckCardBankServiceSoapClient : System.ServiceModel.ClientBase<CheckCardStatusService.CheckCardBankServiceSoap>, CheckCardStatusService.CheckCardBankServiceSoap
     {
         
         /// <summary>
@@ -327,37 +327,37 @@ namespace CheckCardBankService
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CheckCardBankService.CheckCardByLaserResponse> CheckCardBankService.CheckCardBankServiceSoap.CheckCardByLaserAsync(CheckCardBankService.CheckCardByLaserRequest request)
+        System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByLaserResponse> CheckCardStatusService.CheckCardBankServiceSoap.CheckCardByLaserAsync(CheckCardStatusService.CheckCardByLaserRequest request)
         {
             return base.Channel.CheckCardByLaserAsync(request);
         }
         
-        public System.Threading.Tasks.Task<CheckCardBankService.CheckCardByLaserResponse> CheckCardByLaserAsync(string PID, string FirstName, string LastName, string BirthDay, string Laser)
+        public System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByLaserResponse> CheckCardByLaserAsync(string PID, string FirstName, string LastName, string BirthDay, string Laser)
         {
-            CheckCardBankService.CheckCardByLaserRequest inValue = new CheckCardBankService.CheckCardByLaserRequest();
-            inValue.Body = new CheckCardBankService.CheckCardByLaserRequestBody();
+            CheckCardStatusService.CheckCardByLaserRequest inValue = new CheckCardStatusService.CheckCardByLaserRequest();
+            inValue.Body = new CheckCardStatusService.CheckCardByLaserRequestBody();
             inValue.Body.PID = PID;
             inValue.Body.FirstName = FirstName;
             inValue.Body.LastName = LastName;
             inValue.Body.BirthDay = BirthDay;
             inValue.Body.Laser = Laser;
-            return ((CheckCardBankService.CheckCardBankServiceSoap)(this)).CheckCardByLaserAsync(inValue);
+            return ((CheckCardStatusService.CheckCardBankServiceSoap)(this)).CheckCardByLaserAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<CheckCardBankService.CheckCardByCIDResponse> CheckCardBankService.CheckCardBankServiceSoap.CheckCardByCIDAsync(CheckCardBankService.CheckCardByCIDRequest request)
+        System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByCIDResponse> CheckCardStatusService.CheckCardBankServiceSoap.CheckCardByCIDAsync(CheckCardStatusService.CheckCardByCIDRequest request)
         {
             return base.Channel.CheckCardByCIDAsync(request);
         }
         
-        public System.Threading.Tasks.Task<CheckCardBankService.CheckCardByCIDResponse> CheckCardByCIDAsync(string ChipNo, string pid, string bp1no)
+        public System.Threading.Tasks.Task<CheckCardStatusService.CheckCardByCIDResponse> CheckCardByCIDAsync(string ChipNo, string pid, string bp1no)
         {
-            CheckCardBankService.CheckCardByCIDRequest inValue = new CheckCardBankService.CheckCardByCIDRequest();
-            inValue.Body = new CheckCardBankService.CheckCardByCIDRequestBody();
+            CheckCardStatusService.CheckCardByCIDRequest inValue = new CheckCardStatusService.CheckCardByCIDRequest();
+            inValue.Body = new CheckCardStatusService.CheckCardByCIDRequestBody();
             inValue.Body.ChipNo = ChipNo;
             inValue.Body.pid = pid;
             inValue.Body.bp1no = bp1no;
-            return ((CheckCardBankService.CheckCardBankServiceSoap)(this)).CheckCardByCIDAsync(inValue);
+            return ((CheckCardStatusService.CheckCardBankServiceSoap)(this)).CheckCardByCIDAsync(inValue);
         }
         
         public virtual System.Threading.Tasks.Task OpenAsync()

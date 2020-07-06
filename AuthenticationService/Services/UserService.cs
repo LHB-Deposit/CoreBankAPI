@@ -1,8 +1,8 @@
-﻿using AuthenticationAPIService.Helpers;
-using AuthenticationAPIService.Interfaces;
+﻿using AuthenticationAPIService.Interfaces;
 using AuthenticationService.Data;
 using AuthenticationService.Helpers;
 using AuthenticationService.Models;
+using Core.Utility;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
