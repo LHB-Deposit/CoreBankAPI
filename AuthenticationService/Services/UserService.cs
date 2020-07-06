@@ -80,10 +80,5 @@ namespace AuthenticationAPIService.Services
             context.UserProfiles.Add(register);
             context.SaveChanges();
         }
-
-        private bool HashMap(Dictionary<string, string> hashPassword, out string pass)
-        {
-            return hashPassword.TryGetValue("password", out pass);
-        }
     }
 }

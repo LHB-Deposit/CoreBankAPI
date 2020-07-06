@@ -18,18 +18,15 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/DocumentType
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetDocumentType(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.DocTypeValue)].ToString()
+            };
+            return service.GetDocumentType(appSetting);
         }
     }
 }

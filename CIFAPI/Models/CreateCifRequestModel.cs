@@ -21,6 +21,9 @@ namespace CIFAPI.Models
         [StringLength(40)]
         public string ThaiName { get; set; }
 
+        [StringLength(19)]
+        public string ThaiMiddleName { get; set; }
+
         [Required]
         [StringLength(40)]
         public string ThaiSurename { get; set; }
@@ -31,6 +34,9 @@ namespace CIFAPI.Models
         [Required]
         [StringLength(40)]
         public string EngName { get; set; }
+
+        [StringLength(19)]
+        public string EngMiddleName { get; set; }
 
         [Required]
         [StringLength(40)]

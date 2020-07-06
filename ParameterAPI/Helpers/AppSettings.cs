@@ -4,14 +4,6 @@ namespace ParameterAPI.Helpers
 {
     public class AppSettings : ProjectAppSettings
     {
-        // Library
-        public string LHBDDATPAR { get; set; }
-        public string LHBDDATMAS { get; set; }
-        public string LHBPDATPAR { get; set; }
-        public string LHBPDATMAS { get; set; }
-        public string LHBTDATINH { get; set; }
-        public string LHBPDATINH { get; set; }
-
         // File, Key, Value
         public string BOTOccuKey { get; set; }
         public string BOTOccuValue { get; set; }
@@ -42,7 +34,8 @@ namespace ParameterAPI.Helpers
         public string StatusFile { get; set; }
 
         public string AccountTypeKey { get; set; }
-        public string AccountTypeValue { get; set; }
+        public string AccountTypeENValue { get; set; }
+        public string AccountTypeTHValue { get; set; }
         public string AccountTypeFile { get; set; }
 
         public string CountryKey { get; set; }
@@ -69,5 +62,9 @@ namespace ParameterAPI.Helpers
         public string FatcaDescriptionTHValue { get; set; }
         public string FatcaDescriptionENValue { get; set; }
         public string FatcaDescriptionFile { get; set; }
+
+        public string CountryRiskKey { get; set; }
+        public string CountryRiskValue { get; set; }
+        public string CountryRiskFile { get; set; }
     }
 }

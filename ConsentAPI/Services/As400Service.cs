@@ -20,7 +20,7 @@ namespace ConsentAPI.Services
         {
             Logging.WriteLog(requestModel);
             VerifyConsentResponseModel responseModel = new VerifyConsentResponseModel();
-
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 if (IsCifExists(requestModel.CustomerNumber, out string oMessage))
@@ -79,6 +79,7 @@ namespace ConsentAPI.Services
         {
             Logging.WriteLog(requestModel);
             CreateConsentResponseModel responseModel = new CreateConsentResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             DateTime processDateTime = DateTime.Now;
             try
             {

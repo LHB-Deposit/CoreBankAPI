@@ -18,18 +18,15 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/Status
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetStatus(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.StatusFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.StatusKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.StatusValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.StatusFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.StatusKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.StatusValue)].ToString()
+            };
+            return service.GetStatus(appSetting);
         }
     }
 }

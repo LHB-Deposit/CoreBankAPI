@@ -18,18 +18,15 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/PrefixName
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetPrefixName(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.PrefixNameValue)].ToString()
+            };
+            return service.GetPrefixName(appSetting);
         }
     }
 }

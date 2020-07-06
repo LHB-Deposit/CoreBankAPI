@@ -6,27 +6,28 @@ namespace ParameterAPI.Interfaces
 {
     public interface IAs400Service
     {
-        IEnumerable<ParameterModel> GetBOTOccupation(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetBusinessType(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetDocumentType(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetEducationLevel(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetOccupation(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetStatus(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetState(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetAddressType(AppSettings appSettings);
+        IEnumerable<ParameterResponseModel> GetBOTOccupation(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetBusinessType(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetDocumentType(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetEducationLevel(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetOccupation(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetOccupationRisk(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetPrefixName(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetStatus(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetState(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetAddressType(AS400AppSettingModel appSettings);
 
-        IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null, string keyconcat = "");
-        IEnumerable<ParameterModel> ExecuteGetParameter(string sql);
-        IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetSourceOfIncomeCorp(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetCountry(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetPurposeOfAccountOpen(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetPurposeOfAccountOpenCorp(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetSourceOfDeposit(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetSourceOfDepositCorp(AppSettings appSettings);
-        IEnumerable<ParameterModel> GetFatcaDescription(AppSettings appSettings);
+        IEnumerable<ParameterResponseModel> GetParameter(AS400AppSettingModel appSettings, string[] condition = null, string keyconcat = "");
+        IEnumerable<ParameterResponseModel> ExecuteGetParameter(string sql);
+        IEnumerable<ParameterResponseModel> GetAccountType(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetSourceOfIncome(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetSourceOfIncomeCorp(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetCountry(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetPurposeOfAccountOpen(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetPurposeOfAccountOpenCorp(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetSourceOfDeposit(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetSourceOfDepositCorp(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetFatcaDescription(AS400AppSettingModel appSettings);
+        IEnumerable<ParameterResponseModel> GetCountryRisk(AS400AppSettingModel appSettings);
     }
 }

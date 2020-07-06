@@ -12,25 +12,26 @@ using System.Web.Http;
 namespace ParameterAPI.Controllers
 {
     [Authorize]
-    public class OccupationController : ApiController
+    public class CountryRiskController : ApiController
     {
         private readonly IAs400Service service;
 
-        public OccupationController(IAs400Service service)
+        public CountryRiskController(IAs400Service service)
         {
             this.service = service;
         }
 
+        // GET: api/CountryRisk
         [HttpGet]
         public IEnumerable<ParameterResponseModel> Get()
         {
             AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                File = ConfigurationManager.AppSettings[nameof(AppSettings.OccupationFile)].ToString(),
-                Key = ConfigurationManager.AppSettings[nameof(AppSettings.OccupationKey)].ToString(),
-                Value = ConfigurationManager.AppSettings[nameof(AppSettings.OccupationValue)].ToString()
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.CountryRiskFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.CountryRiskKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.CountryRiskValue)].ToString()
             };
-            return service.GetOccupation(appSetting);
+            return service.GetCountryRisk(appSetting);
         }
     }
 }

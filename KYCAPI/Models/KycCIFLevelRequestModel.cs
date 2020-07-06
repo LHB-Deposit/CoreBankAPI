@@ -100,6 +100,7 @@ namespace KYCAPI.Models
 
         [Required]
         [StringLength(2)]
+        [RegularExpression("(IC)", ErrorMessage = "'IC' only for Core Bank Api version 1.0")]
         [MatchParent("CP9XCD1")]
         public string XICCode1 { get; set; }
 

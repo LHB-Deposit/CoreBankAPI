@@ -18,17 +18,13 @@ namespace ParameterAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            AppSettings appSettings = new AppSettings()
+            AS400AppSettingModel appSettings = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
             };
 
             return _service.GetSourceOfIncome(appSettings);
@@ -36,17 +32,13 @@ namespace ParameterAPI.Controllers
 
         [Route("api/SourceOfIncome/Corporate")]
         [HttpGet]
-        public IEnumerable<ParameterModel> Corporate()
+        public IEnumerable<ParameterResponseModel> Corporate()
         {
-            AppSettings appSettings = new AppSettings()
+            AS400AppSettingModel appSettings = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.KYCParameterValue)].ToString()
             };
 
             return _service.GetSourceOfIncomeCorp(appSettings);

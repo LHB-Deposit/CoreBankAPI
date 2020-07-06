@@ -18,17 +18,26 @@ namespace ParameterAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get(string lang = "EN")
         {
-            AppSettings appSettings = new AppSettings()
+            string _value;
+            switch (lang)
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBTDATINH)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATINH)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeValue)].ToString()
+                case "TH":
+                    _value = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeTHValue)].ToString();
+                    break;
+                case "EN":
+                    _value = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeENValue)].ToString();
+                    break;
+                default:
+                    _value = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeENValue)].ToString();
+                    break;
+            }
+            AS400AppSettingModel appSettings = new AS400AppSettingModel()
+            {
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.AccountTypeKey)].ToString(),
+                Value = _value
             };
 
             return _service.GetAccountType(appSettings);

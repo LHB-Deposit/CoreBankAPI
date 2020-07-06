@@ -13,7 +13,5 @@ namespace AuthenticationService.Models
 
         [Required]
         public string Password { get; set; }
-
-        public Dictionary<string, string> HashPassword { get; set; }
     }
 }

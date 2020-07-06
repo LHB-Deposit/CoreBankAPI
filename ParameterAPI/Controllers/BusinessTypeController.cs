@@ -18,18 +18,15 @@ namespace ParameterAPI.Controllers
 
         // GET: api/BusinessType
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetBusinessType(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.BusinessTypeValue)].ToString()
+            };
+            return service.GetBusinessType(appSetting);
         }
     }
 }

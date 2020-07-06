@@ -17,18 +17,15 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/BOTOccupation
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetBOTOccupation(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.BOTOccuValue)].ToString()
+            };
+            return service.GetBOTOccupation(appSetting);
         }
     }
 }

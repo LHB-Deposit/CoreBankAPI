@@ -25,6 +25,8 @@ namespace KYCAPI.Services
         {
             Logging.WriteLog(requestModel);
             KycCIFLevelResponseModel responseModel = new KycCIFLevelResponseModel();
+            if (requestModel.XICCode1.ToUpper().Equals("IC")) requestModel.XICCode1 = "01"; // Hard code For Core Bank Api version 1.0 support M-Choice
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 MBaseMessageModel mBaseMessageModel = CreateKycCIFLevelMessage(requestModel, processDateTime);
@@ -51,6 +53,7 @@ namespace KYCAPI.Services
         {
             Logging.WriteLog(requestModel);
             KycAccountLevelResponseModel responseModel = new KycAccountLevelResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 MBaseMessageModel mBaseMessageModel = CreateKycAccountLevelMessage(requestModel, processDateTime);
@@ -77,6 +80,7 @@ namespace KYCAPI.Services
         {
             Logging.WriteLog(requestModel);
             KycRiskLevelResponseModel responseModel = new KycRiskLevelResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             string sql = $@"SELECT {nameof(KCMAST.KCCIFN)}, {nameof(KCMAST.KCRRKL)} 
                             FROM {appSettings.LIB}.{appSettings.FILE} 
                             WHERE {nameof(KCMAST.KCCIFN)} = '{requestModel.CustomerNumber}'";

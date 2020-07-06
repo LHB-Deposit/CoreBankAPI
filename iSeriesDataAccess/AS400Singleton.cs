@@ -36,7 +36,7 @@ namespace iSeriesDataAccess
             string as400conn;
             string as400User;
             string as400Pass;
-            bool isTest = ConfigurationManager.AppSettings[nameof(ProjectAppSettings.ISTEST)].ToString().Equals("Y") ? true : false; 
+            bool isTest = ConfigurationManager.AppSettings[nameof(ProjectAppSettings.ISTEST)].ToString().Equals("Y"); 
             
             if (isTest)
             {

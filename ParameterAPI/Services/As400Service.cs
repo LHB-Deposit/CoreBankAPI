@@ -7,26 +7,34 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Linq;
 
 namespace ParameterAPI.Services
 {
     public class As400Service : IAs400Service
     {
+        private readonly IAppSettingService appSettingService;
+
         private string KEY { get; set; } = string.Empty;
         private string VALUE { get; set; } = string.Empty;
         private string LIB { get; set; } = string.Empty;
         private string FILE { get; set; } = string.Empty;
         private string SQL { get; set; } = @"SELECT TRIM([KEY]) AS [KEY], TRIM([VALUE]) AS [VALUE] FROM [LIB].[FILE]";
 
-        public IEnumerable<ParameterModel> ExecuteGetParameter(string sql)
+        public As400Service(IAppSettingService appSettingService)
         {
-            List<ParameterModel> parameters = new List<ParameterModel>();
+            this.appSettingService = appSettingService;
+        }
+
+        public IEnumerable<ParameterResponseModel> ExecuteGetParameter(string sql)
+        {
+            List<ParameterResponseModel> parameters = new List<ParameterResponseModel>();
             try
             {
                 AS400Singleton.Instance.ExecuteSql(sql, out DataTable dt, out string Message);
                 foreach (DataRow row in dt.Rows)
                 {
-                    parameters.Add(new ParameterModel
+                    parameters.Add(new ParameterResponseModel
                     {
                         Key = row[KEY].ToString(),
                         Value = row[VALUE].ToString()
@@ -40,28 +48,28 @@ namespace ParameterAPI.Services
             return parameters;
         }
 
-        public IEnumerable<ParameterModel> GetParameter(AppSettings appSettings, string[] condition = null, string keyconcat = "")
+        public IEnumerable<ParameterResponseModel> GetParameter(AS400AppSettingModel appSettings, string[] condition = null, string keyconcat = "")
         {
-            LIB = appSettings.LIB;
-            FILE = appSettings.FILE;
-            KEY = appSettings.KEY;
-            VALUE = appSettings.VALUE;
+            LIB = appSettingService.GetLibrary(appSettings.File);
+            FILE = appSettings.File;
+            KEY = appSettings.Key;
+            VALUE = appSettings.Value;
             if (!string.IsNullOrEmpty(keyconcat))
             {
                 SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
                 .Replace($"TRIM({KEY})", $"{keyconcat}")
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
-                .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
-                .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
+                .Replace($"[LIB]", LIB)
+                .Replace($"[FILE]", FILE);
             }
             else
             {
                 SQL = SQL
                 .Replace($"[{ nameof(AppSettings.KEY) }]", KEY)
                 .Replace($"[{ nameof(AppSettings.VALUE) }]", VALUE)
-                .Replace($"[{ nameof(AppSettings.LIB) }]", LIB)
-                .Replace($"[{ nameof(AppSettings.FILE) }]", FILE);
+                .Replace($"[LIB]", LIB)
+                .Replace($"[FILE]", FILE);
             }
             
 
@@ -82,43 +90,43 @@ namespace ParameterAPI.Services
             return ExecuteGetParameter(SQL);
         }
 
-        public IEnumerable<ParameterModel> GetBOTOccupation(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetBOTOccupation(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetBusinessType(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetBusinessType(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetDocumentType(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetDocumentType(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetEducationLevel(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetEducationLevel(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetOccupation(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetOccupation(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetOccupationRisk(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetOccupationRisk(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetPrefixName(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetPrefixName(AS400AppSettingModel appSettings)
         {
             var keyconcat = "TRIM(CFTTCD CONCAT '' CONCAT CFTTTP)";
             return GetParameter(appSettings, null, keyconcat);
         }
 
-        public IEnumerable<ParameterModel> GetStatus(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetStatus(AS400AppSettingModel appSettings)
         {
             string[] cond = new string[1];
             cond[0] = "CP3UIC = '1'";
@@ -126,12 +134,12 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetAccountType(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetAccountType(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetSourceOfIncome(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetSourceOfIncome(AS400AppSettingModel appSettings)
         {
             string[] cond = 
             { 
@@ -144,7 +152,7 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetSourceOfIncomeCorp(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetSourceOfIncomeCorp(AS400AppSettingModel appSettings)
         {
             string[] cond = {
                 "CP9XIA = 'CF'",
@@ -156,7 +164,7 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetPurposeOfAccountOpen(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetPurposeOfAccountOpen(AS400AppSettingModel appSettings)
         {
             string[] cond =
             {
@@ -168,7 +176,7 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetPurposeOfAccountOpenCorp(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetPurposeOfAccountOpenCorp(AS400AppSettingModel appSettings)
         {
             string[] cond =
             {
@@ -180,7 +188,7 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetSourceOfDeposit(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetSourceOfDeposit(AS400AppSettingModel appSettings)
         {
             string[] cond =
             {
@@ -193,7 +201,7 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetSourceOfDepositCorp(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetSourceOfDepositCorp(AS400AppSettingModel appSettings)
         {
             string[] cond =
             {
@@ -206,11 +214,11 @@ namespace ParameterAPI.Services
             return GetParameter(appSettings, cond);
         }
 
-        public IEnumerable<ParameterModel> GetCountry(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetCountry(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
-        public IEnumerable<ParameterModel> GetState(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetState(AS400AppSettingModel appSettings)
         {
             var keyconcat = "TRIM(TRIM(SSSCOC) CONCAT '' CONCAT SSSTAC)";
             string[] cond =
@@ -219,14 +227,36 @@ namespace ParameterAPI.Services
             };
             return GetParameter(appSettings, cond, keyconcat);
         }
-        public IEnumerable<ParameterModel> GetAddressType(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetAddressType(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
         }
 
-        public IEnumerable<ParameterModel> GetFatcaDescription(AppSettings appSettings)
+        public IEnumerable<ParameterResponseModel> GetFatcaDescription(AS400AppSettingModel appSettings)
         {
             return GetParameter(appSettings);
+        }
+
+        public IEnumerable<ParameterResponseModel> GetCountryRisk(AS400AppSettingModel appSettings)
+        {
+            AS400AppSettingModel countrySetting = new AS400AppSettingModel()
+            {
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.CountryFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.CountryKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.CountryValue)].ToString()
+            };
+
+            var countryList = GetParameter(countrySetting);
+            SQL = @"SELECT TRIM([KEY]) AS [KEY], TRIM([VALUE]) AS [VALUE] FROM [LIB].[FILE]";
+
+            string[] cond =
+            {
+                "KCPCNR = 'Y'"
+            };
+            
+            var coutryRiskList = GetParameter(appSettings, cond);
+
+            return countryList.Where(s => coutryRiskList.Any(x => x.Key.Equals(s.Key)));
         }
     }
 }

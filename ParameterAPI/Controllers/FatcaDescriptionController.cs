@@ -18,9 +18,9 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/Status
         [HttpGet()]
-        public IEnumerable<ParameterModel> Get(string lang = "EN")
+        public IEnumerable<ParameterResponseModel> Get(string lang = "EN")
         {
-            string _value = string.Empty;
+            string _value;
             switch (lang)
             {
                 case "TH":
@@ -33,16 +33,14 @@ namespace ParameterAPI.Controllers
                     _value = ConfigurationManager.AppSettings[nameof(AppSettings.FatcaDescriptionENValue)].ToString();
                     break;
             }
-            return service.GetFatcaDescription(new AppSettings
-            {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATINH)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATINH)].ToString(),
 
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.FatcaDescriptionFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.FatcaDescriptionKey)].ToString(),
-                VALUE = _value
-            });
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
+            {
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.FatcaDescriptionFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.FatcaDescriptionKey)].ToString(),
+                Value = _value
+            };
+            return service.GetFatcaDescription(appSetting);
         }
     }
 }

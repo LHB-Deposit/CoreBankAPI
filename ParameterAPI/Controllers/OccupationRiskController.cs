@@ -18,18 +18,15 @@ namespace ParameterAPI.Controllers
         }
         // GET: api/OccupationRisk
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            return service.GetOccupationRisk(new AppSettings
+            AS400AppSettingModel appSetting = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskValue)].ToString()
-            });
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.OccRiskValue)].ToString()
+            };
+            return service.GetOccupationRisk(appSetting);
         }
     }
 }

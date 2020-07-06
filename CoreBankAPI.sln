@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLDataAccess", "SQLDataAcc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionUtility", "SolutionUtility\SolutionUtility.csproj", "{5244D46D-8317-430B-A7E4-22B9CAB8ED91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DopaApiService", "DopaApiService\DopaApiService.csproj", "{2C8ECCB0-671F-44C5-887C-BB873365CB35}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,10 +85,6 @@ Global
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C8ECCB0-671F-44C5-887C-BB873365CB35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C8ECCB0-671F-44C5-887C-BB873365CB35}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C8ECCB0-671F-44C5-887C-BB873365CB35}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C8ECCB0-671F-44C5-887C-BB873365CB35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,7 +102,6 @@ Global
 		{E18F6FAA-05EB-436F-B52F-26868253431D} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
 		{F20BE7BB-F72C-4CF9-92E7-A1F5B0DDB440} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
 		{5244D46D-8317-430B-A7E4-22B9CAB8ED91} = {5350EA1F-05A3-4EEC-93E3-85E0F697D452}
-		{2C8ECCB0-671F-44C5-887C-BB873365CB35} = {5DBEEE69-7503-4EB6-B75E-87071BAB8380}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {60AED03C-DE68-418C-B2F4-79FC49309665}

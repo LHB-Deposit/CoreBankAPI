@@ -18,17 +18,13 @@ namespace ParameterAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            AppSettings appSettings = new AppSettings()
+            AS400AppSettingModel appSettings = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.CountryFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.CountryKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.CountryValue)].ToString()
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.CountryFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.CountryKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.CountryValue)].ToString()
             };
 
             return _service.GetCountry(appSettings);

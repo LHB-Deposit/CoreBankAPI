@@ -1,12 +1,8 @@
 ﻿using ParameterAPI.Helpers;
 using ParameterAPI.Interfaces;
 using ParameterAPI.Models;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 
 namespace ParameterAPI.Controllers
@@ -22,17 +18,13 @@ namespace ParameterAPI.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ParameterModel> Get()
+        public IEnumerable<ParameterResponseModel> Get()
         {
-            AppSettings appSettings = new AppSettings()
+            AS400AppSettingModel appSettings = new AS400AppSettingModel()
             {
-                LIB = ConfigurationManager.AppSettings[nameof(AppSettings.ISTEST)].ToString().Equals("Y")
-                    ? ConfigurationManager.AppSettings[nameof(AppSettings.LHBDDATPAR)].ToString()
-                    : ConfigurationManager.AppSettings[nameof(AppSettings.LHBPDATPAR)].ToString(),
-
-                FILE = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeFile)].ToString(),
-                KEY = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeKey)].ToString(),
-                VALUE = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeValue)].ToString()
+                File = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeFile)].ToString(),
+                Key = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeKey)].ToString(),
+                Value = ConfigurationManager.AppSettings[nameof(AppSettings.AddressTypeValue)].ToString()
             };
 
             return service.GetAddressType(appSettings);

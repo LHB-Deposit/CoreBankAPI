@@ -22,6 +22,7 @@ namespace CIFAPI.Services
         {
             Logging.WriteLog(requestModel);
             VerifyCitizenResponseModel responseModel = new VerifyCitizenResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 MBaseMessageModel mBaseMessageModel = VerifyCitizenMessage(requestModel, processDateTime);
@@ -48,6 +49,9 @@ namespace CIFAPI.Services
         {
             Logging.WriteLog(requestModel);
             CreateCifAndAccountResponseModel responseModel = new CreateCifAndAccountResponseModel();
+            requestModel.ThaiName = SetFirstnameWithMiddlename(requestModel.ThaiName, requestModel.ThaiMiddleName);
+            requestModel.EngName = SetFirstnameWithMiddlename(requestModel.EngName, requestModel.EngMiddleName);
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 MBaseMessageModel mBaseMessageModel = CreateCifAccountMessage(requestModel, processDateTime);
@@ -72,20 +76,51 @@ namespace CIFAPI.Services
         }
         public CreateCifAddressResponseModel CreateCifAddress(CreateCifAddresRequestModel requestModel, DateTime processDateTime)
         {
+            Logging.WriteLog(requestModel);
             CreateCifAddressResponseModel responseModel = new CreateCifAddressResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
-                string building = requestModel.Building.Length > 50
-                    ? requestModel.Building.Substring(0, requestModel.Building.Length - 11)
-                    : requestModel.Building;
-                requestModel.AddressLine1 = $"{requestModel.HouseNo} {requestModel.VillageNo}";
-                requestModel.AddressLine2 = $"";
-                requestModel.AddressLine3 = $"";
-                requestModel.AddressLine4 = $"";
-                requestModel.AddressLine5 = $"";
-                requestModel.CityStateZip = $"";
+                string houseNo = requestModel.HouseNo.Trim();
+                string villageNo = requestModel.VillageNo.Trim();
+                string building = requestModel.Building.Trim();
+                string floor = requestModel.Floor.Trim();
+                string room = requestModel.Room.Trim();
+                string alley = requestModel.Alley.Trim();
+                string lane = requestModel.Lane.Trim();
+                string road = requestModel.Road.Trim();
+                string subDistrict = requestModel.SubDistrict.Trim();
+                string district = requestModel.District.Trim();
+                string province = requestModel.Province.Trim();
+                string zipCode = requestModel.ZipCode.Trim();
+                string[] addressLine =
+                {
+                    houseNo,villageNo,building,floor,room,alley,lane,road,subDistrict
+                };
+                var dictAddressLine = GetAddressLine(addressLine);
+                foreach (var address in dictAddressLine)
+                {
+                    switch (address.Key)
+                    {
+                        case nameof(requestModel.AddressLine1):
+                            requestModel.AddressLine1 = address.Value;
+                            break;
+                        case nameof(requestModel.AddressLine2):
+                            requestModel.AddressLine2 = address.Value;
+                            break;
+                        case nameof(requestModel.AddressLine3):
+                            requestModel.AddressLine3 = address.Value;
+                            break;
+                        case nameof(requestModel.AddressLine4):
+                            requestModel.AddressLine4 = address.Value;
+                            break;
+                        case nameof(requestModel.AddressLine5):
+                            requestModel.AddressLine5 = address.Value;
+                            break;
+                    }
+                }
 
-                Logging.WriteLog(requestModel);
+                requestModel.CityStateZip = $"{requestModel.District} {requestModel.Province} {requestModel.ZipCode}";
 
                 MBaseMessageModel mBaseMessageModel = CreateCifAddressMessage(requestModel, processDateTime);
 
@@ -106,6 +141,41 @@ namespace CIFAPI.Services
                 Logging.WriteLog(responseModel);
             }
             return responseModel;
+        }
+
+        private string SetFirstnameWithMiddlename(string firstname, string middlename)
+        {
+            string firstnameWithMiddlename = firstname;
+            if (!string.IsNullOrEmpty(middlename)) firstnameWithMiddlename += " " + middlename;
+            return firstnameWithMiddlename;
+        }
+        private Dictionary<string,string> GetAddressLine(string[] fieldAddress)
+        {
+            Dictionary<string, string> addressLine = new Dictionary<string, string>();
+            string tempFieldAddress = string.Empty;
+            string tempValue = string.Empty;
+            int line = 1;
+            foreach (var field in fieldAddress)
+            {
+                if (!string.IsNullOrEmpty(field))
+                {
+                    tempFieldAddress += field + " ";
+                    if (tempFieldAddress.Trim().Length < 40)
+                    {
+                        tempValue += field + " ";
+                        continue;
+                    }
+                    else
+                    {
+                        addressLine.Add($"AddressLine{line}", tempValue.Trim());
+                        tempFieldAddress = field + " ";
+                        tempValue = field + " ";
+                        line++;
+                    }
+                }
+            }
+            if (!string.IsNullOrEmpty(tempFieldAddress)) addressLine.Add($"AddressLine{line}", tempFieldAddress.Trim());
+            return addressLine;
         }
 
         private MBaseMessageModel VerifyCitizenMessage(VerifyCitizenRequestModel requestModel, DateTime processDateTime)

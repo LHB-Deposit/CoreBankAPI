@@ -13,5 +13,7 @@ namespace SolutionUtility
 
         [MatchParent("ErrorDescription")]
         public string ErrorDescription { get; set; } = string.Empty;
+
+        public string ReferenceNo { get; set; }
     }
 }

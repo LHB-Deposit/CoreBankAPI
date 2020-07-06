@@ -84,6 +84,12 @@ namespace CIFAPI.Models
         [MatchParent("CFFBLD")]
         public string Building { get; set; }
 
+        [StringLength(20)]
+        public string Floor { get; set; }
+
+        [StringLength(30)]
+        public string Room { get; set; }
+
         [StringLength(50)]
         [MatchParent("CFFALY")]
         public string Alley { get; set; }

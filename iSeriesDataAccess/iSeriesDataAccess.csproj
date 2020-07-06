@@ -52,13 +52,26 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AS400Singleton.cs" />
+    <Compile Include="FileModel\BTPARB.cs" />
+    <Compile Include="FileModel\CFIDDF.cs" />
     <Compile Include="FileModel\CFMAST.cs" />
+    <Compile Include="FileModel\CFPAR3.cs" />
+    <Compile Include="FileModel\CFPAR9.cs" />
+    <Compile Include="FileModel\CFPARE.cs" />
+    <Compile Include="FileModel\CFSICC.cs" />
+    <Compile Include="FileModel\CFZPAR.cs" />
+    <Compile Include="FileModel\CFZPEL.cs" />
     <Compile Include="FileModel\DPI2142F1.cs" />
     <Compile Include="FileModel\DPI21953.cs" />
     <Compile Include="FileModel\DPI2195F1.cs" />
     <Compile Include="FileModel\DPI2195F4.cs" />
     <Compile Include="FileModel\DPI2195FP.cs" />
+    <Compile Include="FileModel\DPI2392F.cs" />
     <Compile Include="FileModel\KCMAST.cs" />
+    <Compile Include="FileModel\KCPAR2.cs" />
+    <Compile Include="FileModel\KCPAR3.cs" />
+    <Compile Include="FileModel\SSCOUN.cs" />
+    <Compile Include="FileModel\SSSTAT.cs" />
     <Compile Include="LibraryModel\LHBDDATINH.cs" />
     <Compile Include="LibraryModel\LHBDDATMAS.cs" />
     <Compile Include="LibraryModel\LHBDDATPAR.cs" />

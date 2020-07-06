@@ -1,9 +1,9 @@
-﻿using ConsentAPI.Interfaces;
-using iSeriesDataAccess.LibraryModel;
+﻿using iSeriesDataAccess.LibraryModel;
+using ParameterAPI.Interfaces;
 using SolutionUtility;
 using System;
 
-namespace ConsentAPI.Services
+namespace ParameterAPI.Services
 {
     public class AppSettingService : ProjectAppSettings, IAppSettingService
     {

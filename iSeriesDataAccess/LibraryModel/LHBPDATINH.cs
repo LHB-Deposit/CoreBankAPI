@@ -12,5 +12,6 @@ namespace iSeriesDataAccess.LibraryModel
         public string DPI2195F1 { get; set; }
         public string DPI2195F4 { get; set; }
         public string DPI2195FP { get; set; }
+        public string DPI2392F { get; set; }
     }
 }

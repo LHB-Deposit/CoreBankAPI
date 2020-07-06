@@ -23,7 +23,7 @@ namespace FATCAAPI.Services
         {
             Logging.WriteLog(requestModel);
             VerifyFatcaFlagResponseModel responseModel = new VerifyFatcaFlagResponseModel();
-
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             try
             {
                 string _sql = $"SELECT {nameof(DPI2195F1.F1CIFNO)}, TRIM({nameof(DPI2195F1.F1STS)}) AS {nameof(DPI2195F1.F1STS)}, TRIM({nameof(DPI2195F1.F1COD)}) AS {nameof(DPI2195F1.F1COD)} " +
@@ -73,6 +73,7 @@ namespace FATCAAPI.Services
         {
             Logging.WriteLog(requestModel);
             CreateFatcaFlagResponseModel responseModel = new CreateFatcaFlagResponseModel();
+            responseModel.ReferenceNo = requestModel.ReferenceNo;
             string jobName, outFile, ref_key;
             try
             {
@@ -108,13 +109,12 @@ namespace FATCAAPI.Services
                             {
                                 if (row[nameof(DPI2195F4.F4STS)].ToString().Trim().Equals("1"))
                                 {
-                                    responseModel.ReferenceNo = row[nameof(DPI2195F4.F4REFKEY)].ToString().Trim();
-                                    responseModel.FatcaFlag = row[nameof(DPI2195F4.F4STS)].ToString().Trim();
-                                    responseModel.FatcaCode = row[nameof(DPI2195F4.F4STDESC)].ToString().Trim();
+                                    responseModel.ReferenceKey = row[nameof(DPI2195F4.F4REFKEY)].ToString().Trim();
                                 }
                                 else
                                 {
-                                    responseModel.ErrorCode = ResponseCode.AS40000;
+                                    responseModel.ReferenceKey = row[nameof(DPI2195F4.F4REFKEY)].ToString().Trim();
+                                    responseModel.ErrorCode = row[nameof(DPI2195F4.F4STS)].ToString().Trim();
                                     responseModel.ErrorDescription = row[nameof(DPI2195F4.F4STDESC)].ToString().Trim();
                                 }
                                 break;
